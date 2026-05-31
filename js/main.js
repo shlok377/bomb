@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     closeExpertBriefing.addEventListener('click', () => {
         expertBriefing.style.display = 'none';
-        window.location.href = 'manual.html';
+        window.open('manual.html', '_blank');
     });
 
     creditsBtn.addEventListener('click', () => {
