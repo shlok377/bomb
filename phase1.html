@@ -8,21 +8,75 @@
 </head>
 <body>
     <div id="game-container">
-        <h1 id="phase-title">Phase 1</h1>
-        <div id="level-indicator">Level: <span id="current-level">1</span></div>
-        <div id="bomb-placeholder">
-            <p>Bomb View (To be implemented in Stage 2)</p>
-            <p>Phase 1: 3 Random Modules</p>
+        <div id="bomb-container">
+            <!-- HUD -->
+            <div id="bomb-hud">
+                <div id="timer-display">5:00</div>
+                <div id="strike-display"></div>
+            </div>
+
+            <!-- Bomb Faces -->
+            <div id="bomb-faces">
+                <!-- Front Face (Modules) -->
+                <div id="face-front" class="bomb-face">
+                    <!-- Modules will be injected here -->
+                </div>
+
+                <!-- Top Face (Edgework) -->
+                <div id="face-top" class="bomb-face" style="display: none;">
+                    <div class="edgework-item">
+                        <div id="edgework-batteries"></div>
+                        <p>Batteries</p>
+                    </div>
+                </div>
+
+                <!-- Bottom Face (Edgework) -->
+                <div id="face-bottom" class="bomb-face" style="display: none;">
+                    <div class="edgework-item">
+                        <div id="edgework-indicators"></div>
+                        <p>Indicators</p>
+                    </div>
+                </div>
+
+                <!-- Left Face (Edgework) -->
+                <div id="face-left" class="bomb-face" style="display: none;">
+                    <div class="edgework-item">
+                        <div id="edgework-sn"></div>
+                        <p>Serial Number</p>
+                    </div>
+                </div>
+
+                <!-- Right Face (Edgework) -->
+                <div id="face-right" class="bomb-face" style="display: none;">
+                    <p>Empty Side</p>
+                </div>
+
+                <!-- Back Face -->
+                <div id="face-back" class="bomb-face" style="display: none;">
+                    <p>Bomb Back</p>
+                </div>
+
+                <div id="view-indicator">Viewing: FRONT</div>
+            </div>
         </div>
-        <button onclick="window.location.href='index.html'">Back to Main Menu</button>
+
+        <div style="margin-top: 50px;">
+            <p>Use Arrow Keys to rotate the bomb</p>
+            <button onclick="window.location.href='index.html'">Quit to Menu</button>
+        </div>
     </div>
 
-    <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const level = urlParams.get('level');
-        if (level) {
-            document.getElementById('current-level').textContent = level;
-        }
+    <script type="module">
+        import { GameEngine } from './js/GameEngine.js';
+        import { UIManager } from './js/UIManager.js';
+        import { ModuleRegistry } from './js/ModuleRegistry.js';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Phase 1 has 3 modules
+            GameEngine.init(3);
+            UIManager.init();
+            ModuleRegistry.injectModules('face-front', 3);
+        });
     </script>
 </body>
 </html>

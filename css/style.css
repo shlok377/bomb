@@ -53,9 +53,9 @@ button:hover {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background: white;
+    width: 100vw;
+    height: 100vh;
+    background: #000;
     z-index: 1000;
 }
 
@@ -161,4 +161,301 @@ button:hover {
     justify-content: center;
     margin-bottom: 2rem;
     background-color: #222;
+}
+
+/* Bomb Shell UI */
+#bomb-container {
+    position: relative;
+    width: 600px;
+    height: 600px;
+    background-color: #333;
+    border: 10px solid #222;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+#bomb-hud {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #000;
+    padding: 10px 20px;
+    border: 2px solid #444;
+    margin-bottom: 20px;
+}
+
+#timer-display {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 2.5rem;
+    color: #ff0000;
+    text-shadow: 0 0 10px #ff0000;
+}
+
+#strike-display {
+    font-size: 2rem;
+    color: #ff0000;
+    font-weight: bold;
+}
+
+.strike-flash {
+    animation: flash 0.5s ease;
+}
+
+@keyframes flash {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+#bomb-faces {
+    flex-grow: 1;
+    background-color: #444;
+    border: 5px solid #222;
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 10px;
+    padding: 10px;
+}
+
+.bomb-face {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 10px;
+}
+
+#view-indicator {
+    position: absolute;
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1rem;
+    color: #888;
+}
+
+/* Edgework Styles */
+.edgework-item {
+    padding: 10px;
+    border: 1px solid #555;
+    background-color: #222;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#edgework-sn {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ddd;
+}
+
+#edgework-batteries {
+    display: flex;
+    gap: 5px;
+}
+
+.battery {
+    width: 20px;
+    height: 40px;
+    background-color: #555;
+    border: 2px solid #777;
+    position: relative;
+}
+
+.battery::after {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: 5px;
+    width: 10px;
+    height: 5px;
+    background-color: #777;
+}
+
+#edgework-indicators {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.indicator {
+    padding: 2px 5px;
+    border: 2px solid #555;
+    font-size: 0.8rem;
+    position: relative;
+}
+
+.indicator.lit::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 6px;
+    height: 6px;
+    background-color: #f00;
+    border-radius: 50%;
+    box-shadow: 0 0 5px #f00;
+}
+
+/* Game Over Modal */
+.game-over-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.game-over-modal h1 {
+    font-size: 4rem;
+    color: #f00;
+    margin-bottom: 1rem;
+}
+
+/* Module Common Styles */
+.module {
+    width: 100%;
+    height: 100%;
+    background-color: #555;
+    border: 5px solid #333;
+    position: relative;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.module-status {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 15px;
+    height: 15px;
+    background-color: #330000;
+    border: 1px solid #000;
+}
+
+.module-status.disarmed {
+    background-color: #00ff00;
+    box-shadow: 0 0 5px #00ff00;
+}
+
+/* Simple Wires Styles */
+.simple-wires .wire-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 80%;
+}
+
+.wire {
+    height: 10px;
+    width: 100%;
+    cursor: pointer;
+    border: 1px solid rgba(0,0,0,0.3);
+    position: relative;
+}
+
+.wire::before, .wire::after {
+    content: '';
+    position: absolute;
+    top: -5px;
+    width: 10px;
+    height: 20px;
+    background-color: #222;
+}
+.wire::before { left: -10px; }
+.wire::after { right: -10px; }
+
+.wire-red { background-color: #f00; }
+.wire-blue { background-color: #00f; }
+.wire-yellow { background-color: #ff0; }
+.wire-white { background-color: #fff; }
+.wire-black { background-color: #111; }
+
+.cut-wrong {
+    opacity: 0.3;
+}
+
+/* The Button Styles */
+.the-button .button-element {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: 8px solid rgba(0,0,0,0.2);
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+    user-select: none;
+}
+
+.button-element.blue { background-color: #00f; }
+.button-element.white { background-color: #fff; color: #000; }
+.button-element.yellow { background-color: #ff0; color: #000; }
+.button-element.red { background-color: #f00; }
+
+.button-label {
+    font-weight: bold;
+    font-size: 1.2rem;
+    pointer-events: none;
+}
+
+.indicator-strip {
+    display: none;
+    width: 20px;
+    height: 80px;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 2px solid #222;
+}
+
+/* Keypads Styles */
+.keypads .keypad-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 10px;
+    padding: 10px;
+}
+
+.keypad-btn {
+    width: 60px;
+    height: 60px;
+    background-color: #ddd;
+    border: 3px solid #999;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+
+.keypad-btn:hover { background-color: #fff; }
+.keypad-btn.pressed {
+    background-color: #0f0;
+    box-shadow: 0 0 10px #0f0;
+}
+
+.symbol-icon {
+    font-size: 2rem;
+    color: #000;
 }

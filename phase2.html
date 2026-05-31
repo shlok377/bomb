@@ -8,21 +8,52 @@
 </head>
 <body>
     <div id="game-container">
-        <h1 id="phase-title">Phase 2</h1>
-        <div id="level-indicator">Level: <span id="current-level">1</span></div>
-        <div id="bomb-placeholder">
-            <p>Bomb View (To be implemented in Stage 2)</p>
-            <p>Phase 2: 4 Random Modules</p>
+        <div id="bomb-container">
+            <div id="bomb-hud">
+                <div id="timer-display">5:00</div>
+                <div id="strike-display"></div>
+            </div>
+
+            <div id="bomb-faces">
+                <div id="face-front" class="bomb-face"></div>
+                <div id="face-top" class="bomb-face" style="display: none;">
+                    <div class="edgework-item">
+                        <div id="edgework-batteries"></div>
+                        <p>Batteries</p>
+                    </div>
+                </div>
+                <div id="face-bottom" class="bomb-face" style="display: none;">
+                    <div class="edgework-item">
+                        <div id="edgework-indicators"></div>
+                        <p>Indicators</p>
+                    </div>
+                </div>
+                <div id="face-left" class="bomb-face" style="display: none;">
+                    <div class="edgework-item">
+                        <div id="edgework-sn"></div>
+                        <p>Serial Number</p>
+                    </div>
+                </div>
+                <div id="face-right" class="bomb-face" style="display: none;"><p>Empty Side</p></div>
+                <div id="face-back" class="bomb-face" style="display: none;"><p>Bomb Back</p></div>
+                <div id="view-indicator">Viewing: FRONT</div>
+            </div>
         </div>
-        <button onclick="window.location.href='index.html'">Back to Main Menu</button>
+        <div style="margin-top: 50px;">
+            <p>Use Arrow Keys to rotate the bomb</p>
+            <button onclick="window.location.href='index.html'">Quit to Menu</button>
+        </div>
     </div>
 
-    <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const level = urlParams.get('level');
-        if (level) {
-            document.getElementById('current-level').textContent = level;
-        }
+    <script type="module">
+        import { GameEngine } from './js/GameEngine.js';
+        import { UIManager } from './js/UIManager.js';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Phase 2 has 4 modules
+            GameEngine.init(4);
+            UIManager.init();
+        });
     </script>
 </body>
 </html>

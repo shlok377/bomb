@@ -1,6 +1,8 @@
 import { LevelManager } from './LevelManager.js';
 
 document.addEventListener('DOMContentLoaded', () => {
+    console.log("Game Initialized...");
+    
     const defuseBtn = document.getElementById('defuse-btn');
     const manualBtn = document.getElementById('manual-btn');
     const levelModal = document.getElementById('level-modal');
@@ -13,10 +15,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Landing Page Actions
     defuseBtn.addEventListener('click', () => {
+        console.log("Defuse button clicked");
         levelModal.style.display = 'flex';
     });
 
     manualBtn.addEventListener('click', () => {
+        console.log("Manual button clicked");
         manualViewer.style.display = 'block';
     });
 
@@ -26,6 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     closeManual.addEventListener('click', () => {
+        console.log("Closing manual viewer");
         manualViewer.style.display = 'none';
     });
 
