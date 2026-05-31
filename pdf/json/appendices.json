@@ -1,0 +1,32 @@
+{
+  "category": "APPENDICES",
+  "documents": [
+    {
+      "id": "reference-a",
+      "title": "Appendix A: Indicator Identification Reference",
+      "description": "Labelled indicator lights can be found on the sides of the bomb casing.",
+      "logic": {
+        "common_indicators": ["SND", "CLR", "CAR", "IND", "FRQ", "SIG", "NSA", "MSA", "TRN", "BOB", "FRK"]
+      }
+    },
+    {
+      "id": "reference-b",
+      "title": "Appendix B: Battery Identification Reference",
+      "description": "Common battery types can be found within enclosures on the sides of the bomb casing.",
+      "logic": {
+        "battery_types": [
+          {"type": "AA", "visual": "Two batteries in a single enclosure"},
+          {"type": "D", "visual": "One large battery in a single enclosure"}
+        ]
+      }
+    },
+    {
+      "id": "reference-c",
+      "title": "Appendix C: Port Identification Reference",
+      "description": "Digital and analog ports can be found on sides of the bomb casing.",
+      "logic": {
+        "ports": ["DVI-D", "Parallel", "PS/2", "RJ-45", "Serial", "Stereo RCA"]
+      }
+    }
+  ]
+}

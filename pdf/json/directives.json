@@ -1,0 +1,73 @@
+{
+  "category": "DIRECTIVES",
+  "documents": [
+    {
+      "id": "operational-overview",
+      "title": "Operational Overview",
+      "content": [
+        {
+          "type": "header",
+          "text": "BOMB DEFUSAL MANUAL"
+        },
+        {
+          "type": "text",
+          "text": "Welcome to the dangerous and challenging world of bomb defusing. Study this manual carefully; you are the expert. In these pages you will find everything you need to know to defuse even the most insidious of bombs."
+        },
+        {
+          "type": "text",
+          "text": "And remember - One small oversight and it could all be over!"
+        },
+        {
+          "type": "sub-header",
+          "text": "Defusing Bombs"
+        },
+        {
+          "type": "text",
+          "text": "A bomb will explode when its countdown timer reaches 0:00 or when too many strikes have been recorded. The only way to defuse a bomb is to disarm all of its modules before its countdown timer expires."
+        },
+        {
+          "type": "sub-header",
+          "text": "Modules"
+        },
+        {
+          "type": "text",
+          "text": "Each bomb will include up to 11 modules that must be disarmed. Each module is discrete and can be disarmed in any order. Instructions for disarming modules can be found in Section 1. 'Needy' modules present a special case and are described in Section 2."
+        },
+        {
+          "type": "sub-header",
+          "text": "Strikes"
+        },
+        {
+          "type": "text",
+          "text": "When the Defuser makes a mistake, the bomb will record a strike which will be displayed on the indicator above the countdown timer. Bombs with a strike indicator will explode upon the third strike. The timer will begin to count down faster after a strike has been recorded."
+        },
+        {
+          "type": "text",
+          "text": "If no strike indicator is present above the countdown timer, the bomb will explode upon the first strike, leaving no room for error."
+        },
+        {
+          "type": "sub-header",
+          "text": "Gathering Information"
+        },
+        {
+          "type": "text",
+          "text": "Some disarming instructions will require specific information about the bomb, such as the serial number. This type of information can typically be found on the top, bottom, or sides of the bomb casing. See Appendix A, B, and C for identification instructions that will be useful in disarming certain modules."
+        }
+      ]
+    },
+    {
+      "id": "identification-protocol",
+      "title": "Identification Protocol",
+      "content": [
+        {
+          "type": "header",
+          "text": "Section 1: Modules"
+        },
+        {
+          "type": "text",
+          "text": "Modules can be identified by an LED in the top right corner. When this LED is lit green, the module has been disarmed. All modules must be disarmed to defuse the bomb."
+        }
+      ]
+    }
+  ]
+}

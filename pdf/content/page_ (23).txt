@@ -1,0 +1,24 @@
+Port
+
+00000000
+00000000
+00000000
+
+Appendix C: Port Identification Reference
+Digital and analog ports can be found on sides of the bomb casing.
+
+Name
+
+DVI-D
+
+Parallel
+
+PS/2
+
+RJ-45
+
+0
+
+Serial
+
+Stereo RCA

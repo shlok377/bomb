@@ -1,0 +1,44 @@
+{
+  "category": "SUSTENANCE & MAINTENANCE",
+  "documents": [
+    {
+      "id": "atmospheric-venting",
+      "title": "On the Subject of Venting Gas",
+      "flavorText": "Computer hacking is hard work! Well, it usually is. This job could probably be performed by a simple drinking bird...",
+      "rules": [
+        "Respond to the computer prompts by pressing 'Y' for 'Yes' or 'N' for 'No'."
+      ],
+      "logic": {
+        "prompts": {
+          "Vent Gas?": "Y",
+          "Detonate?": "N"
+        }
+      }
+    },
+    {
+      "id": "energy-dissipation",
+      "title": "On the Subject of Capacitor Discharge",
+      "flavorText": "I'm going to guess that this is just meant to occupy your attention, because otherwise this is some shoddy electronics work.",
+      "rules": [
+        "Discharge the capacitor before it overloads by holding down the lever."
+      ]
+    },
+    {
+      "id": "rotary-interfacing",
+      "title": "On the Subject of Knobs",
+      "flavorText": "Needlessly complicated and endlessly needy. Imagine if such expertise were used to make something other than diabolical puzzles.",
+      "rules": [
+        "The knob can be turned to one of four different positions.",
+        "The knob must be in the correct position when this module's timer hits zero.",
+        "The correct position can be determined by the on/off configuration of the twelve LEDs.",
+        "Knob positions are relative to the 'UP' label, which may have rotated."
+      ],
+      "logic": {
+        "Up": ["101111 (Top) / 111010 (Bottom)"],
+        "Down": ["011111 (Top) / 101111 (Bottom)"],
+        "Left": ["000010 (Top) / 100111 (Bottom)"],
+        "Right": ["101111 (Top) / 111111 (Bottom)"]
+      }
+    }
+  ]
+}

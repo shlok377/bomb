@@ -1,0 +1,162 @@
+{
+  "category": "COMPONENT SCHEMATICS",
+  "documents": [
+    {
+      "id": "linear-connectors",
+      "title": "On the Subject of Wires",
+      "flavorText": "Wires are the lifeblood of electronics! Wait, no, electricity is the lifeblood. Wires are more like the arteries. The veins? No matter...",
+      "rules": [
+        "A wire module can have 3-6 wires on it.",
+        "Only the one correct wire needs to be cut to disarm the module.",
+        "Wire ordering begins with the first on the top."
+      ],
+      "logic": {
+        "3_wires": [
+          "If there are no red wires, cut the second wire.",
+          "Otherwise, if the last wire is white, cut the last wire.",
+          "Otherwise, if there is more than one blue wire, cut the last blue wire.",
+          "Otherwise, cut the last wire."
+        ],
+        "4_wires": [
+          "If there is more than one red wire and the last digit of the serial number is odd, cut the last red wire.",
+          "Otherwise, if the last wire is yellow and there are no red wires, cut the first wire.",
+          "Otherwise, if there is exactly one blue wire, cut the first wire.",
+          "Otherwise, if there is more than one yellow wire, cut the last wire.",
+          "Otherwise, cut the second wire."
+        ],
+        "5_wires": [
+          "If the last wire is black and the last digit of the serial number is odd, cut the fourth wire.",
+          "Otherwise, if there is exactly one red wire and there is more than one yellow wire, cut the first wire.",
+          "Otherwise, if there are no black wires, cut the second wire.",
+          "Otherwise, cut the first wire."
+        ],
+        "6_wires": [
+          "If there are no yellow wires and the last digit of the serial number is odd, cut the third wire.",
+          "Otherwise, if there is exactly one yellow wire and there is more than one white wire, cut the fourth wire.",
+          "Otherwise, if there are no red wires, cut the last wire.",
+          "Otherwise, cut the fourth wire."
+        ]
+      }
+    },
+    {
+      "id": "multi-state-actuators",
+      "title": "On the Subject of The Button",
+      "flavorText": "You might think that a button telling you to press it is pretty straightforward. That's the kind of thinking that gets people exploded.",
+      "rules": [
+        "Follow these rules in the order they are listed. Perform the first action that applies:"
+      ],
+      "logic": {
+        "actions": [
+          "If the button is blue and the button says 'Abort', hold the button and refer to 'Releasing a Held Button'.",
+          "If there is more than 1 battery on the bomb and the button says 'Detonate', press and immediately release the button.",
+          "If the button is white and there is a lit indicator with label CAR, hold the button and refer to 'Releasing a Held Button'.",
+          "If there are more than 2 batteries on the bomb and there is a lit indicator with label FRK, press and immediately release the button.",
+          "If the button is yellow, hold the button and refer to 'Releasing a Held Button'.",
+          "If the button is red and the button says 'Hold', press and immediately release the button.",
+          "If none of the above apply, hold the button and refer to 'Releasing a Held Button'."
+        ],
+        "releasing": {
+          "title": "Releasing a Held Button",
+          "instruction": "If you start holding the button down, a colored strip will light up on the right side of the module. Based on its color, you must release the button at a specific point in time:",
+          "strip_colors": [
+            "Blue strip: release when the countdown timer has a 4 in any position.",
+            "White strip: release when the countdown timer has a 1 in any position.",
+            "Yellow strip: release when the countdown timer has a 5 in any position.",
+            "Any other color strip: release when the countdown timer has a 1 in any position."
+          ]
+        }
+      }
+    },
+    {
+      "id": "hierarchical-symbol-sets",
+      "title": "On the Subject of Keypads",
+      "flavorText": "I'm not sure what these symbols are, but I suspect they have something to do with occult.",
+      "rules": [
+        "Only one column below has all four of the symbols from the keypad.",
+        "Press the four buttons in the order their symbols appear from top to bottom within that column."
+      ],
+      "logic": {
+        "columns": [
+          ["balloon", "at", "lambda", "lightning", "squid", "h", "backwards-c"],
+          ["euro", "balloon", "backwards-c", "cursive-q", "hollow-star", "h", "question-mark"],
+          ["copyright", "wavy-w", "cursive-q", "k", "r", "lambda", "hollow-star"],
+          ["six", "paragraph", "b", "squid", "k", "question-mark", "smiley"],
+          ["trident", "smiley", "b", "c-dot", "paragraph", "dragon", "solid-star"],
+          ["six", "euro", "puzzle", "ae", "trident", "n", "omega"]
+        ]
+      }
+    },
+    {
+      "id": "pattern-recognition",
+      "title": "On the Subject of Simon Says",
+      "flavorText": "This is like one of those toys you played with as a kid... except this one is a knockoff.",
+      "rules": [
+        "One of the four colored buttons will flash.",
+        "Using the correct table below, press the button with the corresponding color.",
+        "The sequence will lengthen by one each time you correctly enter a sequence."
+      ],
+      "logic": {
+        "vowel": [
+          {"red": "blue", "blue": "red", "green": "yellow", "yellow": "green"},
+          {"red": "yellow", "blue": "green", "green": "blue", "yellow": "red"},
+          {"red": "green", "blue": "red", "green": "yellow", "yellow": "blue"}
+        ],
+        "no_vowel": [
+          {"red": "blue", "blue": "yellow", "green": "green", "yellow": "red"},
+          {"red": "red", "blue": "blue", "green": "yellow", "yellow": "green"},
+          {"red": "yellow", "blue": "red", "green": "blue", "yellow": "green"}
+        ]
+      }
+    },
+    {
+      "id": "asymmetrical-wiring",
+      "title": "On the Subject of Complicated Wires",
+      "flavorText": "These wires aren't like the others. Some have stripes! ... The good news is that we've found a concise set of instructions... Maybe too concise...",
+      "rules": [
+        "Look at each wire: there is an LED above the wire and a space for a '*' symbol below the wire.",
+        "For each wire/LED/symbol combination, use the Venn diagram below to decide whether or not to cut the wire."
+      ],
+      "logic": {
+        "legend": {
+          "C": "Cut the wire",
+          "D": "Do not cut the wire",
+          "S": "Cut the wire if the last digit of the serial number is even",
+          "P": "Cut the wire if the bomb has a parallel port",
+          "B": "Cut the wire if the bomb has two or more batteries"
+        },
+        "combinations": {
+          "none": "C",
+          "red": "S",
+          "blue": "S",
+          "red_blue": "S",
+          "star": "C",
+          "red_star": "C",
+          "blue_star": "D",
+          "red_blue_star": "P",
+          "led": "D",
+          "red_led": "B",
+          "blue_led": "P",
+          "red_blue_led": "S",
+          "star_led": "B",
+          "red_star_led": "B",
+          "blue_star_led": "P",
+          "red_blue_star_led": "D"
+        }
+      }
+    },
+    {
+      "id": "sequential-routing",
+      "title": "On the Subject of Wire Sequences",
+      "flavorText": "It's hard to say how this mechanism works... there must have been an easier way to manage nine wires.",
+      "rules": [
+        "Within this module there are several panels with wires on them, but only one panel is visible at a time.",
+        "Cut the wires as directed by the following table. Wire occurrences are cumulative over all panels within the module."
+      ],
+      "logic": {
+        "red": ["C", "B", "A", "AC", "B", "AC", "ABC", "AB", "B"],
+        "blue": ["B", "AC", "B", "A", "B", "BC", "C", "AC", "A"],
+        "black": ["ABC", "AC", "B", "AC", "B", "BC", "AB", "C", "C"]
+      }
+    }
+  ]
+}

@@ -1,0 +1,135 @@
+{
+  "category": "SIGNAL & LOGIC",
+  "documents": [
+    {
+      "id": "verbal-relays",
+      "title": "On the Subject of Who's on First",
+      "flavorText": "This contraption is like something out of a sketch comedy routine... I'll keep this brief, as words only complicate matters.",
+      "logic": {
+        "step1": {
+          "YES": "middle-left", "FIRST": "top-right", "DISPLAY": "bottom-right", "OKAY": "top-right", "SAYS": "bottom-right", 
+          "NOTHING": "middle-left", "": "bottom-left", "BLANK": "middle-right", "NO": "bottom-right", "LED": "middle-left",
+          "LEAD": "bottom-right", "READ": "middle-right", "RED": "middle-right", "REED": "bottom-left", "LEED": "bottom-left",
+          "THEY ARE": "bottom-left", "YOUR": "middle-right", "YOU'RE": "middle-right", "YOURS": "middle-left", "YOU": "middle-right",
+          "YOU ARE": "bottom-right", "U": "bottom-left", "THEY'RE": "bottom-left", "THERE": "bottom-right", "THEIR": "middle-right",
+          "THEY": "middle-left", "SEE": "bottom-right", "C": "top-right", "CEE": "bottom-right"
+        },
+        "step2": {
+          "READY": ["YES", "OKAY", "WHAT", "MIDDLE", "LEFT", "PRESS", "RIGHT", "BLANK", "READY", "NO", "FIRST", "UHHH", "NOTHING", "WAIT"],
+          "FIRST": ["LEFT", "OKAY", "YES", "MIDDLE", "NO", "RIGHT", "NOTHING", "UHHH", "WAIT", "READY", "BLANK", "WHAT", "PRESS", "FIRST"],
+          "NO": ["BLANK", "UHHH", "WAIT", "FIRST", "WHAT", "READY", "RIGHT", "YES", "NOTHING", "LEFT", "PRESS", "OKAY", "NO", "MIDDLE"],
+          "BLANK": ["WAIT", "RIGHT", "OKAY", "MIDDLE", "BLANK", "PRESS", "READY", "NOTHING", "NO", "WHAT", "LEFT", "UHHH", "YES", "FIRST"],
+          "NOTHING": ["UHHH", "RIGHT", "OKAY", "MIDDLE", "YES", "BLANK", "NO", "PRESS", "LEFT", "WHAT", "WAIT", "FIRST", "NOTHING", "READY"],
+          "YES": ["OKAY", "RIGHT", "UHHH", "MIDDLE", "FIRST", "WHAT", "PRESS", "READY", "NOTHING", "YES", "LEFT", "BLANK", "NO", "WAIT"],
+          "WHAT": ["UHHH", "WHAT", "LEFT", "NOTHING", "READY", "BLANK", "MIDDLE", "NO", "OKAY", "FIRST", "WAIT", "YES", "PRESS", "RIGHT"],
+          "UHHH": ["READY", "NOTHING", "LEFT", "WHAT", "OKAY", "YES", "RIGHT", "NO", "PRESS", "BLANK", "UHHH", "MIDDLE", "WAIT", "FIRST"],
+          "LEFT": ["RIGHT", "LEFT", "FIRST", "NO", "MIDDLE", "YES", "BLANK", "WHAT", "UHHH", "WAIT", "PRESS", "READY", "OKAY", "NOTHING"],
+          "RIGHT": ["YES", "NOTHING", "READY", "PRESS", "NO", "WAIT", "WHAT", "RIGHT", "MIDDLE", "LEFT", "UHHH", "BLANK", "OKAY", "FIRST"],
+          "MIDDLE": ["BLANK", "READY", "OKAY", "WHAT", "NOTHING", "PRESS", "NO", "WAIT", "LEFT", "MIDDLE", "RIGHT", "FIRST", "UHHH", "YES"],
+          "OKAY": ["MIDDLE", "NO", "FIRST", "YES", "UHHH", "NOTHING", "WAIT", "OKAY", "LEFT", "READY", "BLANK", "PRESS", "WHAT", "RIGHT"],
+          "WAIT": ["UHHH", "NO", "BLANK", "OKAY", "YES", "LEFT", "FIRST", "PRESS", "WHAT", "WAIT", "NOTHING", "READY", "RIGHT", "MIDDLE"],
+          "PRESS": ["RIGHT", "MIDDLE", "YES", "READY", "PRESS", "OKAY", "NOTHING", "UHHH", "BLANK", "LEFT", "FIRST", "WHAT", "NO", "WAIT"],
+          "YOU": ["SURE", "YOU ARE", "YOUR", "YOU'RE", "NEXT", "UH HUH", "UR", "HOLD", "WHAT?", "YOU", "UH UH", "LIKE", "DONE", "U"],
+          "YOU ARE": ["YOUR", "NEXT", "LIKE", "UH HUH", "WHAT?", "DONE", "UH UH", "HOLD", "YOU", "U", "YOU'RE", "SURE", "UR", "YOU ARE"],
+          "YOUR": ["UH UH", "YOU ARE", "UH HUH", "YOUR", "NEXT", "UR", "SURE", "U", "YOU'RE", "YOU", "WHAT?", "HOLD", "LIKE", "DONE"],
+          "YOU'RE": ["YOU", "YOU'RE", "UR", "NEXT", "UH UH", "YOU ARE", "U", "YOUR", "WHAT?", "UH HUH", "SURE", "DONE", "LIKE", "HOLD"],
+          "UR": ["DONE", "U", "UR", "UH HUH", "WHAT?", "SURE", "YOUR", "HOLD", "YOU'RE", "LIKE", "NEXT", "UH UH", "YOU ARE", "YOU"],
+          "U": ["UH HUH", "SURE", "NEXT", "WHAT?", "YOU'RE", "UR", "UH UH", "DONE", "U", "YOU", "LIKE", "HOLD", "YOU ARE", "YOUR"],
+          "UH HUH": ["UH HUH", "YOUR", "YOU ARE", "YOU", "DONE", "HOLD", "UH UH", "NEXT", "SURE", "LIKE", "YOU'RE", "UR", "U", "WHAT?"],
+          "UH UH": ["UR", "U", "YOU ARE", "YOU'RE", "NEXT", "UH HUH", "DONE", "YOU", "UH HUH", "LIKE", "YOUR", "SURE", "HOLD", "WHAT?"],
+          "WHAT?": ["YOU", "HOLD", "YOU'RE", "YOUR", "U", "DONE", "UH UH", "LIKE", "YOU ARE", "UH HUH", "UR", "NEXT", "WHAT?", "SURE"],
+          "DONE": ["SURE", "UH HUH", "NEXT", "WHAT?", "YOUR", "UR", "YOU'RE", "HOLD", "LIKE", "YOU", "U", "YOU ARE", "UH UH", "DONE"],
+          "NEXT": ["WHAT?", "UH HUH", "UH UH", "YOUR", "HOLD", "SURE", "NEXT", "LIKE", "DONE", "YOU ARE", "UR", "YOU'RE", "U", "YOU"],
+          "HOLD": ["YOU ARE", "U", "DONE", "UH UH", "YOU", "UR", "SURE", "WHAT?", "YOU'RE", "NEXT", "HOLD", "UH HUH", "YOUR", "LIKE"],
+          "SURE": ["YOU ARE", "DONE", "LIKE", "YOU'RE", "YOU", "HOLD", "UH HUH", "UR", "SURE", "U", "WHAT?", "NEXT", "YOUR", "UH UH"],
+          "LIKE": ["YOU'RE", "NEXT", "U", "UR", "HOLD", "DONE", "UH UH", "WHAT?", "UH HUH", "YOU", "LIKE", "SURE", "YOU ARE", "YOUR"]
+        }
+      }
+    },
+    {
+      "id": "volatile-memory-access",
+      "title": "On the Subject of Memory",
+      "flavorText": "Memory is a fragile thing... pay attention!",
+      "logic": {
+        "stage1": [
+          {"display": 1, "action": "position", "value": 2},
+          {"display": 2, "action": "position", "value": 2},
+          {"display": 3, "action": "position", "value": 3},
+          {"display": 4, "action": "position", "value": 4}
+        ],
+        "stage2": [
+          {"display": 1, "action": "label", "value": 4},
+          {"display": 2, "action": "position", "history_stage": 1},
+          {"display": 3, "action": "position", "value": 1},
+          {"display": 4, "action": "position", "history_stage": 1}
+        ],
+        "stage3": [
+          {"display": 1, "action": "label", "history_stage": 2},
+          {"display": 2, "action": "label", "history_stage": 1},
+          {"display": 3, "action": "position", "value": 3},
+          {"display": 4, "action": "label", "value": 4}
+        ],
+        "stage4": [
+          {"display": 1, "action": "position", "history_stage": 1},
+          {"display": 2, "action": "position", "value": 1},
+          {"display": 3, "action": "position", "history_stage": 2},
+          {"display": 4, "action": "position", "history_stage": 2}
+        ],
+        "stage5": [
+          {"display": 1, "action": "label", "history_stage": 1},
+          {"display": 2, "action": "label", "history_stage": 2},
+          {"display": 3, "action": "label", "history_stage": 4},
+          {"display": 4, "action": "label", "history_stage": 3}
+        ]
+      }
+    },
+    {
+      "id": "frequential-deciphering",
+      "title": "On the Subject of Morse Code",
+      "flavorText": "An antiquated form of naval communication... pay attention and you might just learn something.",
+      "logic": {
+        "words": [
+          {"word": "shell", "freq": "3.505"}, {"word": "halls", "freq": "3.515"},
+          {"word": "slick", "freq": "3.522"}, {"word": "trick", "freq": "3.532"},
+          {"word": "boxes", "freq": "3.535"}, {"word": "leaks", "freq": "3.542"},
+          {"word": "strobe", "freq": "3.545"}, {"word": "bistro", "freq": "3.552"},
+          {"word": "flick", "freq": "3.555"}, {"word": "bombs", "freq": "3.565"},
+          {"word": "break", "freq": "3.572"}, {"word": "brick", "freq": "3.575"},
+          {"word": "steak", "freq": "3.582"}, {"word": "sting", "freq": "3.592"},
+          {"word": "vector", "freq": "3.595"}, {"word": "beats", "freq": "3.600"}
+        ]
+      }
+    },
+    {
+      "id": "navigational-algorithms",
+      "title": "On the Subject of Mazes",
+      "flavorText": "This seems to be some kind of maze, probably stolen off of a restaurant placemat.",
+      "logic": {
+        "mazes": [
+          {"indicators": [{"x": 1, "y": 2}, {"x": 6, "y": 3}], "id": 1},
+          {"indicators": [{"x": 2, "y": 4}, {"x": 5, "y": 2}], "id": 2},
+          {"indicators": [{"x": 4, "y": 4}, {"x": 6, "y": 4}], "id": 3},
+          {"indicators": [{"x": 1, "y": 1}, {"x": 1, "y": 4}], "id": 4},
+          {"indicators": [{"x": 4, "y": 6}, {"x": 5, "y": 3}], "id": 5},
+          {"indicators": [{"x": 3, "y": 5}, {"x": 5, "y": 1}], "id": 6},
+          {"indicators": [{"x": 2, "y": 1}, {"x": 2, "y": 6}], "id": 7},
+          {"indicators": [{"x": 3, "y": 4}, {"x": 4, "y": 1}], "id": 8},
+          {"indicators": [{"x": 1, "y": 5}, {"x": 3, "y": 2}], "id": 9}
+        ]
+      }
+    },
+    {
+      "id": "cryptographic-passphrases",
+      "title": "On the Subject of Passwords",
+      "flavorText": "Fortunately this password doesn't seem to meet standard government security requirements...",
+      "logic": {
+        "words": [
+          "about", "after", "again", "below", "could", "every", "first", "found", "great", "house",
+          "large", "learn", "never", "other", "place", "plant", "point", "right", "small", "sound",
+          "spell", "still", "study", "their", "there", "these", "thing", "think", "three", "water",
+          "where", "which", "world", "would", "write"
+        ]
+      }
+    }
+  ]
+}
