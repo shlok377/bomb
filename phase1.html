@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phase 1 - Defuse the Bomb</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="game-container">
+        <h1 id="phase-title">Phase 1</h1>
+        <div id="level-indicator">Level: <span id="current-level">1</span></div>
+        <div id="bomb-placeholder">
+            <p>Bomb View (To be implemented in Stage 2)</p>
+            <p>Phase 1: 3 Random Modules</p>
+        </div>
+        <button onclick="window.location.href='index.html'">Back to Main Menu</button>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const level = urlParams.get('level');
+        if (level) {
+            document.getElementById('current-level').textContent = level;
+        }
+    </script>
+</body>
+</html>
