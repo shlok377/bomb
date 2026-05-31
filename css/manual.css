@@ -1,0 +1,209 @@
+/* Clunky Gov Portal CSS (2016 Era) */
+
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f0eee4; /* Aged beige */
+    color: #333;
+    overflow: hidden; /* Prevent body scroll, use container scrolls */
+}
+
+#classified-header {
+    background-color: #d10000;
+    color: white;
+    text-align: center;
+    padding: 5px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    border-bottom: 2px solid #000;
+    height: 30px;
+    box-sizing: border-box;
+}
+
+#classified-footer {
+    background-color: #d10000;
+    color: white;
+    text-align: center;
+    padding: 5px;
+    font-size: 0.8rem;
+    border-top: 2px solid #000;
+    height: 30px;
+    box-sizing: border-box;
+}
+
+#app-shell {
+    display: flex;
+    height: calc(100vh - 60px); /* Subtract header and footer */
+    width: 100%;
+}
+
+/* Persistent Left Sidebar */
+#side-nav {
+    width: 300px;
+    background-color: #dcdcdc; /* Light grey government feel */
+    border-right: 3px solid #999;
+    overflow-y: auto;
+    padding: 20px 0;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+}
+
+.nav-section {
+    margin-bottom: 20px;
+}
+
+.nav-category {
+    background-color: #999;
+    color: #fff;
+    padding: 8px 15px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    border-top: 1px solid #777;
+    border-bottom: 1px solid #777;
+}
+
+#side-nav a {
+    color: #0000EE;
+    padding: 10px 25px;
+    text-decoration: underline;
+    display: block;
+    font-size: 0.9rem;
+    border-bottom: 1px solid #ccc;
+}
+
+#side-nav a:hover {
+    background-color: #fff;
+    color: #551A8B;
+}
+
+.logout-section {
+    margin-top: 40px;
+    padding: 0 15px;
+}
+
+.logout-btn {
+    background-color: #800 !important;
+    color: white !important;
+    text-align: center;
+    border: 2px solid #000;
+    padding: 10px !important;
+    text-decoration: none !important;
+}
+
+.logout-btn:hover {
+    background-color: #a00 !important;
+}
+
+/* Main Content Area */
+#manual-body {
+    flex-grow: 1;
+    background-color: #fff;
+    overflow-y: auto;
+    padding: 40px;
+    box-shadow: inset 5px 0 10px rgba(0,0,0,0.05);
+}
+
+#welcome-screen {
+    text-align: center;
+    margin-top: 50px;
+}
+
+h1 {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 2.2rem;
+    color: #000;
+    text-transform: uppercase;
+    border-bottom: 3px double #000;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-family: Arial, sans-serif;
+    color: #d10000;
+    text-transform: uppercase;
+    border-left: 10px solid #d10000;
+    padding-left: 15px;
+    margin-top: 30px;
+    font-size: 1.5rem;
+}
+
+h3 {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 5px;
+    margin-top: 25px;
+}
+
+.flavor-text {
+    font-style: italic;
+    color: #666;
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    line-height: 1.4;
+}
+
+.warning-text {
+    color: #d10000;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    border: 2px solid #d10000;
+    padding: 10px;
+    margin: 20px 0;
+}
+
+/* Table Styling (Clunky) */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    border: 2px solid #000;
+}
+
+th, td {
+    border: 1px solid #000;
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #eee;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Image Handling */
+.center-img {
+    display: block;
+    margin: 20px auto;
+    border: 1px solid #999;
+    padding: 8px;
+    background: #fff;
+    box-shadow: 4px 4px 0px #ddd;
+    max-width: 100%;
+}
+
+/* List Styling */
+ul {
+    list-style-type: square;
+    padding-left: 30px;
+}
+
+li {
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+.logic-section {
+    margin-top: 30px;
+}

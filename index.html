@@ -9,17 +9,80 @@
 <body>
 
     <div id="landing-page">
-        <h1>Keep Talking and Nobody Explodes</h1>
+        <h1>DEFUSE <span style="font-size: 1.2rem; display: block; letter-spacing: 2px; color: #888;">A FAN TRIBUTE TO KEEP TALKING AND NOBODY EXPLODES</span></h1>
         <div class="button-container">
             <button id="defuse-btn">Defuse the Bomb</button>
             <button id="manual-btn">Read the Manual</button>
         </div>
+        <button id="credits-btn">Credits</button>
     </div>
 
-    <!-- Manual Viewer Iframe Overlay -->
-    <div id="manual-viewer">
-        <button id="close-manual">Back to Main Menu</button>
-        <iframe src="pdf/manual.pdf" type="application/pdf"></iframe>
+    <!-- Credits Modal -->
+    <div id="credits-modal" class="modal">
+        <div class="modal-content">
+            <h2 style="color: #fff; border-bottom: 2px solid #555; padding-bottom: 10px;">CREDITS & DISCLAIMERS</h2>
+            <div style="margin-top: 20px; line-height: 1.6;">
+                <p><strong>Original Concept & Logic:</strong> Steel Crate Games</p>
+                <p>This project is a non-commercial, fan-made tribute and reproduction of the original game <strong>"Keep Talking and Nobody Explodes"</strong>.</p>
+                <p>We do not own any rights to the game's mechanics, names, or manual content. This project was built for educational and recreational purposes to facilitate long-distance play.</p>
+                <p>Please support the official developers by purchasing the original game on <a href="https://store.steampowered.com/app/341800/Keep_Talking_and_Nobody_Explodes/" target="_blank" style="color: #0f0;">Steam</a>.</p>
+                <hr style="border-color: #444; margin: 20px 0;">
+                <p><strong>Fan-Made Web Implementation:</strong> Built by Fans</p>
+            </div>
+            <button id="close-credits" class="accept-btn" style="margin-top: 20px;">BACK</button>
+        </div>
+    </div>
+
+    <!-- Defuser Briefing Modal -->
+    <div id="defuser-briefing" class="modal">
+        <div class="modal-content briefing-content">
+            <h2 style="color: #0f0;">MISSION BRIEFING: THE DEFUSER</h2>
+            <div class="briefing-columns">
+                <div class="brief-col">
+                    <h3>DO:</h3>
+                    <ul>
+                        <li>Communicate everything you see in detail.</li>
+                        <li>Rotate the bomb to check for edgework (Serial, Batteries).</li>
+                        <li>Keep track of the timer and strikes.</li>
+                    </ul>
+                </div>
+                <div class="brief-col">
+                    <h3>DON'T:</h3>
+                    <ul>
+                        <li><strong>NEVER</strong> look at the expert's manual.</li>
+                        <li>Don't click things randomly; mistakes speed up the clock.</li>
+                        <li>Don't panic! Your expert is your only lifeline.</li>
+                    </ul>
+                </div>
+            </div>
+            <button id="close-defuser-briefing" class="accept-btn">I UNDERSTAND - START MISSION</button>
+        </div>
+    </div>
+
+    <!-- Expert Briefing Modal -->
+    <div id="expert-briefing" class="modal">
+        <div class="modal-content briefing-content">
+            <h2 style="color: #f00;">MISSION BRIEFING: THE EXPERT</h2>
+            <div class="briefing-columns">
+                <div class="brief-col">
+                    <h3>DO:</h3>
+                    <ul>
+                        <li>Navigate the manual quickly using the sidebar.</li>
+                        <li>Ask the Defuser for specific details (Serial, Indicators).</li>
+                        <li>Give clear, concise instructions.</li>
+                    </ul>
+                </div>
+                <div class="brief-col">
+                    <h3>DON'T:</h3>
+                    <ul>
+                        <li><strong>NEVER</strong> look at the defuser's screen.</li>
+                        <li>Don't forget that the bomb speeds up with each strike.</li>
+                        <li>Don't let the Defuser panic!</li>
+                    </ul>
+                </div>
+            </div>
+            <button id="close-expert-briefing" class="accept-btn">I UNDERSTAND - ACCESS MANUAL</button>
+        </div>
     </div>
 
     <!-- Phase/Level Selection Modal -->

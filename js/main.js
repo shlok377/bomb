@@ -13,37 +13,64 @@ document.addEventListener('DOMContentLoaded', () => {
     const manualBtn = document.getElementById('manual-btn');
     const levelModal = document.getElementById('level-modal');
     const closeModal = document.getElementById('close-modal');
-    const manualViewer = document.getElementById('manual-viewer');
-    const closeManual = document.getElementById('close-manual');
+    const defuserBriefing = document.getElementById('defuser-briefing');
+    const closeDefuserBriefing = document.getElementById('close-defuser-briefing');
+    const expertBriefing = document.getElementById('expert-briefing');
+    const closeExpertBriefing = document.getElementById('close-expert-briefing');
+    const creditsBtn = document.getElementById('credits-btn');
+    const creditsModal = document.getElementById('credits-modal');
+    const closeCredits = document.getElementById('close-credits');
 
     // Initialize Level Manager
     LevelManager.init();
 
     // Landing Page Actions
     defuseBtn.addEventListener('click', () => {
-        console.log("Defuse button clicked");
-        levelModal.style.display = 'flex';
+        Logger.log("SYSTEM", "Defuse clicked - showing briefing");
+        defuserBriefing.style.display = 'flex';
     });
 
     manualBtn.addEventListener('click', () => {
-        console.log("Manual button clicked");
-        manualViewer.style.display = 'block';
+        Logger.log("SYSTEM", "Manual clicked - showing briefing");
+        expertBriefing.style.display = 'flex';
     });
 
-    // Close Actions
+    // Briefing Accept Actions
+    closeDefuserBriefing.addEventListener('click', () => {
+        defuserBriefing.style.display = 'none';
+        levelModal.style.display = 'flex';
+    });
+
+    closeExpertBriefing.addEventListener('click', () => {
+        expertBriefing.style.display = 'none';
+        window.location.href = 'manual.html';
+    });
+
+    creditsBtn.addEventListener('click', () => {
+        creditsModal.style.display = 'flex';
+    });
+
+    closeCredits.addEventListener('click', () => {
+        creditsModal.style.display = 'none';
+    });
+
+    // Close Modal Actions
     closeModal.addEventListener('click', () => {
         levelModal.style.display = 'none';
     });
 
-    closeManual.addEventListener('click', () => {
-        console.log("Closing manual viewer");
-        manualViewer.style.display = 'none';
-    });
-
-    // Close modal on outside click
     window.addEventListener('click', (event) => {
         if (event.target === levelModal) {
             levelModal.style.display = 'none';
+        }
+        if (event.target === creditsModal) {
+            creditsModal.style.display = 'none';
+        }
+        if (event.target === defuserBriefing) {
+            defuserBriefing.style.display = 'none';
+        }
+        if (event.target === expertBriefing) {
+            expertBriefing.style.display = 'none';
         }
     });
 });
