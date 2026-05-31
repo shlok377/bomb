@@ -19,10 +19,10 @@ const imageMap = {
     'identification-protocol': ['Indicators.png'],
     'linear-connectors': ['The Wires.png'],
     'multi-state-actuators': ['The Button.png'],
-    'hierarchical-symbol-sets': ['Keypad.png', 'Keypads Series Columns.png'],
+    'hierarchical-symbol-sets': ['Keypad.png', 'Keypads Series Columns.jpg'],
     'pattern-recognition': ['Simon Says.png', 'Simon Says Tables.png'],
     'asymmetrical-wiring': ['Complicated Wires.png', 'Complicated Wires and Diagram.png'],
-    'sequential-routing': ['Wire Sequences.png', 'Wiring Sequence Table.png'],
+    'sequential-routing': ['Wire Sequences.png', 'Wiring Sequence Table.jpg'],
     'verbal-relays': ['Whos on first.png', 'Whos on first figures.png'],
     'volatile-memory-access': ['Memory.png'],
     'frequential-deciphering': ['Morse Code.png', 'Morse Code Tables.png'],
@@ -31,7 +31,7 @@ const imageMap = {
     'rotary-interfacing': ['LED Config Knobs Tables.png'],
     'reference-a': ['Appendix A.png', 'Indicators.png'],
     'reference-b': ['Appendix B Battery.png', 'Batteries.png'],
-    'reference-c': ['Appendix C Ports.png']
+    'reference-c': ['Appendix C Ports.jpg']
 };
 
 let manualData = [];
