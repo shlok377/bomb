@@ -15,7 +15,18 @@
 
     <div id="game-container">
         <div id="level-indicator">Level: <span id="current-level">1</span></div>
-        <div id="bomb-container">
+
+        <div id="main-game-area">
+            <!-- Left Info Panel -->
+            <div id="info-panel">
+                <h2>INSTRUCTIONS</h2>
+                <div id="info-content">
+                    <p>Intel gathering in progress...</p>
+                </div>
+            </div>
+
+            <div id="bomb-container">
+
             <div id="bomb-hud">
                 <div id="timer-display">5:00</div>
                 <div id="strike-display"></div>
@@ -45,6 +56,7 @@
                 <div id="face-back" class="bomb-face" style="display: none;"><div class="edgework-item"><p>Bomb Back</p></div></div>
             </div>
         </div>
+    </div> <!-- End main-game-area -->
 
         <div id="view-indicator">Viewing: FRONT</div>
 
@@ -76,6 +88,22 @@
                 document.getElementById('current-level').textContent = level;
             }
 
+            // Hide Status Report if not Level 1
+            if (level !== "1") {
+                document.getElementById('info-panel').style.display = 'none';
+            } else {
+                // Update Phase 3 specific info
+                document.getElementById('info-content').innerHTML = `
+                    <p><strong>INTEL: CRISIS MANAGEMENT</strong></p>
+                    <ul style="padding-left: 15px; margin-top: 10px;">
+                        <li><strong>10 Seconds:</strong> JUST 10 seconds is all it takes.</li>
+                        <li><strong>Extreme Edgework:</strong> Advanced modules require perfect knowledge of batteries, serial number parity, AND lit indicators.</li>
+                        <li><strong>Light Shape:</strong> For specialized modules (Morse), pattern start after a brief "Green" light, relay these patterns to your Expert. (e.g. dot bar bar, bar dot bar)</li>
+                        <li><strong>Efficiency:</strong> You are handling 6 modules. Clear the simplest ones first to reduce visual noise.</li>
+                    </ul>
+                `;
+            }
+
             document.getElementById('begin-btn').onclick = async () => {
                 document.getElementById('start-overlay').style.display = 'none';
                 
@@ -87,7 +115,7 @@
                 // Phase 3 has 6 modules
                 GameEngine.init(6);
                 UIManager.init();
-                ModuleRegistry.injectModules('face-front', 6);
+                ModuleRegistry.injectModules('face-front', 6, 3);
             };
         });
     </script>

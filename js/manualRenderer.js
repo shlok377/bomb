@@ -73,14 +73,29 @@ async function init() {
 }
 
 function setupNavListeners() {
-    document.querySelectorAll('#side-nav a').forEach(link => {
-        if (link.classList.contains('logout-btn')) return;
-        
+    // Document Links
+    document.querySelectorAll('.nav-link').forEach(link => {
         link.onclick = (e) => {
             e.preventDefault();
             const docId = link.dataset.doc;
             if (docId) renderDocument(docId);
         };
+    });
+
+    // Search Filtering
+    const searchInput = document.getElementById('manual-search');
+    searchInput.addEventListener('input', (e) => {
+        const term = e.target.value.toLowerCase();
+        const links = document.querySelectorAll('.nav-link');
+        
+        links.forEach(link => {
+            const text = link.textContent.toLowerCase();
+            if (text.includes(term)) {
+                link.classList.remove('hidden');
+            } else {
+                link.classList.add('hidden');
+            }
+        });
     });
 }
 

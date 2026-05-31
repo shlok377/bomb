@@ -85,13 +85,26 @@ export class MorseCode {
         const light = this.container.querySelector('.morse-light');
         
         const flashSequence = async () => {
+            if (this.isDisarmed || GameEngine.isGameOver) return;
+
+            // GREEN SYNC PULSE: Signals the start of the word
+            light.classList.add('sync-pulse');
+            await this.sleep(1000);
+            light.classList.remove('sync-pulse');
+            await this.sleep(1000);
+
             for (const char of this.word) {
                 if (this.isDisarmed || GameEngine.isGameOver) return;
                 const code = this.morseMap[char];
                 for (const symbol of code) {
+                    const isDot = symbol === '.';
                     light.classList.add('lit');
-                    await this.sleep(symbol === '.' ? dotTime : dashTime);
+                    light.classList.add(isDot ? 'dot' : 'dash');
+                    
+                    await this.sleep(isDot ? dotTime : dashTime);
+                    
                     light.classList.remove('lit');
+                    light.classList.remove('dot', 'dash');
                     await this.sleep(dotTime); // Gap between symbols
                 }
                 await this.sleep(letterGap);

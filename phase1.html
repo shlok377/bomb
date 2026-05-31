@@ -15,7 +15,18 @@
 
     <div id="game-container">
         <div id="level-indicator">Level: <span id="current-level">1</span></div>
-        <div id="bomb-container">
+        
+        <div id="main-game-area">
+            <!-- Left Info Panel -->
+            <div id="info-panel">
+                <h2>INSTRUCTIONS</h2>
+                <div id="info-content">
+                    <p>Intel gathering in progress...</p>
+                </div>
+            </div>
+
+            <!-- Bomb Shell UI -->
+            <div id="bomb-container">
             <!-- HUD -->
             <div id="bomb-hud">
                 <div id="timer-display">5:00</div>
@@ -68,6 +79,7 @@
                 </div>
             </div>
         </div>
+    </div> <!-- End main-game-area -->
 
         <div id="view-indicator">Viewing: FRONT</div>
 
@@ -99,6 +111,22 @@
                 document.getElementById('current-level').textContent = level;
             }
 
+            // Hide Status Report if not Level 1
+            if (level !== "1") {
+                document.getElementById('info-panel').style.display = 'none';
+            } else {
+                // Update Phase 1 specific info
+                document.getElementById('info-content').innerHTML = `
+                    <p><strong>INTEL: COMMUNICATION PROTOCOL</strong></p>
+                    <ul style="padding-left: 15px; margin-top: 10px;">
+                        <li><strong>Step 1:</strong> Read the 6-character Hex Tags to your Expert immediately, they DISAPPEAR after 20 seconds.</li>
+                        <li><strong>Step 2:</strong> Rotate the bomb to find the Serial Number, Battery count and Indicators.</li>
+                        <li><strong>Step 3:</strong> Describe the modules by their physical traits (e.g., "three wires: red, white, blue" or "a big yellow button").</li>
+                        <li><strong>Step 4:</strong> Describe the modules and ASK your Expert what information do they want next and how to solve those modules.</li>
+                    </ul>
+                `;
+            }
+
             document.getElementById('begin-btn').onclick = async () => {
                 document.getElementById('start-overlay').style.display = 'none';
                 
@@ -110,7 +138,7 @@
                 // Phase 1 has 3 modules
                 GameEngine.init(3);
                 UIManager.init();
-                ModuleRegistry.injectModules('face-front', 3);
+                ModuleRegistry.injectModules('face-front', 3, 1);
             };
         });
     </script>

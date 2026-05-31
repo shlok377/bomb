@@ -10,6 +10,22 @@ import { WireSequences } from './modules/WireSequences.js';
 import { Mazes } from './modules/Mazes.js';
 import { Passwords } from './modules/Passwords.js';
 import { Logger } from './Logger.js';
+import { AudioManager } from './AudioManager.js';
+
+// Nightmare Mode Tags
+const ModuleTags = {
+    'simple-wires': '#D0OV8B',
+    'the-button': '#O0DV8B',
+    'keypads': '#0ODV8B',
+    'simon-says': '#A0OV8B',
+    'whos-on-first': '#D0OA8B',
+    'memory': '#O0DA8B',
+    'morse-code': '#0VDA8B',
+    'complicated-wires': '#DV0A8B',
+    'wire-sequences': '#OV0A8B',
+    'mazes': '#D00V8B',
+    'passwords': '#O00V8B'
+};
 
 export const ModuleRegistry = {
     // List of available module classes
@@ -27,12 +43,20 @@ export const ModuleRegistry = {
         'passwords': Passwords
     },
 
-    injectModules(containerId, count) {
+    // Phase-specific module pools
+    phaseModules: {
+        1: ['simple-wires', 'the-button', 'keypads', 'memory', 'whos-on-first', 'passwords', 'simon-says'],
+        2: ['simple-wires', 'the-button', 'keypads', 'memory', 'whos-on-first', 'passwords', 'simon-says', 'wire-sequences', 'mazes'],
+        3: ['simple-wires', 'the-button', 'keypads', 'memory', 'whos-on-first', 'passwords', 'simon-says', 'wire-sequences', 'mazes', 'complicated-wires', 'morse-code']
+    },
+
+    injectModules(containerId, count, phase = 3) {
         try {
             const container = document.getElementById(containerId);
             if (!container) throw new Error(`Container ${containerId} not found`);
 
-            Logger.log("ModuleRegistry", `Injecting ${count} modules into ${containerId}`);
+            const allowedKeys = this.phaseModules[phase] || this.phaseModules[3];
+            Logger.log("ModuleRegistry", `Injecting ${count} modules from Phase ${phase} pool into ${containerId}`);
             
             // Clear container first
             container.innerHTML = '';
@@ -46,26 +70,44 @@ export const ModuleRegistry = {
                 slots.push(slot);
             }
 
-            // Get available module keys
-            const keys = Object.keys(this.availableModules);
-            
             // Randomly select 'count' indices from the 6 available slots
-            // Ensuring they are as non-adjacent as possible
             const selectedIndices = this.pickNonAdjacentSlots(count);
             
             Logger.log("ModuleRegistry", `Selected Non-Adjacent Slots: ${selectedIndices}`);
 
             selectedIndices.forEach(slotIdx => {
                 const slot = slots[slotIdx];
-                slot.innerHTML = ''; // Clear slot if needed
+                slot.innerHTML = ''; 
 
-                // Randomly pick a module type
-                const randomKey = keys[Math.floor(Math.random() * keys.length)];
+                // Randomly pick a module type from the allowed phase pool
+                const randomKey = allowedKeys[Math.floor(Math.random() * allowedKeys.length)];
                 const ModuleClass = this.availableModules[randomKey];
                 
                 // Initialize the module
                 const moduleInstance = new ModuleClass(slot);
                 moduleInstance.init();
+
+                // Add the Obfuscation Cover
+                const cover = document.createElement('div');
+                cover.className = 'module-cover';
+                cover.textContent = ModuleTags[randomKey];
+                cover.onclick = () => {
+                    AudioManager.playClick();
+                    cover.classList.add('revealed');
+                };
+                slot.appendChild(cover);
+
+                // Phase-based auto-reveal timeout
+                let revealTime = 20000; // Phase 1: 20s
+                if (phase === 2) revealTime = 15000; // Phase 2: 15s
+                if (phase === 3) revealTime = 10000; // Phase 3: 10s
+
+                setTimeout(() => {
+                    if (!cover.classList.contains('revealed')) {
+                        Logger.log("ModuleRegistry", `Auto-revealing tag after ${revealTime/1000}s timeout`);
+                        cover.classList.add('revealed');
+                    }
+                }, revealTime);
             });
 
         } catch (err) {
@@ -97,24 +139,18 @@ export const ModuleRegistry = {
             attempts++;
         }
         
-        // Fallback: just pick random if no non-adjacent set is found (unlikely for count=3)
+        // Fallback: just pick random if no non-adjacent set is found
         Logger.warn("ModuleRegistry", "Could not find perfect non-adjacent slots, falling back to random.");
         return slots.sort(() => Math.random() - 0.5).slice(0, count);
     },
 
     areAdjacent(s1, s2) {
-        // Grid:
-        // 0 1 2
-        // 3 4 5
         const row1 = Math.floor(s1 / 3);
         const col1 = s1 % 3;
         const row2 = Math.floor(s2 / 3);
         const col2 = s2 % 3;
-        
         const rowDiff = Math.abs(row1 - row2);
         const colDiff = Math.abs(col1 - col2);
-        
-        // Horizontal or Vertical adjacency (not diagonal)
         return (rowDiff === 0 && colDiff === 1) || (rowDiff === 1 && colDiff === 0);
     }
 };
