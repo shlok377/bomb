@@ -33,7 +33,7 @@ export class MorseCode {
         };
         this.isDisarmed = false;
         this.currentFreqIndex = 0;
-        this.flashInterval = null;
+        this.flashSequenceId = 0;
     }
 
     init() {
@@ -53,6 +53,7 @@ export class MorseCode {
         this.container.innerHTML = `
             <div class="module morse-code">
                 <div class="module-status"></div>
+                <button class="morse-replay" title="Replay Pattern">↻</button>
                 <div class="morse-light"></div>
                 <div class="morse-controls">
                     <button class="morse-nav prev"><</button>
@@ -66,6 +67,7 @@ export class MorseCode {
         this.container.querySelector('.prev').onclick = () => this.changeFreq(-1);
         this.container.querySelector('.next').onclick = () => this.changeFreq(1);
         this.container.querySelector('.morse-tx').onclick = () => this.submit();
+        this.container.querySelector('.morse-replay').onclick = () => this.replay();
     }
 
     changeFreq(dir) {
@@ -74,8 +76,22 @@ export class MorseCode {
         this.container.querySelector('.morse-freq-display').textContent = `${this.frequencies[this.currentFreqIndex].freq} MHz`;
     }
 
+    replay() {
+        if (this.isDisarmed || GameEngine.isGameOver) return;
+        
+        Logger.log("MorseCode", "Replaying sequence");
+        const light = this.container.querySelector('.morse-light');
+        if (light) {
+            light.classList.remove('sync-pulse', 'lit', 'dot', 'dash');
+        }
+        this.startFlashing();
+    }
+
     async startFlashing() {
         if (this.isDisarmed || GameEngine.isGameOver) return;
+
+        this.flashSequenceId++;
+        const currentSeqId = this.flashSequenceId;
 
         const dotTime = 250;
         const dashTime = 750;
@@ -85,32 +101,35 @@ export class MorseCode {
         const light = this.container.querySelector('.morse-light');
         
         const flashSequence = async () => {
-            if (this.isDisarmed || GameEngine.isGameOver) return;
+            if (this.isDisarmed || GameEngine.isGameOver || this.flashSequenceId !== currentSeqId) return;
 
             // GREEN SYNC PULSE: Signals the start of the word
             light.classList.add('sync-pulse');
             await this.sleep(1000);
+            if (this.flashSequenceId !== currentSeqId) return;
             light.classList.remove('sync-pulse');
             await this.sleep(1000);
+            if (this.flashSequenceId !== currentSeqId) return;
 
             for (const char of this.word) {
-                if (this.isDisarmed || GameEngine.isGameOver) return;
+                if (this.isDisarmed || GameEngine.isGameOver || this.flashSequenceId !== currentSeqId) return;
                 const code = this.morseMap[char];
                 for (const symbol of code) {
+                    if (this.flashSequenceId !== currentSeqId) return;
                     const isDot = symbol === '.';
                     light.classList.add('lit');
                     light.classList.add(isDot ? 'dot' : 'dash');
                     
                     await this.sleep(isDot ? dotTime : dashTime);
+                    if (this.flashSequenceId !== currentSeqId) return;
                     
-                    light.classList.remove('lit');
-                    light.classList.remove('dot', 'dash');
+                    light.classList.remove('lit', 'dot', 'dash');
                     await this.sleep(dotTime); // Gap between symbols
                 }
                 await this.sleep(letterGap);
             }
             await this.sleep(wordGap);
-            if (!this.isDisarmed && !GameEngine.isGameOver) flashSequence();
+            if (!this.isDisarmed && !GameEngine.isGameOver && this.flashSequenceId === currentSeqId) flashSequence();
         };
 
         flashSequence();
