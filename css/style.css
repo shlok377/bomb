@@ -3,11 +3,11 @@ body, html {
     margin: 0;
     padding: 0;
     width: 100%;
-    height: 100%;
+    min-height: 100%;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #1a1a1a;
     color: #ffffff;
-    overflow: hidden;
+    overflow-y: auto;
 }
 
 #landing-page {
@@ -15,7 +15,7 @@ body, html {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    min-height: 100vh;
     text-align: center;
 }
 
@@ -142,35 +142,25 @@ button:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    height: 100vh;
+    justify-content: flex-start;
+    padding: 20px;
+    min-height: 100vh;
+    box-sizing: border-box;
 }
 
 #level-indicator {
-    font-size: 1.2rem;
-    margin-bottom: 2rem;
-}
-
-#bomb-placeholder {
-    width: 400px;
-    height: 400px;
-    border: 3px dashed #555;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 2rem;
-    background-color: #222;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
 }
 
 /* Bomb Shell UI */
 #bomb-container {
     position: relative;
-    width: 600px;
-    height: 600px;
+    width: 100%;
+    max-width: 750px;
     background-color: #333;
     border: 10px solid #222;
-    padding: 20px;
+    padding: 15px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -181,9 +171,10 @@ button:hover {
     justify-content: space-between;
     align-items: center;
     background-color: #000;
-    padding: 10px 20px;
+    padding: 5px 15px;
     border: 2px solid #444;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
+    min-height: 70px;
 }
 
 #timer-display {
@@ -204,125 +195,54 @@ button:hover {
 }
 
 @keyframes flash {
-    0% { opacity: 1; }
-    50% { opacity: 0; }
-    100% { opacity: 1; }
+    0% { background-color: rgba(255, 0, 0, 0); }
+    50% { background-color: rgba(255, 0, 0, 0.3); }
+    100% { background-color: rgba(255, 0, 0, 0); }
 }
 
+.shake {
+    animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+    transform: translate3d(0, 0, 0);
+}
+
+@keyframes shake {
+    10%, 90% { transform: translate3d(-2px, 0, 0); }
+    20%, 80% { transform: translate3d(4px, 0, 0); }
+    30%, 50%, 70% { transform: translate3d(-8px, 0, 0); }
+    40%, 60% { transform: translate3d(8px, 0, 0); }
+}
+
+/* ... existing styles ... */
+
+/* Bomb Faces Container */
 #bomb-faces {
-    flex-grow: 1;
     background-color: #444;
     border: 5px solid #222;
     position: relative;
+    padding: 15px;
+    min-height: 400px;
+}
+
+/* Individual Face Grid */
+.bomb-face {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(2, 1fr);
-    gap: 10px;
-    padding: 10px;
-}
-
-.bomb-face {
+    gap: 15px;
     width: 100%;
     height: 100%;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    gap: 10px;
 }
 
-#view-indicator {
-    position: absolute;
-    bottom: -40px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 1rem;
-    color: #888;
-}
-
-/* Edgework Styles */
-.edgework-item {
-    padding: 10px;
-    border: 1px solid #555;
-    background-color: #222;
+.module-slot {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background-color: #333;
+    border: 2px inset #222;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-}
-
-#edgework-sn {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #ddd;
-}
-
-#edgework-batteries {
-    display: flex;
-    gap: 5px;
-}
-
-.battery {
-    width: 20px;
-    height: 40px;
-    background-color: #555;
-    border: 2px solid #777;
     position: relative;
-}
-
-.battery::after {
-    content: '';
-    position: absolute;
-    top: -5px;
-    left: 5px;
-    width: 10px;
-    height: 5px;
-    background-color: #777;
-}
-
-#edgework-indicators {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.indicator {
-    padding: 2px 5px;
-    border: 2px solid #555;
-    font-size: 0.8rem;
-    position: relative;
-}
-
-.indicator.lit::before {
-    content: '';
-    position: absolute;
-    top: -8px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 6px;
-    height: 6px;
-    background-color: #f00;
-    border-radius: 50%;
-    box-shadow: 0 0 5px #f00;
-}
-
-/* Game Over Modal */
-.game-over-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0,0,0,0.9);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 2000;
-}
-
-.game-over-modal h1 {
-    font-size: 4rem;
-    color: #f00;
-    margin-bottom: 1rem;
+    overflow: hidden;
 }
 
 /* Module Common Styles */
@@ -337,6 +257,8 @@ button:hover {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding: 5px;
+    overflow: hidden;
 }
 
 .module-status {
@@ -354,32 +276,132 @@ button:hover {
     box-shadow: 0 0 5px #00ff00;
 }
 
+#view-indicator {
+    background-color: #000;
+    color: #0f0;
+    padding: 5px 15px;
+    border: 1px solid #444;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
+}
+
+/* Navigation Buttons */
+.nav-controls {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.nav-btn {
+    padding: 10px 15px;
+    background-color: #333;
+    border: 2px solid #555;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    transition: all 0.2s;
+}
+
+.nav-btn:hover {
+    background-color: #555;
+    border-color: #fff;
+}
+
+.nav-btn.btn-up { grid-column: 2; grid-row: 1; }
+.nav-btn.btn-left { grid-column: 1; grid-row: 2; }
+.nav-btn.btn-front { grid-column: 2; grid-row: 2; background-color: #444; }
+.nav-btn.btn-right { grid-column: 3; grid-row: 2; }
+.nav-btn.btn-down { grid-column: 2; grid-row: 3; }
+
+/* Edgework Styles */
+.edgework-item {
+    padding: 20px;
+    border: 1px solid #555;
+    background-color: #222;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    grid-column: 1 / span 3;
+    grid-row: 1 / span 2;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+#edgework-sn {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #ddd;
+    margin-bottom: 10px;
+}
+
+#edgework-batteries {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.battery {
+    width: 30px;
+    height: 60px;
+    background-color: #555;
+    border: 3px solid #777;
+    position: relative;
+}
+
+#edgework-indicators {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+}
+
+.indicator {
+    padding: 5px 10px;
+    border: 2px solid #555;
+    font-size: 1.2rem;
+    position: relative;
+    background-color: #111;
+}
+
 /* Simple Wires Styles */
 .simple-wires .wire-container {
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    width: 80%;
+    justify-content: space-around;
+    height: 85%;
+    width: 90%;
 }
 
 .wire {
-    height: 10px;
+    height: 12px;
     width: 100%;
     cursor: pointer;
-    border: 1px solid rgba(0,0,0,0.3);
+    border: 1px solid rgba(0,0,0,0.5);
     position: relative;
+    border-radius: 6px;
 }
 
 .wire::before, .wire::after {
     content: '';
     position: absolute;
-    top: -5px;
-    width: 10px;
+    top: -4px;
+    width: 14px;
     height: 20px;
     background-color: #222;
+    border: 1px solid #000;
 }
-.wire::before { left: -10px; }
-.wire::after { right: -10px; }
+.wire::before { left: -14px; }
+.wire::after { right: -14px; }
 
 .wire-red { background-color: #f00; }
 .wire-blue { background-color: #00f; }
@@ -387,8 +409,9 @@ button:hover {
 .wire-white { background-color: #fff; }
 .wire-black { background-color: #111; }
 
-.cut-wrong {
-    opacity: 0.3;
+.wire-cut {
+    opacity: 0;
+    pointer-events: none;
 }
 
 /* The Button Styles */
@@ -400,9 +423,8 @@ button:hover {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    border: 8px solid rgba(0,0,0,0.2);
-    box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
-    user-select: none;
+    border: 10px solid rgba(0,0,0,0.2);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
 }
 
 .button-element.blue { background-color: #00f; }
@@ -412,16 +434,16 @@ button:hover {
 
 .button-label {
     font-weight: bold;
-    font-size: 1.2rem;
+    font-size: 1rem;
     pointer-events: none;
 }
 
 .indicator-strip {
     display: none;
-    width: 20px;
-    height: 80px;
+    width: 15px;
+    height: 60px;
     position: absolute;
-    right: 15px;
+    right: 10px;
     top: 50%;
     transform: translateY(-50%);
     border: 2px solid #222;
@@ -433,7 +455,6 @@ button:hover {
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(2, 1fr);
     gap: 10px;
-    padding: 10px;
 }
 
 .keypad-btn {
@@ -456,6 +477,455 @@ button:hover {
 }
 
 .symbol-icon {
-    font-size: 2rem;
+    font-size: 1.8rem;
     color: #000;
+}
+
+/* Simon Says Styles */
+.simon-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 10px;
+    width: 80%;
+    height: 80%;
+}
+
+.simon-btn {
+    border: 4px solid #222;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.1s;
+}
+
+.simon-btn.red { background-color: #f00; border-top-left-radius: 100%; }
+.simon-btn.blue { background-color: #00f; border-top-right-radius: 100%; }
+.simon-btn.green { background-color: #0f0; border-bottom-left-radius: 100%; }
+.simon-btn.yellow { background-color: #ff0; border-bottom-right-radius: 100%; }
+
+.simon-btn.active {
+    opacity: 1;
+    box-shadow: 0 0 20px white;
+    z-index: 10;
+}
+
+/* Who's on First Styles */
+.whos-on-first {
+    padding: 10px;
+}
+
+.wof-display {
+    background-color: #000;
+    color: #0f0;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1rem;
+    padding: 8px;
+    width: 85%;
+    text-align: center;
+    border: 2px solid #444;
+    margin-bottom: 8px;
+    min-height: 1.2rem;
+}
+
+.wof-button-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(3, 1fr);
+    gap: 5px;
+    width: 95%;
+}
+
+.wof-btn {
+    padding: 6px 2px;
+    font-size: 0.6rem;
+    background-color: #ccc;
+    color: #000;
+    border: 2px solid #888;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.wof-btn:hover { background-color: #eee; }
+
+/* Memory Styles */
+.memory {
+    padding: 10px;
+    justify-content: space-between;
+}
+
+.memory-display {
+    background-color: #000;
+    color: #f00;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 2rem;
+    padding: 1px 25px;
+    border: 2px solid #444;
+    margin-bottom: 5px;
+    box-shadow: inset 0 0 10px rgba(255,0,0,0.2);
+}
+
+.memory-button-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 3px;
+    margin-bottom: 0px;
+}
+
+.memory-btn {
+    height: 30px;
+    width: 30px;
+    font-size: 1rem;
+    font-weight: bold;
+    background-color: #444444;
+    border: 2px solid #999;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.memory-stages {
+    display: flex;
+    gap: 8px;
+    padding: 5px;
+    background: rgba(0,0,0,0.2);
+    border-radius: 10px;
+}
+
+.stage-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #300;
+    border: 1px solid #000;
+}
+
+.stage-dot.active {
+    background-color: #f00;
+    box-shadow: 0 0 8px #f00;
+}
+
+/* Morse Code Styles */
+.morse-code {
+    padding: 10px;
+    justify-content: space-around;
+}
+
+.morse-light {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-color: #330;
+    border: 3px solid #111;
+    margin-bottom: 5px;
+    transition: background-color 0.05s;
+}
+
+.morse-light.lit {
+    background-color: #ff0;
+    box-shadow: 0 0 25px #ff0;
+}
+
+.morse-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    gap: 5px;
+}
+
+.morse-freq-display {
+    background-color: #000;
+    color: #f00;
+    font-family: 'Courier New', Courier, monospace;
+    padding: 16px 4px;
+    border: 1px solid #444;
+    min-width: 90px;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.morse-nav {
+    background-color: #444;
+    color: white;
+    border: 1px solid #666;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.morse-tx {
+    width: 60%;
+    padding: 8px;
+    background-color: #800;
+    color: white;
+    border: 2px solid #400;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 5px;
+}
+
+.morse-tx:hover { background-color: #a00; }
+
+/* Complicated Wires Styles */
+.comp-wire-container {
+    display: flex;
+    justify-content: space-around;
+    width: 90%;
+    height: 80%;
+}
+
+.comp-wire-slot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.comp-led {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #300;
+}
+
+.comp-led.lit {
+    background-color: #f00;
+    box-shadow: 0 0 5px #f00;
+}
+
+.comp-wire {
+    width: 10px;
+    height: 60px;
+    background-color: #fff;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.comp-wire.red { background-color: #f00; }
+.comp-wire.blue { background-color: #00f; }
+.comp-wire.red.blue { background: linear-gradient(to right, #f00 50%, #00f 50%); }
+.comp-wire.cut { opacity: 0; pointer-events: none; }
+
+.comp-star {
+    font-size: 1.2rem;
+    color: #222;
+}
+
+.comp-star.present { color: #000; }
+
+/* Wire Sequences Styles */
+.wire-sequences { padding: 5px; justify-content: space-between; }
+
+.ws-panel-label {
+    font-size: 0.75rem;
+    color: #eee;
+    background: #222;
+    padding: 2px 8px;
+    border: 1px solid #444;
+    margin-bottom: 5px;
+}
+
+.ws-wire-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 60%;
+    width: 90%;
+}
+
+.ws-wire-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 20px;
+}
+
+.ws-wire {
+    height: 12px;
+    width: 80%;
+    cursor: pointer;
+    border: 1px solid rgba(0,0,0,0.5);
+    position: relative;
+    border-radius: 6px;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.ws-wire::before, .ws-wire::after {
+    content: '';
+    position: absolute;
+    top: -4px;
+    width: 10px;
+    height: 18px;
+    background-color: #222;
+    border: 1px solid #000;
+}
+.ws-wire::before { left: -10px; }
+.ws-wire::after { right: -10px; }
+
+.ws-wire.red { background-color: #f00; }
+.ws-wire.blue { background-color: #00f; }
+.ws-wire.black { background-color: #111; }
+.ws-wire.cut { opacity: 0; pointer-events: none; }
+
+.ws-to-label { 
+    font-weight: bold; 
+    color: #000; 
+    font-size: 1.2rem;
+    width: 20px;
+    text-align: center;
+}
+
+.ws-next-btn {
+    padding: 4px 12px;
+    font-size: 0.8rem;
+    background-color: #444;
+    color: white;
+    border: 2px solid #666;
+    cursor: pointer;
+}
+
+/* Mazes Styles */
+.maze-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    gap: 2px;
+    width: 120px;
+    height: 120px;
+    background-color: #222;
+    padding: 2px;
+    margin-bottom: 10px;
+}
+
+.maze-cell {
+    background-color: #444;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.maze-player {
+    width: 8px;
+    height: 8px;
+    background-color: #fff;
+    border-radius: 2px;
+}
+
+.maze-goal {
+    width: 0; height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 8px solid #f00;
+}
+
+.maze-indicator {
+    width: 6px;
+    height: 6px;
+    border: 2px solid #0f0;
+    border-radius: 50%;
+    position: absolute;
+}
+
+.maze-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.maze-mid-row {
+    display: flex;
+    gap: 20px;
+}
+
+.maze-btn {
+    width: 25px;
+    height: 25px;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Passwords Styles */
+.pass-columns {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 15px;
+}
+
+.pass-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.pass-char {
+    background-color: #000;
+    color: #0f0;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.2rem;
+    padding: 5px;
+    border: 1px solid #444;
+    width: 25px;
+    text-align: center;
+}
+
+.pass-nav {
+    width: 25px;
+    height: 20px;
+    font-size: 0.7rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pass-submit {
+    padding: 5px 15px;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+}
+
+/* Game Over Modal */
+.game-over-modal {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background-color: rgba(0, 0, 0, 0.95) !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    z-index: 99999 !important;
+    pointer-events: all !important;
+}
+
+.game-over-modal .modal-content {
+    background-color: #222 !important;
+    padding: 3rem !important;
+    border: 5px solid #444 !important;
+    border-radius: 10px !important;
+    box-shadow: 0 0 50px rgba(255, 0, 0, 0.5) !important;
+    max-width: 500px !important;
+    width: 90% !important;
+    color: white !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
 }

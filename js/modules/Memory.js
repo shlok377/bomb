@@ -1,0 +1,134 @@
+import { GameEngine } from '../GameEngine.js';
+import { Logger } from '../Logger.js';
+
+export class Memory {
+    constructor(container) {
+        this.container = container;
+        this.stage = 1;
+        this.history = []; // Array of { pos, label }
+        this.currentDisplay = 0;
+        this.currentButtons = [];
+        this.isDisarmed = false;
+    }
+
+    init() {
+        try {
+            Logger.log("Memory", "Initializing module");
+            this.generateStage();
+            this.render();
+        } catch (err) {
+            Logger.error("Memory", "Initialization failed", err);
+        }
+    }
+
+    generateStage() {
+        this.currentDisplay = Math.floor(Math.random() * 4) + 1;
+        this.currentButtons = [1, 2, 3, 4].sort(() => Math.random() - 0.5);
+        Logger.log("Memory", `Stage ${this.stage} Generated`, { display: this.currentDisplay, buttons: this.currentButtons });
+    }
+
+    render() {
+        this.container.innerHTML = `
+            <div class="module memory">
+                <div class="module-status"></div>
+                <div class="memory-display">${this.currentDisplay}</div>
+                <div class="memory-button-row">
+                    ${this.currentButtons.map((label, i) => `<button class="memory-btn" data-pos="${i}">${label}</button>`).join('')}
+                </div>
+                <div class="memory-stages">
+                    <div class="stage-dot ${this.stage >= 1 ? 'active' : ''}"></div>
+                    <div class="stage-dot ${this.stage >= 2 ? 'active' : ''}"></div>
+                    <div class="stage-dot ${this.stage >= 3 ? 'active' : ''}"></div>
+                    <div class="stage-dot ${this.stage >= 4 ? 'active' : ''}"></div>
+                    <div class="stage-dot ${this.stage >= 5 ? 'active' : ''}"></div>
+                </div>
+            </div>
+        `;
+
+        this.container.querySelectorAll('.memory-btn').forEach(btn => {
+            btn.onclick = () => this.handlePress(parseInt(btn.dataset.pos), parseInt(btn.textContent));
+        });
+    }
+
+    handlePress(pos, label) {
+        if (this.isDisarmed || GameEngine.isGameOver) return;
+
+        Logger.log("Memory", `Stage ${this.stage} pressed pos ${pos}, label ${label}`);
+
+        const correct = this.getCorrectButton();
+        
+        // Correct button logic returns an object { pos: X } or { label: Y }
+        let isCorrect = false;
+        if (correct.pos !== undefined) {
+            isCorrect = (pos === correct.pos);
+        } else if (correct.label !== undefined) {
+            isCorrect = (label === correct.label);
+        }
+
+        if (isCorrect) {
+            this.history.push({ pos, label });
+            if (this.stage === 5) {
+                this.disarm();
+            } else {
+                this.stage++;
+                this.generateStage();
+                this.render();
+            }
+        } else {
+            this.strike();
+        }
+    }
+
+    getCorrectButton() {
+        const d = this.currentDisplay;
+        const h = this.history;
+
+        if (this.stage === 1) {
+            if (d === 1) return { pos: 1 };
+            if (d === 2) return { pos: 1 };
+            if (d === 3) return { pos: 2 };
+            if (d === 4) return { pos: 3 };
+        }
+        if (this.stage === 2) {
+            if (d === 1) return { label: 4 };
+            if (d === 2) return { pos: h[0].pos };
+            if (d === 3) return { pos: 0 };
+            if (d === 4) return { pos: h[0].pos };
+        }
+        if (this.stage === 3) {
+            if (d === 1) return { label: h[1].label };
+            if (d === 2) return { label: h[0].label };
+            if (d === 3) return { pos: 2 };
+            if (d === 4) return { label: 4 };
+        }
+        if (this.stage === 4) {
+            if (d === 1) return { pos: h[0].pos };
+            if (d === 2) return { pos: 0 };
+            if (d === 3) return { pos: h[1].pos };
+            if (d === 4) return { pos: h[1].pos };
+        }
+        if (this.stage === 5) {
+            if (d === 1) return { label: h[0].label };
+            if (d === 2) return { label: h[1].label };
+            if (d === 3) return { label: h[3].label };
+            if (d === 4) return { label: h[2].label };
+        }
+        return {};
+    }
+
+    disarm() {
+        this.isDisarmed = true;
+        this.container.querySelector('.module-status').classList.add('disarmed');
+        Logger.log("Memory", "Module Disarmed");
+        GameEngine.moduleSolved();
+    }
+
+    strike() {
+        Logger.warn("Memory", "Incorrect button! Resetting to Stage 1.");
+        this.stage = 1;
+        this.history = [];
+        GameEngine.addStrike();
+        this.generateStage();
+        this.render();
+    }
+}

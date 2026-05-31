@@ -7,7 +7,14 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <div id="start-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 5000; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+        <h1 id="start-phase-title">Phase 1</h1>
+        <p id="start-level-num">Level 1</p>
+        <button id="begin-btn" style="padding: 1.5rem 3rem; font-size: 1.5rem; background-color: #080; margin-top: 20px;">READY</button>
+    </div>
+
     <div id="game-container">
+        <div id="level-indicator">Level: <span id="current-level">1</span></div>
         <div id="bomb-container">
             <!-- HUD -->
             <div id="bomb-hud">
@@ -48,20 +55,31 @@
 
                 <!-- Right Face (Edgework) -->
                 <div id="face-right" class="bomb-face" style="display: none;">
-                    <p>Empty Side</p>
+                    <div class="edgework-item">
+                        <p>Empty Side</p>
+                    </div>
                 </div>
 
                 <!-- Back Face -->
                 <div id="face-back" class="bomb-face" style="display: none;">
-                    <p>Bomb Back</p>
+                    <div class="edgework-item">
+                        <p>Bomb Back</p>
+                    </div>
                 </div>
-
-                <div id="view-indicator">Viewing: FRONT</div>
             </div>
         </div>
 
-        <div style="margin-top: 50px;">
-            <p>Use Arrow Keys to rotate the bomb</p>
+        <div id="view-indicator">Viewing: FRONT</div>
+
+        <div class="nav-controls">
+            <button class="nav-btn btn-up" data-face="top">Flip Up</button>
+            <button class="nav-btn btn-left" data-face="left">Flip Left</button>
+            <button class="nav-btn btn-front" data-face="front">Front</button>
+            <button class="nav-btn btn-right" data-face="right">Flip Right</button>
+            <button class="nav-btn btn-down" data-face="bottom">Flip Down</button>
+        </div>
+
+        <div style="margin-top: 30px;">
             <button onclick="window.location.href='index.html'">Quit to Menu</button>
         </div>
     </div>
@@ -70,12 +88,30 @@
         import { GameEngine } from './js/GameEngine.js';
         import { UIManager } from './js/UIManager.js';
         import { ModuleRegistry } from './js/ModuleRegistry.js';
+        import { AudioManager } from './js/AudioManager.js';
 
         document.addEventListener('DOMContentLoaded', () => {
-            // Phase 1 has 3 modules
-            GameEngine.init(3);
-            UIManager.init();
-            ModuleRegistry.injectModules('face-front', 3);
+            const urlParams = new URLSearchParams(window.location.search);
+            const level = urlParams.get('level') || "1";
+            
+            document.getElementById('start-level-num').textContent = `Level ${level}`;
+            if (document.getElementById('current-level')) {
+                document.getElementById('current-level').textContent = level;
+            }
+
+            document.getElementById('begin-btn').onclick = async () => {
+                document.getElementById('start-overlay').style.display = 'none';
+                
+                // Initialize and Resume Audio (MUST happen in user gesture)
+                AudioManager.init();
+                await AudioManager.resume();
+                AudioManager.playClick(); 
+
+                // Phase 1 has 3 modules
+                GameEngine.init(3);
+                UIManager.init();
+                ModuleRegistry.injectModules('face-front', 3);
+            };
         });
     </script>
 </body>

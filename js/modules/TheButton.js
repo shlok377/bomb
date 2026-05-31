@@ -1,6 +1,7 @@
 import { BombState } from '../BombState.js';
 import { GameEngine } from '../GameEngine.js';
 import { Logger } from '../Logger.js';
+import { AudioManager } from '../AudioManager.js';
 
 export class TheButton {
     constructor(container) {
@@ -46,6 +47,7 @@ export class TheButton {
     onMouseDown() {
         if (this.isDisarmed || GameEngine.isGameOver) return;
         
+        AudioManager.playClick();
         this.isHolding = true;
         this.holdStartTime = Date.now();
         
@@ -122,7 +124,7 @@ export class TheButton {
         if (this.stripColor === 'blue') return 4;
         if (this.stripColor === 'white') return 1;
         if (this.stripColor === 'yellow') return 5;
-        return 1;
+        return 1; // For red or other colors
     }
 
     disarm() {

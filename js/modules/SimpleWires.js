@@ -1,6 +1,7 @@
 import { BombState } from '../BombState.js';
 import { GameEngine } from '../GameEngine.js';
 import { Logger } from '../Logger.js';
+import { AudioManager } from '../AudioManager.js';
 
 export class SimpleWires {
     constructor(container) {
@@ -50,8 +51,15 @@ export class SimpleWires {
     cutWire(index) {
         if (this.isDisarmed || GameEngine.isGameOver) return;
 
+        const wireEl = this.container.querySelectorAll('.wire')[index];
+        if (wireEl.classList.contains('wire-cut')) return;
+
+        AudioManager.playClick();
         Logger.log("SimpleWires", `Wire ${index} (${this.wires[index]}) cut`);
         
+        // Visual feedback for cut
+        wireEl.classList.add('wire-cut');
+
         const correctIndex = this.getCorrectWireIndex();
         
         if (index === correctIndex) {
@@ -117,8 +125,6 @@ export class SimpleWires {
 
     strike(index) {
         Logger.warn("SimpleWires", `Incorrect wire cut: ${index}. Correct was ${this.getCorrectWireIndex()}`);
-        const wireEl = this.container.querySelectorAll('.wire')[index];
-        wireEl.classList.add('cut-wrong');
         GameEngine.addStrike();
     }
 }

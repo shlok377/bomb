@@ -1,7 +1,13 @@
 import { LevelManager } from './LevelManager.js';
+import { Logger } from './Logger.js';
+
+window.onerror = function(message, source, lineno, colno, error) {
+    Logger.error("GLOBAL", `Uncaught Error: ${message}`, { source, lineno, colno, error });
+    return false;
+};
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log("Game Initialized...");
+    Logger.log("SYSTEM", "Game Initialized...");
     
     const defuseBtn = document.getElementById('defuse-btn');
     const manualBtn = document.getElementById('manual-btn');

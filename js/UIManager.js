@@ -21,27 +21,55 @@ export const UIManager = {
     },
 
     setupEventListeners() {
-        // Keyboard rotation
-        window.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowUp') this.rotateTo('top');
-            if (e.key === 'ArrowDown') this.rotateTo('bottom');
-            if (e.key === 'ArrowLeft') this.rotateTo('left');
-            if (e.key === 'ArrowRight') this.rotateTo('right');
-            if (e.key === 'Escape') this.rotateTo('front');
-        });
+        try {
+            // Keyboard rotation
+            window.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowUp') this.rotateTo('top');
+                if (e.key === 'ArrowDown') this.rotateTo('bottom');
+                if (e.key === 'ArrowLeft') this.rotateTo('left');
+                if (e.key === 'ArrowRight') this.rotateTo('right');
+                if (e.key === 'Escape') this.rotateTo('front');
+            });
 
-        // Game Events
-        window.addEventListener('game-tick', (e) => {
-            this.updateTimer(e.detail.timeLeft);
-        });
+            // On-screen navigation buttons
+            document.addEventListener('click', (e) => {
+                if (e.target.classList.contains('nav-btn')) {
+                    const face = e.target.dataset.face;
+                    if (face) this.rotateTo(face);
+                }
+            });
 
-        window.addEventListener('game-strike', (e) => {
-            this.updateStrikes(e.detail.strikes);
-        });
+            // Game Events
+            window.addEventListener('game-tick', (e) => {
+                this.updateTimer(e.detail.timeLeft);
+            });
 
-        window.addEventListener('game-over', (e) => {
-            this.showGameOver(e.detail);
-        });
+            window.addEventListener('game-strike', (e) => {
+                this.updateStrikes(e.detail.strikes);
+                this.triggerStrikeVisuals();
+            });
+
+            window.addEventListener('game-over', (e) => {
+                Logger.log("UIManager", "Game Over event received", e.detail);
+                if (e.detail.result === 'loss') this.triggerExplosionVisuals();
+                this.showGameOver(e.detail);
+            });
+        } catch (err) {
+            Logger.error("UIManager", "Error setting up event listeners", err);
+        }
+    },
+
+    triggerStrikeVisuals() {
+        document.body.classList.add('strike-flash');
+        setTimeout(() => document.body.classList.remove('strike-flash'), 500);
+    },
+
+    triggerExplosionVisuals() {
+        const bomb = document.getElementById('bomb-container');
+        if (bomb) {
+            bomb.classList.add('shake');
+            setTimeout(() => bomb.classList.remove('shake'), 500);
+        }
     },
 
     rotateTo(face) {
@@ -131,15 +159,37 @@ export const UIManager = {
     },
 
     showGameOver(data) {
-        const modal = document.createElement('div');
-        modal.className = 'game-over-modal';
-        modal.innerHTML = `
-            <div class="modal-content">
-                <h1>${data.result === 'win' ? 'BOMB DEFUSED' : 'BOOM!'}</h1>
-                <p>${data.result === 'win' ? 'You survived.' : data.reason}</p>
-                <button onclick="window.location.href='index.html'">Main Menu</button>
-            </div>
-        `;
-        document.body.appendChild(modal);
+        try {
+            // Remove any existing modals
+            const existing = document.querySelector('.game-over-modal');
+            if (existing) existing.remove();
+
+            const modal = document.createElement('div');
+            modal.className = 'game-over-modal';
+            
+            const title = data.result === 'win' ? 'BOMB DEFUSED' : 'BOOM!';
+            const message = data.result === 'win' ? 'You survived.' : `Explosion: ${data.reason}`;
+            
+            modal.innerHTML = `
+                <div class="modal-content" style="text-align: center;">
+                    <h1 style="color: ${data.result === 'win' ? '#0f0' : '#f00'}">${title}</h1>
+                    <p style="font-size: 1.5rem; margin-bottom: 2rem;">${message}</p>
+                    <button id="restart-btn" style="padding: 1rem 2rem; font-size: 1.2rem; cursor: pointer;">Return to Menu</button>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            document.getElementById('restart-btn').addEventListener('click', () => {
+                window.location.href = 'index.html';
+            });
+
+            Logger.log("UIManager", "Game Over modal displayed");
+        } catch (err) {
+            Logger.error("UIManager", "Critical error in showGameOver", err);
+            // Fallback alert if UI fails
+            alert(`${data.result === 'win' ? 'Victory!' : 'BOOM!'} ${data.reason || ''}`);
+            window.location.href = 'index.html';
+        }
     }
 };
