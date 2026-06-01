@@ -121,7 +121,7 @@
           "C": "Cut the wire",
           "D": "Do not cut the wire",
           "S": "Cut the wire if the last digit of the serial number is even",
-          "P": "Cut the wire if the bomb has a parallel port",
+          "P": "Cut the wire if the last digit of the serial number is even (Field Mod)",
           "B": "Cut the wire if the bomb has two or more batteries"
         },
         "combinations": {

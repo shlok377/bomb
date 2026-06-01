@@ -24,10 +24,12 @@ export const BombState = {
 
     _generateSerialNumber() {
         const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        const digits = "0123456789";
         let sn = "";
-        for (let i = 0; i < 6; i++) {
+        for (let i = 0; i < 5; i++) {
             sn += chars.charAt(Math.floor(Math.random() * chars.length));
         }
+        sn += digits.charAt(Math.floor(Math.random() * digits.length));
         return sn;
     },
 
@@ -57,8 +59,9 @@ export const BombState = {
     },
 
     isSerialLastDigitEven() {
-        const lastChar = this.serialNumber.charAt(this.serialNumber.length - 1);
-        const lastDigit = parseInt(lastChar);
-        return !isNaN(lastDigit) && lastDigit % 2 === 0;
+        const digits = this.serialNumber.match(/\d/g);
+        if (!digits) return false;
+        const lastDigit = parseInt(digits[digits.length - 1]);
+        return lastDigit % 2 === 0;
     }
 };
