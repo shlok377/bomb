@@ -119,7 +119,7 @@ export class SimonSays {
             noVowel: [
                 { red: 'blue', blue: 'yellow', green: 'green', yellow: 'red' }, // 0 strikes
                 { red: 'red', blue: 'blue', green: 'yellow', yellow: 'green' }, // 1 strike
-                { red: 'yellow', blue: 'red', green: 'blue', yellow: 'green' }  // 2 strikes
+                { red: 'yellow', blue: 'green', green: 'blue', yellow: 'red' }  // 2 strikes
             ]
         };
 
