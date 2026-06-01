@@ -19,7 +19,7 @@ const imageMap = {
     'identification-protocol': ['Indicators.png'],
     'linear-connectors': ['The Wires.png'],
     'multi-state-actuators': ['The Button.png'],
-    'hierarchical-symbol-sets': ['Keypad.png', 'Keypads Series Columns.jpg'],
+    'hierarchical-symbol-sets': ['Keypad.png'],
     'pattern-recognition': ['Simon Says.png', 'Simon Says Tables.png'],
     'asymmetrical-wiring': ['Complicated Wires.png', 'Complicated Wires and Diagram.png'],
     'sequential-routing': ['Wire Sequences.png', 'Wiring Sequence Table.jpg'],
@@ -140,6 +140,7 @@ function renderDocument(id) {
                 if (item.type === 'header') html += `<h2>${item.text}</h2>`;
                 if (item.type === 'sub-header') html += `<h3>${item.text}</h3>`;
                 if (item.type === 'text') html += `<p>${item.text}</p>`;
+                if (item.type === 'image') html += `<img src="pic/${item.src}" class="center-img" alt="${item.src}">`;
             });
         }
 
@@ -198,13 +199,7 @@ function renderLogicContent(id, logic) {
     }
 
     if (id === 'hierarchical-symbol-sets') {
-        html += `<h3>Symbol Columns</h3><div class='side-by-side'>`;
-        logic.columns.forEach((col, i) => {
-            html += `<table style='width: auto;'><tr><th>Col ${i+1}</th></tr>`;
-            col.forEach(s => html += `<tr><td>${s}</td></tr>`);
-            html += `</table>`;
-        });
-        html += `</div>`;
+        // Rendered via inline image in JSON now.
     }
 
     if (id === 'verbal-relays') {
