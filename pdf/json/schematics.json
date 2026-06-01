@@ -71,9 +71,19 @@
       "id": "hierarchical-symbol-sets",
       "title": "On the Subject of Keypads",
       "flavorText": "I'm not sure what these symbols are, but I suspect they have something to do with occult.",
-      "rules": [
-        "Only one column below has all four of the symbols from the keypad.",
-        "Press the four buttons in the order their symbols appear from top to bottom within that column."
+      "content": [
+        {
+          "type": "text",
+          "text": "Only one column below has all four of the symbols from the keypad."
+        },
+        {
+          "type": "text",
+          "text": "Press the four buttons in the order their symbols appear from top to bottom within that column."
+        },
+        {
+          "type": "image",
+          "src": "Keypads Series Columns.jpg"
+        }
       ],
       "logic": {
         "columns": [
@@ -104,7 +114,7 @@
         "no_vowel": [
           {"red": "blue", "blue": "yellow", "green": "green", "yellow": "red"},
           {"red": "red", "blue": "blue", "green": "yellow", "yellow": "green"},
-          {"red": "yellow", "blue": "red", "green": "blue", "yellow": "green"}
+          {"red": "yellow", "blue": "green", "green": "blue", "yellow": "red"}
         ]
       }
     },

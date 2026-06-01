@@ -50,28 +50,34 @@
       "id": "volatile-memory-access",
       "title": "On the Subject of Memory",
       "flavorText": "Memory is a fragile thing... pay attention!",
+      "content": [
+        {
+          "type": "text",
+          "text": "Note: Button positions are indicated using Military Compass Directions (North-West, North-East, South-West, South-East)."
+        }
+      ],
       "logic": {
         "stage1": [
-          {"display": 1, "action": "position", "value": 2},
-          {"display": 2, "action": "position", "value": 2},
-          {"display": 3, "action": "position", "value": 3},
-          {"display": 4, "action": "position", "value": 4}
+          {"display": 1, "action": "position", "value": "North-East"},
+          {"display": 2, "action": "position", "value": "North-East"},
+          {"display": 3, "action": "position", "value": "South-West"},
+          {"display": 4, "action": "position", "value": "South-East"}
         ],
         "stage2": [
-          {"display": 1, "action": "label", "value": 4},
+          {"display": 1, "action": "label", "value": "4"},
           {"display": 2, "action": "position", "history_stage": 1},
-          {"display": 3, "action": "position", "value": 1},
+          {"display": 3, "action": "position", "value": "North-West"},
           {"display": 4, "action": "position", "history_stage": 1}
         ],
         "stage3": [
           {"display": 1, "action": "label", "history_stage": 2},
           {"display": 2, "action": "label", "history_stage": 1},
-          {"display": 3, "action": "position", "value": 3},
-          {"display": 4, "action": "label", "value": 4}
+          {"display": 3, "action": "position", "value": "South-West"},
+          {"display": 4, "action": "label", "value": "4"}
         ],
         "stage4": [
           {"display": 1, "action": "position", "history_stage": 1},
-          {"display": 2, "action": "position", "value": 1},
+          {"display": 2, "action": "position", "value": "North-West"},
           {"display": 3, "action": "position", "history_stage": 2},
           {"display": 4, "action": "position", "history_stage": 2}
         ],
