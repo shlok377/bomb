@@ -145,7 +145,7 @@ export const UIManager = {
             BombState.indicators.forEach(ind => {
                 const el = document.createElement('div');
                 el.className = `indicator ${ind.lit ? 'lit' : 'unlit'}`;
-                el.textContent = ind.label;
+                el.innerHTML = `<div class="indicator-led"></div><span>${ind.label}</span>`;
                 indContainer.appendChild(el);
             });
         }

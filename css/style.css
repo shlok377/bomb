@@ -566,11 +566,37 @@ button:hover {
 }
 
 .indicator {
-    padding: 5px 10px;
-    border: 2px solid #555;
-    font-size: 1.2rem;
-    position: relative;
+    padding: 5px 12px;
+    border: 2px solid #444;
+    font-size: 1.1rem;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    background-color: #000;
+    color: #555; /* Dimmer for unlit */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-radius: 2px;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+}
+
+.indicator-led {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
     background-color: #111;
+    border: 1px solid #333;
+}
+
+.indicator.lit {
+    color: #fff;
+    border-color: #777;
+}
+
+.indicator.lit .indicator-led {
+    background-color: #fff;
+    border-color: #fff;
+    box-shadow: 0 0 10px #fff;
 }
 
 /* Simple Wires Styles */
