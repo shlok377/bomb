@@ -1,3 +1,63 @@
+/* Screen Effects Overlay */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    z-index: 4000; /* High, but under modals */
+    box-shadow: inset 0 0 0 transparent;
+    background-color: transparent;
+    transition: box-shadow 0.3s, background-color 0.3s;
+}
+
+/* Strike Flash */
+body.strike-flash::after {
+    background-color: rgba(255, 0, 0, 0.4) !important;
+    transition: none !important;
+}
+
+/* Strike Persistence */
+body.strike-1::after {
+    box-shadow: inset 0 0 50px rgba(255, 0, 0, 0.2);
+}
+body.strike-2::after {
+    box-shadow: inset 0 0 120px rgba(255, 0, 0, 0.4);
+}
+
+/* Timer Animations */
+body.time-60::after {
+    animation: pulse-60 2s infinite;
+}
+body.time-30::after {
+    animation: pulse-30 1s infinite;
+}
+body.time-15 {
+    animation: shake 0.5s infinite;
+}
+body.time-15::after {
+    animation: pulse-15 0.5s infinite;
+    box-shadow: inset 0 0 150px rgba(255, 0, 0, 0.6);
+}
+
+@keyframes pulse-60 {
+    0%, 100% { background-color: rgba(255, 0, 0, 0.0); }
+    50% { background-color: rgba(255, 0, 0, 0.05); }
+}
+@keyframes pulse-30 {
+    0%, 100% { background-color: rgba(255, 0, 0, 0.05); box-shadow: inset 0 0 80px rgba(255, 0, 0, 0.3); }
+    50% { background-color: rgba(255, 0, 0, 0.1); box-shadow: inset 0 0 120px rgba(255, 0, 0, 0.5); }
+}
+@keyframes pulse-15 {
+    0%, 100% { background-color: rgba(255, 0, 0, 0.1); box-shadow: inset 0 0 120px rgba(255, 0, 0, 0.5); }
+    50% { background-color: rgba(255, 0, 0, 0.2); box-shadow: inset 0 0 200px rgba(255, 0, 0, 0.8); }
+}
+@keyframes shake {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(-2px, 2px); }
+    50% { transform: translate(2px, -2px); }
+    75% { transform: translate(-2px, -2px); }
+}
+
 /* Base Styles */
 body, html {
     margin: 0;
