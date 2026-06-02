@@ -305,3 +305,28 @@ li {
 #note-area::placeholder {
     color: rgba(0,0,0,0.4);
 }
+
+#open-note-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background-color: #ff6767;
+    border-radius: 50%;
+    border: 2px solid #000;
+    cursor: pointer;
+    z-index: 5000;
+    display: none; /* Hidden by default */
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    font-family: 'Indie Flower', cursive;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 46px;
+    text-align: center;
+    transition: background-color 0.2s;
+}
+
+#open-note-btn:hover {
+    background-color: #ff8888;
+}
