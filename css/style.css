@@ -31,6 +31,41 @@ h1 {
     gap: 2rem;
 }
 
+/* Role Selection Hover Tooltips */
+.button-container button {
+    position: relative;
+}
+
+.button-container button::after {
+    content: attr(data-desc);
+    position: absolute;
+    top: 110%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #111;
+    color: #0f0;
+    padding: 12px;
+    border: 2px solid #555;
+    border-radius: 5px;
+    width: 250px;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    white-space: normal;
+    text-transform: none;
+    letter-spacing: normal;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 100;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    font-weight: normal;
+}
+
+.button-container button:hover::after {
+    opacity: 1;
+    transform: translateX(-50%) translateY(5px);
+}
+
 button {
     padding: 1rem 2rem;
     font-size: 1.2rem;
@@ -116,6 +151,19 @@ button:hover {
     max-width: 80%;
     width: 600px;
     text-align: left;
+    /* Sleek Entry Animation */
+    animation: modalEntry 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes modalEntry {
+    from {
+        opacity: 0;
+        transform: translateY(-30px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
 /* Briefing Specific Styles */
@@ -223,6 +271,8 @@ button:hover {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
+    position: relative;
+    z-index: 6000; /* Higher than start-overlay (5000) */
 }
 
 #info-panel h2 {
@@ -471,11 +521,41 @@ button:hover {
 }
 
 .battery {
-    width: 30px;
-    height: 60px;
-    background-color: #555;
-    border: 3px solid #777;
+    width: 25px;
+    height: 55px;
+    background-color: #111; /* Black body */
+    border: 1px solid #000;
     position: relative;
+    border-radius: 2px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+    margin-top: 8px; /* Space for the nub */
+}
+
+/* Copper Top */
+.battery::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 35%;
+    background: linear-gradient(to right, #b87333, #ffb86c, #b87333); 
+    border-bottom: 1px solid #000;
+    border-radius: 1px 1px 0 0;
+}
+
+/* Silver Terminal Nub */
+.battery::after {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 10px;
+    height: 6px;
+    background: linear-gradient(to right, #888, #fff, #888);
+    border: 1px solid #444;
+    border-radius: 2px 2px 0 0;
 }
 
 #edgework-indicators {
