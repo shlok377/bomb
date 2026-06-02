@@ -880,11 +880,17 @@ button:hover {
 .comp-wire.cut { opacity: 0; pointer-events: none; }
 
 .comp-star {
-    font-size: 1.2rem;
-    color: #222;
+    font-size: 1.5rem;
+    color: #000;
+    opacity: 0.1; /* Almost invisible when absent */
+    transition: opacity 0.2s;
 }
 
-.comp-star.present { color: #000; }
+.comp-star.present { 
+    opacity: 1; /* Fully visible when present */
+    color: #fff; /* White star for better contrast against dark background */
+    text-shadow: 0 0 5px #fff;
+}
 
 /* Wire Sequences Styles */
 .wire-sequences { padding: 5px; justify-content: space-between; }

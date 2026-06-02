@@ -1,5 +1,6 @@
 import { GameEngine } from '../GameEngine.js';
 import { Logger } from '../Logger.js';
+import { AudioManager } from '../AudioManager.js';
 
 export class Memory {
     constructor(container) {
@@ -9,7 +10,7 @@ export class Memory {
         this.currentDisplay = 0;
         this.currentButtons = [];
         this.isDisarmed = false;
-        this.posMap = ['NW', 'NE', 'SW', 'SE']; // Map grid index 0-3 to Compass
+        this.posMap = ['North-West', 'North-East', 'South-West', 'South-East']; // Map grid index 0-3 to Compass
     }
 
     init() {
@@ -72,44 +73,43 @@ export class Memory {
                 this.disarm();
             } else {
                 this.stage++;
-                this.currentDisplay = 0;
-                this.currentButtons = [];
-                this.isDisarmed = false;
-                this.posMap = ['North-West', 'North-East', 'South-West', 'South-East']; // Map grid index 0-3 to Compass
-                }
+                this.generateStage();
+                this.render();
+            }
+        } else {
+            this.strike();
+        }
+    }
 
-                init() {
-                ...
-                getCorrectButton() {
-                const d = this.currentDisplay;
-                const h = this.history;
+    getCorrectButton() {
+        const d = this.currentDisplay;
+        const h = this.history;
 
-                if (this.stage === 1) {
-                    if (d === 1) return { pos: 'North-East' };
-                    if (d === 2) return { pos: 'North-East' };
-                    if (d === 3) return { pos: 'South-West' };
-                    if (d === 4) return { pos: 'South-East' };
-                }
-                if (this.stage === 2) {
-                    if (d === 1) return { label: 4 };
-                    if (d === 2) return { pos: h[0].pos };
-                    if (d === 3) return { pos: 'North-West' };
-                    if (d === 4) return { pos: h[0].pos };
-                }
-                if (this.stage === 3) {
-                    if (d === 1) return { label: h[1].label };
-                    if (d === 2) return { label: h[0].label };
-                    if (d === 3) return { pos: 'South-West' };
-                    if (d === 4) return { label: 4 };
-                }
-                if (this.stage === 4) {
-                    if (d === 1) return { pos: h[0].pos };
-                    if (d === 2) return { pos: 'North-West' };
-                    if (d === 3) return { pos: h[1].pos };
-                    if (d === 4) return { pos: h[1].pos };
-                }
-                if (this.stage === 5) {
-
+        if (this.stage === 1) {
+            if (d === 1) return { pos: 'North-East' };
+            if (d === 2) return { pos: 'North-East' };
+            if (d === 3) return { pos: 'South-West' };
+            if (d === 4) return { pos: 'South-East' };
+        }
+        if (this.stage === 2) {
+            if (d === 1) return { label: 4 };
+            if (d === 2) return { pos: h[0].pos };
+            if (d === 3) return { pos: 'North-West' };
+            if (d === 4) return { pos: h[0].pos };
+        }
+        if (this.stage === 3) {
+            if (d === 1) return { label: h[1].label };
+            if (d === 2) return { label: h[0].label };
+            if (d === 3) return { pos: 'South-West' };
+            if (d === 4) return { label: 4 };
+        }
+        if (this.stage === 4) {
+            if (d === 1) return { pos: h[0].pos };
+            if (d === 2) return { pos: 'North-West' };
+            if (d === 3) return { pos: h[1].pos };
+            if (d === 4) return { pos: h[1].pos };
+        }
+        if (this.stage === 5) {
             if (d === 1) return { label: h[0].label };
             if (d === 2) return { label: h[1].label };
             if (d === 3) return { label: h[3].label };
