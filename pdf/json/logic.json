@@ -119,25 +119,19 @@
       "content": [
         {
           "type": "text",
-          "text": "Note: Coordinates are in (X,Y) format. (0,0) is the top-left box. X increases right, Y increases down."
+          "text": "Note: Locate the maze identifying green indicators to find the correct blueprint below."
         },
         {
           "type": "text",
-          "text": "LEGEND: White Box = Defuser's current position. Red Triangle = Target location (Finish). Green Circles = Maze identifier indicators."
+          "text": "LEGEND: White Box that defuser sees = Your current position. Red Triangle = Target location (Finish). Green Circles = Maze identification indicators."
+        },
+        {
+          "type": "text",
+          "text": "The path is carved into the grid. Any movement into a blocked (WHITE) cell will trigger a strike."
         }
       ],
       "logic": {
-        "mazes": [
-          {"indicators": [{"x": 0, "y": 1}, {"x": 5, "y": 2}], "id": 1},
-          {"indicators": [{"x": 1, "y": 3}, {"x": 4, "y": 1}], "id": 2},
-          {"indicators": [{"x": 3, "y": 3}, {"x": 5, "y": 3}], "id": 3},
-          {"indicators": [{"x": 0, "y": 4}, {"x": 0, "y": 0}], "id": 4},
-          {"indicators": [{"x": 4, "y": 2}, {"x": 3, "y": 5}], "id": 5},
-          {"indicators": [{"x": 4, "y": 0}, {"x": 2, "y": 4}], "id": 6},
-          {"indicators": [{"x": 1, "y": 0}, {"x": 1, "y": 5}], "id": 7},
-          {"indicators": [{"x": 3, "y": 0}, {"x": 2, "y": 3}], "id": 8},
-          {"indicators": [{"x": 2, "y": 1}, {"x": 0, "y": 4}], "id": 9}
-        ]
+        "use_visual_grid": true
       }
     },
     {
