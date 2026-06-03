@@ -1,6 +1,0 @@
-On the Subject of Capacitor Discharge
-I'm going to guess that this is just meant to occupy your attention, because
-otherwise this is some shoddy electronics work.
-
-. Discharge the capacitor before it overloads by holding
-down the lever.

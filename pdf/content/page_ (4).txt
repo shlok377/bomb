@@ -1,7 +1,0 @@
-Section 1: Modules
-
-
-Modules can be identified by an LED in the top right corner.
-When this LED is lit green, the module has been disarmed.
-
-All modules must be disarmed to defuse the bomb.

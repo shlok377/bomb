@@ -26,7 +26,7 @@ const imageMap = {
     'verbal-relays': ['Whos on first.png', 'Whos on first figures.png'],
     'volatile-memory-access': ['Memory.png'],
     'frequential-deciphering': ['Morse Code.png', 'Morse Code Tables.png'],
-    'navigational-algorithms': ['Mazes.png', 'Mazes Images.png'],
+    'navigational-algorithms': [],
     'cryptographic-passphrases': ['Passwords.png', 'Passwords Table.png'],
     'rotary-interfacing': ['LED Config Knobs Tables.png'],
     'reference-a': ['Appendix A.png', 'Indicators.png'],
@@ -235,13 +235,18 @@ function renderLogicContent(id, logic) {
     }
 
     if (id === 'navigational-algorithms') {
-        html += `<table><tr><th>Indicators</th><th>ID</th></tr>`;
-        logic.mazes.forEach(m => {
-            const inds = m.indicators.map(i => `(${i.x}, ${i.y})`).join(' & ');
-            html += `<tr><td>${inds}</td><td>Maze ${m.id}</td></tr>`;
-        });
-        html += `</table>`;
+        html += `<div class="maze-manual-grid">`;
+        for (let i = 1; i <= 9; i++) {
+            html += `
+                <div class="maze-manual-item">
+                    <img src="pic/matrices/${i}.jpg" alt="Maze ${i}" style="width: 100%; border: 2px solid #555;">
+                    <p style="text-align: center; font-weight: bold; margin-top: 5px;">Maze ${i}</p>
+                </div>
+            `;
+        }
+        html += `</div>`;
     }
+
 
     if (id === 'cryptographic-passphrases') {
         html += `<p>${logic.words.join(', ')}</p>`;
