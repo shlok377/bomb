@@ -1,3 +1,63 @@
+/* Screen Effects Overlay */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    z-index: 4000; /* High, but under modals */
+    box-shadow: inset 0 0 0 transparent;
+    background-color: transparent;
+    transition: box-shadow 0.3s, background-color 0.3s;
+}
+
+/* Strike Flash */
+body.strike-flash::after {
+    background-color: rgba(255, 0, 0, 0.4) !important;
+    transition: none !important;
+}
+
+/* Strike Persistence */
+body.strike-1::after {
+    box-shadow: inset 0 0 50px rgba(255, 0, 0, 0.2);
+}
+body.strike-2::after {
+    box-shadow: inset 0 0 120px rgba(255, 0, 0, 0.4);
+}
+
+/* Timer Animations */
+body.time-60::after {
+    animation: pulse-60 2s infinite;
+}
+body.time-30::after {
+    animation: pulse-30 1s infinite;
+}
+body.time-15 {
+    animation: shake 0.5s infinite;
+}
+body.time-15::after {
+    animation: pulse-15 0.5s infinite;
+    box-shadow: inset 0 0 150px rgba(255, 0, 0, 0.6);
+}
+
+@keyframes pulse-60 {
+    0%, 100% { background-color: rgba(255, 0, 0, 0.0); }
+    50% { background-color: rgba(255, 0, 0, 0.05); }
+}
+@keyframes pulse-30 {
+    0%, 100% { background-color: rgba(255, 0, 0, 0.05); box-shadow: inset 0 0 80px rgba(255, 0, 0, 0.3); }
+    50% { background-color: rgba(255, 0, 0, 0.1); box-shadow: inset 0 0 120px rgba(255, 0, 0, 0.5); }
+}
+@keyframes pulse-15 {
+    0%, 100% { background-color: rgba(255, 0, 0, 0.1); box-shadow: inset 0 0 120px rgba(255, 0, 0, 0.5); }
+    50% { background-color: rgba(255, 0, 0, 0.2); box-shadow: inset 0 0 200px rgba(255, 0, 0, 0.8); }
+}
+@keyframes shake {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(-2px, 2px); }
+    50% { transform: translate(2px, -2px); }
+    75% { transform: translate(-2px, -2px); }
+}
+
 /* Base Styles */
 body, html {
     margin: 0;
@@ -29,6 +89,41 @@ h1 {
 .button-container {
     display: flex;
     gap: 2rem;
+}
+
+/* Role Selection Hover Tooltips */
+.button-container button {
+    position: relative;
+}
+
+.button-container button::after {
+    content: attr(data-desc);
+    position: absolute;
+    top: 110%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #111;
+    color: #0f0;
+    padding: 12px;
+    border: 2px solid #555;
+    border-radius: 5px;
+    width: 250px;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    white-space: normal;
+    text-transform: none;
+    letter-spacing: normal;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 100;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    font-weight: normal;
+}
+
+.button-container button:hover::after {
+    opacity: 1;
+    transform: translateX(-50%) translateY(5px);
 }
 
 button {
@@ -116,6 +211,19 @@ button:hover {
     max-width: 80%;
     width: 600px;
     text-align: left;
+    /* Sleek Entry Animation */
+    animation: modalEntry 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes modalEntry {
+    from {
+        opacity: 0;
+        transform: translateY(-30px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
 /* Briefing Specific Styles */
@@ -223,6 +331,8 @@ button:hover {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
+    position: relative;
+    z-index: 6000; /* Higher than start-overlay (5000) */
 }
 
 #info-panel h2 {
@@ -471,11 +581,41 @@ button:hover {
 }
 
 .battery {
-    width: 30px;
-    height: 60px;
-    background-color: #555;
-    border: 3px solid #777;
+    width: 25px;
+    height: 55px;
+    background-color: #111; /* Black body */
+    border: 1px solid #000;
     position: relative;
+    border-radius: 2px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+    margin-top: 8px; /* Space for the nub */
+}
+
+/* Copper Top */
+.battery::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 35%;
+    background: linear-gradient(to right, #b87333, #ffb86c, #b87333); 
+    border-bottom: 1px solid #000;
+    border-radius: 1px 1px 0 0;
+}
+
+/* Silver Terminal Nub */
+.battery::after {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 10px;
+    height: 6px;
+    background: linear-gradient(to right, #888, #fff, #888);
+    border: 1px solid #444;
+    border-radius: 2px 2px 0 0;
 }
 
 #edgework-indicators {
@@ -486,11 +626,37 @@ button:hover {
 }
 
 .indicator {
-    padding: 5px 10px;
-    border: 2px solid #555;
-    font-size: 1.2rem;
-    position: relative;
+    padding: 5px 12px;
+    border: 2px solid #444;
+    font-size: 1.1rem;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    background-color: #000;
+    color: #555; /* Dimmer for unlit */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-radius: 2px;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+}
+
+.indicator-led {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
     background-color: #111;
+    border: 1px solid #333;
+}
+
+.indicator.lit {
+    color: #fff;
+    border-color: #777;
+}
+
+.indicator.lit .indicator-led {
+    background-color: #fff;
+    border-color: #fff;
+    box-shadow: 0 0 10px #fff;
 }
 
 /* Simple Wires Styles */
@@ -880,11 +1046,17 @@ button:hover {
 .comp-wire.cut { opacity: 0; pointer-events: none; }
 
 .comp-star {
-    font-size: 1.2rem;
-    color: #222;
+    font-size: 1.5rem;
+    color: #000;
+    opacity: 0.1; /* Almost invisible when absent */
+    transition: opacity 0.2s;
 }
 
-.comp-star.present { color: #000; }
+.comp-star.present { 
+    opacity: 1; /* Fully visible when present */
+    color: #fff; /* White star for better contrast against dark background */
+    text-shadow: 0 0 5px #fff;
+}
 
 /* Wire Sequences Styles */
 .wire-sequences { padding: 5px; justify-content: space-between; }

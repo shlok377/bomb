@@ -11,13 +11,13 @@ export class WireSequences {
 
         this.rules = {
             red: [
-                'C', 'B', 'A', 'AC', 'B', 'AC', 'ABC', 'AB', 'B'
+                'C', 'B', 'A', 'A or C', 'B', 'A or C', 'A, B, or C', 'A or B', 'B'
             ],
             blue: [
-                'B', 'AC', 'B', 'A', 'B', 'BC', 'C', 'AC', 'A'
+                'B', 'A or C', 'B', 'A', 'B', 'B or C', 'C', 'A or C', 'A'
             ],
             black: [
-                'ABC', 'AC', 'B', 'AC', 'B', 'BC', 'AB', 'C', 'C'
+                'A, B, or C', 'A or C', 'B', 'A or C', 'B', 'B or C', 'A or B', 'C', 'C'
             ]
         };
     }

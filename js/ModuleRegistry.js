@@ -98,8 +98,8 @@ export const ModuleRegistry = {
                 slot.appendChild(cover);
 
                 // Phase-based auto-reveal timeout
-                let revealTime = 20000; // Phase 1: 20s
-                if (phase === 2) revealTime = 15000; // Phase 2: 15s
+                let revealTime = 30000; // Phase 1: 30s
+                if (phase === 2) revealTime = 20000; // Phase 2: 20s
                 if (phase === 3) revealTime = 10000; // Phase 3: 10s
 
                 setTimeout(() => {

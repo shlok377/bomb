@@ -69,6 +69,16 @@ export const GameEngine = {
         // Play tick sound
         AudioManager.playTick();
         
+        // Update Screen Effects based on time
+        document.body.classList.remove('time-60', 'time-30', 'time-15');
+        if (this.timeLeft <= 15) {
+            document.body.classList.add('time-15');
+        } else if (this.timeLeft <= 30) {
+            document.body.classList.add('time-30');
+        } else if (this.timeLeft <= 60) {
+            document.body.classList.add('time-60');
+        }
+
         const event = new CustomEvent('game-tick', { detail: { timeLeft: this.timeLeft } });
         window.dispatchEvent(event);
     },
@@ -79,6 +89,15 @@ export const GameEngine = {
         this.strikes++;
         AudioManager.playStrike();
         Logger.log("GameEngine", `STRIKE! Total: ${this.strikes}. Speeding up!`);
+
+        // Brief Strike Flash
+        document.body.classList.add('strike-flash');
+        setTimeout(() => document.body.classList.remove('strike-flash'), 300);
+
+        // Persistent Strike Damage Overlay
+        document.body.classList.remove('strike-1', 'strike-2');
+        if (this.strikes === 1) document.body.classList.add('strike-1');
+        if (this.strikes >= 2) document.body.classList.add('strike-2');
         
         const event = new CustomEvent('game-strike', { detail: { strikes: this.strikes } });
         window.dispatchEvent(event);
@@ -110,6 +129,9 @@ export const GameEngine = {
         if (this.isGameOver) return;
         this.isGameOver = true;
         
+        // Clear screen effects
+        document.body.classList.remove('time-60', 'time-30', 'time-15', 'strike-1', 'strike-2', 'strike-flash');
+
         try {
             clearInterval(this.timerInterval);
             AudioManager.playExplosion();
@@ -132,6 +154,10 @@ export const GameEngine = {
     victory() {
         this.isGameOver = true;
         clearInterval(this.timerInterval);
+
+        // Clear screen effects
+        document.body.classList.remove('time-60', 'time-30', 'time-15', 'strike-1', 'strike-2', 'strike-flash');
+
         AudioManager.playDisarmed(); // Chime for victory
         Logger.log("GameEngine", "Bomb Defused! You Win!");
 

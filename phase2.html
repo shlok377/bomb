@@ -78,45 +78,68 @@
         import { UIManager } from './js/UIManager.js';
         import { ModuleRegistry } from './js/ModuleRegistry.js';
         import { AudioManager } from './js/AudioManager.js';
+        import { Logger } from './js/Logger.js';
+
+        window.onerror = function(message, source, lineno, colno, error) {
+            console.error(`[PHASE 2 ERROR] ${message} at ${source}:${lineno}`);
+        };
 
         document.addEventListener('DOMContentLoaded', () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const level = urlParams.get('level') || "1";
-            
-            document.getElementById('start-level-num').textContent = `Level ${level}`;
-            if (document.getElementById('current-level')) {
-                document.getElementById('current-level').textContent = level;
-            }
-
-            // Hide Status Report if not Level 1
-            if (level !== "1") {
-                document.getElementById('info-panel').style.display = 'none';
-            } else {
-                // Update Phase 2 specific info
-                document.getElementById('info-content').innerHTML = `
-                    <p><strong>INTEL: ADVANCED COORDINATION</strong></p>
-                    <ul style="padding-left: 15px; margin-top: 10px;">
-                        <li><strong>15 Seconds:</strong> You only have 15 seconds to use the Hex Codes. Speed is life.</li>
-                        <li><strong>Navigation:</strong> For the navigation module (Mazes), find and describe the green circle identifiers first.</li>
-                        <li><strong>Persistence:</strong> Some modules span multiple panels. Do not click 'Next' until the Expert confirms the current set is safe.</li>
-                        <li><strong>Vigilance:</strong> Mistakes now cause the timer to accelerate even more aggressively.</li>
-                    </ul>
-                `;
-            }
-
-            document.getElementById('begin-btn').onclick = async () => {
-                document.getElementById('start-overlay').style.display = 'none';
+            try {
+                Logger.log("PHASE 2", "Initializing Level...");
                 
-                // Initialize and Resume Audio (MUST happen in user gesture)
-                AudioManager.init();
-                await AudioManager.resume();
-                AudioManager.playClick(); 
+                const urlParams = new URLSearchParams(window.location.search);
+                const level = urlParams.get('level') || "1";
+                Logger.log("PHASE 2", `Received level: ${level}`);
 
-                // Phase 2 has 4 modules
-                GameEngine.init(4);
-                UIManager.init();
-                ModuleRegistry.injectModules('face-front', 4, 2);
-            };
+                document.getElementById('start-level-num').textContent = `Level ${level}`;
+                if (document.getElementById('current-level')) {
+                    document.getElementById('current-level').textContent = level;
+                }
+
+                // Hide Status Report if not Level 1
+                if (level !== "1") {
+                    if (document.getElementById('info-panel')) {
+                        document.getElementById('info-panel').style.display = 'none';
+                    }
+                } else {
+                    const infoContent = document.getElementById('info-content');
+                    if (infoContent) {
+                        infoContent.innerHTML = `
+                            <p><strong>INTEL: ADVANCED COORDINATION</strong></p>
+                            <ul style="padding-left: 15px; margin-top: 10px;">
+                                <li><strong>20 Seconds:</strong> You only have 20 seconds to use the Hex Codes. Speed is life.</li>
+                                <li><strong>Navigation:</strong> For the navigation module (Mazes), find and describe the green circle identifiers first.</li>
+                                <li><strong>Persistence:</strong> Some modules span multiple panels. Do not click 'Next' until the Expert confirms the current set is safe.</li>
+                                <li><strong>Vigilance:</strong> Mistakes now cause the timer to accelerate even more aggressively.</li>
+                            </ul>
+                        `;
+                    }
+                }
+
+                const beginBtn = document.getElementById('begin-btn');
+                beginBtn.onclick = async () => {
+                    try {
+                        console.log("[PHASE 2] Starting Mission...");
+                        const overlay = document.getElementById('start-overlay');
+                        if (overlay) {
+                            overlay.setAttribute('style', 'display: none !important');
+                        }
+                        
+                        AudioManager.init();
+                        await AudioManager.resume();
+                        AudioManager.playClick(); 
+
+                        GameEngine.init(4);
+                        UIManager.init();
+                        ModuleRegistry.injectModules('face-front', 4, 2);
+                    } catch (err) {
+                        console.error("[PHASE 2] Failed to start mission", err);
+                    }
+                };
+            } catch (err) {
+                Logger.error("PHASE 2", "Initialization failed", err);
+            }
         });
     </script>
 </body>

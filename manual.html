@@ -69,7 +69,7 @@
     <!-- Sticky Note for Temporary Intel -->
     <div id="sticky-note">
         <div id="note-title-box"> 
-            <div id="note-title">Scratchpad (Temporary Intel)</div>
+            <div id="note-title">Scratchpad (Grab Here to Drag)</div>
             <div id="note-close-btn">
                 <img src="https://openclipart.org/image/2400px/svg_to_png/183568/close-button.png" alt="close">
             </div>
@@ -78,6 +78,9 @@
             <textarea id="note-area" placeholder="Use this for temporary text..."></textarea>
         </div>
     </div>
+
+    <!-- Reopen Note Button -->
+    <div id="open-note-btn" title="Open Scratchpad">📝</div>
 
     <div id="classified-footer">
         PROPERTY OF THE DEPARTMENT OF DEFUSAL - EST. 2016
@@ -95,6 +98,13 @@
         // Close logic
         document.getElementById("note-close-btn").onclick = function() {
             document.getElementById("sticky-note").style.display = "none";
+            document.getElementById("open-note-btn").style.display = "block";
+        };
+
+        // Open logic
+        document.getElementById("open-note-btn").onclick = function() {
+            document.getElementById("sticky-note").style.display = "block";
+            document.getElementById("open-note-btn").style.display = "none";
         };
     </script>
 </body>
