@@ -5,14 +5,28 @@
       "id": "verbal-relays",
       "title": "On the Subject of Who's on First",
       "flavorText": "This contraption is like something out of a sketch comedy routine... I'll keep this brief, as words only complicate matters.",
+      "content": [
+        {
+          "type": "text",
+          "text": "1. Look at the word on the main display. Use the 'Step 1' table to find which button position to check."
+        },
+        {
+          "type": "text",
+          "text": "2. Look at the label of the button in that specific position. Use the 'Step 2' list for that label."
+        },
+        {
+          "type": "text",
+          "text": "3. The Expert reads the words in the list one by one. The first word they say that is also present on one of the 6 buttons is the correct one to press."
+        }
+      ],
       "logic": {
         "step1": {
-          "YES": "middle-left", "FIRST": "top-right", "DISPLAY": "bottom-right", "OKAY": "top-right", "SAYS": "bottom-right", 
-          "NOTHING": "middle-left", "": "bottom-left", "BLANK": "middle-right", "NO": "bottom-right", "LED": "middle-left",
-          "LEAD": "bottom-right", "READ": "middle-right", "RED": "middle-right", "REED": "bottom-left", "LEED": "bottom-left",
-          "THEY ARE": "bottom-left", "YOUR": "middle-right", "YOU'RE": "middle-right", "YOURS": "middle-left", "YOU": "middle-right",
-          "YOU ARE": "bottom-right", "U": "bottom-left", "THEY'RE": "bottom-left", "THERE": "bottom-right", "THEIR": "middle-right",
-          "THEY": "middle-left", "SEE": "bottom-right", "C": "top-right", "CEE": "bottom-right"
+          "YES": "Middle Left", "FIRST": "Top Right", "DISPLAY": "Bottom Right", "OKAY": "Top Right", "SAYS": "Bottom Right", 
+          "NOTHING": "Middle Left", "": "Bottom Left", "BLANK": "Middle Right", "NO": "Bottom Right", "LED": "Middle Left",
+          "LEAD": "Bottom Right", "READ": "Middle Right", "RED": "Middle Right", "REED": "Bottom Left", "LEED": "Bottom Left",
+          "HOLD ON": "Bottom Right", "YOU": "Middle Right", "YOU ARE": "Bottom Right", "YOUR": "Middle Right", "YOU'RE": "Middle Right",
+          "UR": "Top Left", "THERE": "Bottom Right", "THEY'RE": "Bottom Left", "THEIR": "Middle Right", "THEY ARE": "Bottom Left",
+          "SEE": "Bottom Right", "C": "Top Right", "CEE": "Bottom Right"
         },
         "step2": {
           "READY": ["YES", "OKAY", "WHAT", "MIDDLE", "LEFT", "PRESS", "RIGHT", "BLANK", "READY", "NO", "FIRST", "UHHH", "NOTHING", "WAIT"],
@@ -32,17 +46,17 @@
           "YOU": ["SURE", "YOU ARE", "YOUR", "YOU'RE", "NEXT", "UH HUH", "UR", "HOLD", "WHAT?", "YOU", "UH UH", "LIKE", "DONE", "U"],
           "YOU ARE": ["YOUR", "NEXT", "LIKE", "UH HUH", "WHAT?", "DONE", "UH UH", "HOLD", "YOU", "U", "YOU'RE", "SURE", "UR", "YOU ARE"],
           "YOUR": ["UH UH", "YOU ARE", "UH HUH", "YOUR", "NEXT", "UR", "SURE", "U", "YOU'RE", "YOU", "WHAT?", "HOLD", "LIKE", "DONE"],
-          "YOU'RE": ["YOU", "YOU'RE", "UR", "NEXT", "UH UH", "YOU ARE", "U", "YOUR", "WHAT?", "UH HUH", "SURE", "DONE", "LIKE", "HOLD"],
-          "UR": ["DONE", "U", "UR", "UH HUH", "WHAT?", "SURE", "YOUR", "HOLD", "YOU'RE", "LIKE", "NEXT", "UH UH", "YOU ARE", "YOU"],
+          "YOU'RE": ["YOU", "YOU'RE", "UR", "NEXT", "UH HUH", "YOU ARE", "U", "YOUR", "WHAT?", "UH HUH", "SURE", "DONE", "LIKE", "HOLD"],
+          "UR": ["DONE", "U", "UR", "UH HUH", "WHAT?", "SURE", "YOUR", "HOLD", "YOU'RE", "LIKE", "NEXT", "UH HUH", "YOU ARE", "YOU"],
           "U": ["UH HUH", "SURE", "NEXT", "WHAT?", "YOU'RE", "UR", "UH UH", "DONE", "U", "YOU", "LIKE", "HOLD", "YOU ARE", "YOUR"],
-          "UH HUH": ["UH HUH", "YOUR", "YOU ARE", "YOU", "DONE", "HOLD", "UH UH", "NEXT", "SURE", "LIKE", "YOU'RE", "UR", "U", "WHAT?"],
+          "UH HUH": ["UH HUH", "YOUR", "YOU ARE", "YOU", "DONE", "HOLD", "UH HUH", "NEXT", "SURE", "LIKE", "YOU'RE", "UR", "U", "WHAT?"],
           "UH UH": ["UR", "U", "YOU ARE", "YOU'RE", "NEXT", "UH HUH", "DONE", "YOU", "UH HUH", "LIKE", "YOUR", "SURE", "HOLD", "WHAT?"],
-          "WHAT?": ["YOU", "HOLD", "YOU'RE", "YOUR", "U", "DONE", "UH UH", "LIKE", "YOU ARE", "UH HUH", "UR", "NEXT", "WHAT?", "SURE"],
+          "WHAT?": ["YOU", "HOLD", "YOU'RE", "YOUR", "U", "DONE", "UH HUH", "LIKE", "YOU ARE", "UH HUH", "UR", "NEXT", "WHAT?", "SURE"],
           "DONE": ["SURE", "UH HUH", "NEXT", "WHAT?", "YOUR", "UR", "YOU'RE", "HOLD", "LIKE", "YOU", "U", "YOU ARE", "UH UH", "DONE"],
-          "NEXT": ["WHAT?", "UH HUH", "UH UH", "YOUR", "HOLD", "SURE", "NEXT", "LIKE", "DONE", "YOU ARE", "UR", "YOU'RE", "U", "YOU"],
-          "HOLD": ["YOU ARE", "U", "DONE", "UH UH", "YOU", "UR", "SURE", "WHAT?", "YOU'RE", "NEXT", "HOLD", "UH HUH", "YOUR", "LIKE"],
+          "NEXT": ["WHAT?", "UH HUH", "UH HUH", "YOUR", "HOLD", "SURE", "NEXT", "LIKE", "DONE", "YOU ARE", "UR", "YOU'RE", "U", "YOU"],
+          "HOLD": ["YOU ARE", "U", "DONE", "UH HUH", "YOU", "UR", "SURE", "WHAT?", "YOU'RE", "NEXT", "HOLD", "UH HUH", "YOUR", "LIKE"],
           "SURE": ["YOU ARE", "DONE", "LIKE", "YOU'RE", "YOU", "HOLD", "UH HUH", "UR", "SURE", "U", "WHAT?", "NEXT", "YOUR", "UH UH"],
-          "LIKE": ["YOU'RE", "NEXT", "U", "UR", "HOLD", "DONE", "UH UH", "WHAT?", "UH HUH", "YOU", "LIKE", "SURE", "YOU ARE", "YOUR"]
+          "LIKE": ["YOU'RE", "NEXT", "U", "UR", "HOLD", "DONE", "UH HUH", "WHAT?", "UH HUH", "YOU", "LIKE", "SURE", "YOU ARE", "YOUR"]
         }
       }
     },
