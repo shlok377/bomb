@@ -138,6 +138,32 @@
       "id": "cryptographic-passphrases",
       "title": "On the Subject of Passwords",
       "flavorText": "Fortunately this password doesn't seem to meet standard government security requirements...",
+      "content": [
+        {
+          "type": "text",
+          "text": "1. Defuser: Scroll through all 6 letters in the first column and read them out loud to the Expert."
+        },
+        {
+          "type": "text",
+          "text": "2. Expert: Look at the word list in the manual. Cross off every word that does not start with one of those 6 letters."
+        },
+        {
+          "type": "text",
+          "text": "3. Defuser: Now scroll through the 6 letters in the second column."
+        },
+        {
+          "type": "text",
+          "text": "4. Expert: Look at your remaining words. Cross off any that don't have one of those letters in the second position."
+        },
+        {
+          "type": "text",
+          "text": "5. Repeat: Usually, by the 3rd or 4th column, there will only be one word left in the Expert's list."
+        },
+        {
+          "type": "text",
+          "text": "6. Action: The Expert tells the Defuser that word. The Defuser flips the letters to match it and hits Submit."
+        }
+      ],
       "logic": {
         "words": [
           "about", "after", "again", "below", "could", "every", "first", "found", "great", "house",

@@ -44,7 +44,8 @@ export class Passwords {
                 }
             }
             this.columns[i] = column.sort(() => Math.random() - 0.5);
-            this.indices[i] = this.columns[i].indexOf(char);
+            // Start at a random index (not necessarily the correct one)
+            this.indices[i] = Math.floor(Math.random() * 6);
         }
         Logger.log("Passwords", "Password Generated", this.selectedWord);
     }
