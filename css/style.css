@@ -1372,42 +1372,95 @@ button:hover {
     height: 100%;
 }
 
+.comp-slot-reveal {
+    animation: keypadReveal 0.4s var(--anim-bouncy) both;
+}
+
 .comp-led {
     width: 8px;
     height: 8px;
     border-radius: 50%;
     background-color: #300;
+    transition: background-color 0.3s, box-shadow 0.3s;
 }
 
 .comp-led.lit {
     background-color: #f00;
-    box-shadow: 0 0 5px #f00;
+    box-shadow: 0 0 8px #f00, 0 0 15px rgba(255, 0, 0, 0.4);
+    animation: ledPulse 2s infinite alternate var(--anim-smooth);
+}
+
+@keyframes ledPulse {
+    from { filter: brightness(0.8); box-shadow: 0 0 5px #f00; }
+    to { filter: brightness(1.3); box-shadow: 0 0 12px #f00; }
 }
 
 .comp-wire {
-    width: 10px;
+    width: 12px;
     height: 60px;
     background-color: #fff;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 6px;
+    position: relative;
+    transition: transform var(--time-fast) var(--anim-bouncy), box-shadow var(--time-fast) var(--anim-smooth);
+    will-change: transform;
+}
+
+.comp-wire:hover {
+    transform: scaleX(1.15);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
 }
 
 .comp-wire.red { background-color: #f00; }
 .comp-wire.blue { background-color: #00f; }
 .comp-wire.red.blue { background: linear-gradient(to right, #f00 50%, #00f 50%); }
-.comp-wire.cut { opacity: 0; pointer-events: none; }
+
+.comp-wire.cut {
+    opacity: 1 !important;
+    pointer-events: none;
+    background-color: transparent !important;
+    box-shadow: none !important;
+}
+
+.comp-wire.cut::before,
+.comp-wire.cut::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 40%;
+    background: inherit;
+    border-radius: 4px;
+    transition: transform var(--time-med) var(--anim-bouncy);
+}
+
+.comp-wire.cut::before {
+    top: -5px;
+    transform: translateY(-15px) rotate(-10deg);
+}
+
+.comp-wire.cut::after {
+    bottom: -5px;
+    transform: translateY(15px) rotate(10deg);
+}
 
 .comp-star {
     font-size: 1.5rem;
     color: #000;
     opacity: 0.1; /* Almost invisible when absent */
-    transition: opacity 0.2s;
+    transition: opacity 0.5s var(--anim-smooth), color 0.5s;
 }
 
 .comp-star.present { 
     opacity: 1; /* Fully visible when present */
     color: #fff; /* White star for better contrast against dark background */
     text-shadow: 0 0 5px #fff;
+    animation: starShimmer 3s infinite alternate var(--anim-smooth);
+}
+
+@keyframes starShimmer {
+    0%, 100% { filter: brightness(1); transform: scale(1); }
+    50% { filter: brightness(1.5); transform: scale(1.1); text-shadow: 0 0 12px #fff; }
 }
 
 /* Wire Sequences Styles */
