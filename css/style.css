@@ -1464,7 +1464,7 @@ button:hover {
 }
 
 /* Wire Sequences Styles */
-.wire-sequences { padding: 5px; justify-content: space-between; }
+.wire-sequences { padding: 5px; justify-content: space-between; overflow: hidden; }
 
 .ws-panel-label {
     font-size: 0.75rem;
@@ -1473,6 +1473,17 @@ button:hover {
     padding: 2px 8px;
     border: 1px solid #444;
     margin-bottom: 5px;
+    transition: box-shadow 0.3s;
+}
+
+.ws-panel-label.pulse {
+    animation: labelPulseOnce 0.4s var(--anim-smooth);
+}
+
+@keyframes labelPulseOnce {
+    0% { box-shadow: 0 0 0 #fff; transform: scale(1); }
+    50% { box-shadow: 0 0 10px #fff; transform: scale(1.1); }
+    100% { box-shadow: 0 0 0 #fff; transform: scale(1); }
 }
 
 .ws-wire-container {
@@ -1481,6 +1492,22 @@ button:hover {
     justify-content: space-around;
     height: 60%;
     width: 90%;
+    position: relative;
+    transition: transform 0.4s var(--anim-snappy), opacity 0.4s;
+}
+
+.ws-wire-container.slide-out {
+    transform: translateX(-120%);
+    opacity: 0;
+}
+
+.ws-wire-container.slide-in {
+    animation: slideInRight 0.4s var(--anim-snappy) both;
+}
+
+@keyframes slideInRight {
+    from { transform: translateX(120%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
 }
 
 .ws-wire-row {
@@ -1499,24 +1526,53 @@ button:hover {
     position: relative;
     border-radius: 6px;
     box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+    transition: transform var(--time-fast) var(--anim-bouncy), box-shadow var(--time-fast) var(--anim-smooth);
+    will-change: transform;
 }
 
-.ws-wire::before, .ws-wire::after {
+.ws-wire:hover {
+    transform: scale(1.03);
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.3), 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.ws-wire.red { --wire-color: #f00; background-color: #f00; }
+.ws-wire.blue { --wire-color: #00f; background-color: #00f; }
+.ws-wire.black { --wire-color: #111; background-color: #111; }
+
+.ws-wire.cut {
+    opacity: 1 !important;
+    pointer-events: none;
+    background-color: transparent !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+}
+
+.ws-wire.cut::before,
+.ws-wire.cut::after {
     content: '';
     position: absolute;
-    top: -4px;
-    width: 10px;
-    height: 18px;
-    background-color: #222;
-    border: 1px solid #000;
+    top: 0;
+    height: 100%;
+    width: 40%;
+    background-color: var(--wire-color);
+    border: 1px solid rgba(0,0,0,0.5);
+    border-radius: 6px;
+    transition: transform var(--time-med) var(--anim-bouncy);
 }
-.ws-wire::before { left: -10px; }
-.ws-wire::after { right: -10px; }
 
-.ws-wire.red { background-color: #f00; }
-.ws-wire.blue { background-color: #00f; }
-.ws-wire.black { background-color: #111; }
-.ws-wire.cut { opacity: 0; pointer-events: none; }
+.ws-wire.cut::before {
+    left: -10px;
+    transform: translateX(-15px) rotate(-3deg);
+}
+
+.ws-wire.cut::after {
+    right: -10px;
+    transform: translateX(15px) rotate(3deg);
+}
+
+.ws-reveal {
+    animation: wireReveal var(--time-med) var(--anim-bouncy) both;
+}
 
 .ws-to-label { 
     font-weight: bold; 
@@ -1532,13 +1588,17 @@ button:hover {
     background-color: #444;
     color: white;
     border: 2px solid #666;
+    box-shadow: 0 3px 0 #222;
     cursor: pointer;
     position: relative;
-    z-index: 100; /* Higher z-index to avoid overlap */
+    z-index: 100;
+    transition: transform 0.1s var(--anim-snappy), box-shadow 0.1s var(--anim-snappy);
+    user-select: none;
 }
 
-.ws-next-btn:hover {
-    background-color: #666;
+.ws-next-btn:active {
+    transform: translateY(2px);
+    box-shadow: 0 1px 0 #222;
 }
 
 /* Mazes Styles */

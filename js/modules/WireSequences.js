@@ -50,16 +50,16 @@ export class WireSequences {
         }
     }
 
-    render() {
+    render(isSlideIn = false) {
         const panel = this.panels[this.currentPanel];
         this.container.innerHTML = `
             <div class="module wire-sequences">
                 <div class="module-status"></div>
                 <div class="ws-panel-label">Panel ${this.currentPanel + 1}/4</div>
-                <div class="ws-wire-container">
+                <div class="ws-wire-container ${isSlideIn ? 'slide-in' : ''}">
                     ${panel.map((w, i) => `
                         <div class="ws-wire-row">
-                            <div class="ws-wire ${w.color} ${w.cut ? 'cut' : ''}" data-index="${i}"></div>
+                            <div class="ws-wire ${w.color} ${w.cut ? 'cut' : ''} ${!isSlideIn ? 'ws-reveal' : ''}" style="animation-delay: ${i * 0.1}s" data-index="${i}"></div>
                             <div class="ws-to-label">${w.to}</div>
                         </div>
                     `).join('')}
@@ -67,6 +67,11 @@ export class WireSequences {
                 <button class="ws-next-btn">${this.currentPanel === 3 ? 'Finish' : 'Next'}</button>
             </div>
         `;
+
+        if (isSlideIn) {
+            const label = this.container.querySelector('.ws-panel-label');
+            label.classList.add('pulse');
+        }
 
         this.container.querySelectorAll('.ws-wire').forEach(wire => {
             wire.onclick = () => this.handleCut(parseInt(wire.dataset.index));
@@ -99,8 +104,13 @@ export class WireSequences {
 
     nextPanel() {
         if (this.currentPanel < 3) {
-            this.currentPanel++;
-            this.render();
+            const container = this.container.querySelector('.ws-wire-container');
+            container.classList.add('slide-out');
+            
+            setTimeout(() => {
+                this.currentPanel++;
+                this.render(true);
+            }, 400);
         } else {
             this.disarm();
         }
