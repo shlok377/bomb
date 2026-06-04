@@ -79,38 +79,15 @@ export class Passwords {
     cycle(colIdx, dir) {
         if (this.isDisarmed || GameEngine.isGameOver) return;
         
-        const container = this.container.querySelector(`.pass-char-container[data-col="${colIdx}"]`);
-        const oldCharEl = container.querySelector('.pass-char');
-        
-        // Setup new character element
-        const nextIdx = (this.indices[colIdx] + dir + 6) % 6;
-        const newCharEl = document.createElement('div');
-        newCharEl.className = 'pass-char';
-        newCharEl.textContent = this.columns[colIdx][nextIdx].toUpperCase();
-        
-        // Apply animation classes
-        if (dir > 0) { // Down
-            oldCharEl.classList.add('slide-up-out');
-            newCharEl.classList.add('slide-up-in');
-        } else { // Up
-            oldCharEl.classList.add('slide-down-out');
-            newCharEl.classList.add('slide-down-in');
-        }
-        
-        container.appendChild(newCharEl);
-        
-        // Trigger animation
-        setTimeout(() => {
-            newCharEl.classList.remove('slide-up-in', 'slide-down-in');
-            this.indices[colIdx] = nextIdx;
-        }, 50);
+        // 1. Synchronously update the index
+        this.indices[colIdx] = (this.indices[colIdx] + dir + 6) % 6;
+        const char = this.columns[colIdx][this.indices[colIdx]].toUpperCase();
 
-        // Cleanup old element
-        setTimeout(() => {
-            if (oldCharEl.parentNode === container) {
-                container.removeChild(oldCharEl);
-            }
-        }, 200);
+        // 2. Clear and replace with a SINGLE animated element
+        const container = this.container.querySelector(`.pass-char-container[data-col="${colIdx}"]`);
+        const animClass = dir > 0 ? 'slide-in-up' : 'slide-in-down';
+        
+        container.innerHTML = `<div class="pass-char ${animClass}">${char}</div>`;
     }
 
     submit() {
