@@ -51,6 +51,10 @@ export class TheButton {
         this.isHolding = true;
         this.holdStartTime = Date.now();
         
+        const btn = this.container.querySelector('.button-element');
+        btn.classList.add('pressed');
+        btn.classList.add('holding');
+        
         // After 500ms, assume it's a hold and show the strip
         setTimeout(() => {
             if (this.isHolding) {
@@ -64,7 +68,9 @@ export class TheButton {
         const stripColors = ['blue', 'white', 'yellow', 'red'];
         this.stripColor = stripColors[Math.floor(Math.random() * stripColors.length)];
         strip.style.backgroundColor = this.stripColor;
-        strip.style.display = 'block';
+        strip.style.color = this.stripColor; // Used for box-shadow currentColor
+        strip.classList.add('show');
+        strip.classList.add('glow');
         Logger.log("TheButton", `Button held. Strip color: ${this.stripColor}`);
     }
 
@@ -72,9 +78,14 @@ export class TheButton {
         if (!this.isHolding) return;
         this.isHolding = false;
         
+        const btn = this.container.querySelector('.button-element');
+        btn.classList.remove('pressed');
+        btn.classList.remove('holding');
+        
         const holdDuration = Date.now() - this.holdStartTime;
         const strip = this.container.querySelector('.indicator-strip');
-        strip.style.display = 'none';
+        strip.classList.remove('show');
+        strip.classList.remove('glow');
 
         if (holdDuration < 500) {
             this.processPress();

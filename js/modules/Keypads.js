@@ -63,7 +63,8 @@ export class Keypads {
         const grid = this.container.querySelector('.keypad-grid');
         this.selectedSymbols.forEach((symbol, index) => {
             const btn = document.createElement('button');
-            btn.className = 'keypad-btn';
+            btn.className = 'keypad-btn keypad-reveal';
+            btn.style.animationDelay = `${index * 0.05}s`;
             btn.dataset.symbol = symbol;
             // For now, just display the name. In production, this would be an icon.
             btn.innerHTML = `<span class="symbol-icon">${this.getSymbolIcon(symbol)}</span>`;
@@ -103,6 +104,7 @@ export class Keypads {
 
     disarm() {
         this.isDisarmed = true;
+
         this.container.querySelector('.module-status').classList.add('disarmed');
         Logger.log("Keypads", "Module Disarmed");
         GameEngine.moduleSolved();
@@ -111,7 +113,16 @@ export class Keypads {
     strike() {
         Logger.warn("Keypads", "Incorrect symbol order!");
         this.pressedCount = 0;
-        this.container.querySelectorAll('.keypad-btn').forEach(b => b.classList.remove('pressed'));
+        const buttons = this.container.querySelectorAll('.keypad-btn');
+        buttons.forEach(b => {
+            b.classList.add('error');
+            b.classList.remove('pressed');
+        });
+        
+        setTimeout(() => {
+            buttons.forEach(b => b.classList.remove('error'));
+        }, 300);
+        
         GameEngine.addStrike();
     }
 }

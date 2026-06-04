@@ -818,7 +818,14 @@ button:hover {
     justify-content: center;
     cursor: pointer;
     border: 10px solid rgba(0,0,0,0.2);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+    box-shadow: 0 6px 0 rgba(0,0,0,0.4), 0 10px 20px rgba(0,0,0,0.3);
+    transition: transform var(--time-fast) var(--anim-bouncy), box-shadow var(--time-fast) var(--anim-bouncy);
+    user-select: none;
+}
+
+.the-button .button-element:active, .the-button .button-element.pressed {
+    transform: scale(0.92) translateY(4px);
+    box-shadow: 0 2px 0 rgba(0,0,0,0.4), 0 5px 10px rgba(0,0,0,0.3);
 }
 
 .button-element.blue { background-color: #00f; }
@@ -830,6 +837,16 @@ button:hover {
     font-weight: bold;
     font-size: 1rem;
     pointer-events: none;
+    transition: opacity var(--time-fast);
+}
+
+.the-button .button-element.holding .button-label {
+    animation: labelPulse 1s infinite alternate var(--anim-smooth);
+}
+
+@keyframes labelPulse {
+    from { opacity: 0.6; filter: brightness(0.8); }
+    to { opacity: 1; filter: brightness(1.2); }
 }
 
 .indicator-strip {
@@ -837,10 +854,30 @@ button:hover {
     width: 15px;
     height: 60px;
     position: absolute;
-    right: 10px;
+    right: 15px;
     top: 50%;
     transform: translateY(-50%);
     border: 2px solid #222;
+    z-index: 10;
+}
+
+.indicator-strip.show {
+    display: block;
+    animation: stripReveal 0.4s var(--anim-bouncy) both;
+}
+
+@keyframes stripReveal {
+    from { transform: translateY(-50%) translateX(20px); opacity: 0; }
+    to { transform: translateY(-50%) translateX(0); opacity: 1; }
+}
+
+.indicator-strip.glow {
+    animation: stripGlow 1s infinite alternate var(--anim-smooth), stripReveal 0.4s var(--anim-bouncy) both;
+}
+
+@keyframes stripGlow {
+    from { box-shadow: 0 0 5px currentColor; }
+    to { box-shadow: 0 0 15px currentColor; }
 }
 
 /* Keypads Styles */
@@ -861,18 +898,57 @@ button:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background 0.2s;
+    box-shadow: 0 4px 0 #666;
+    transition: transform var(--time-fast) var(--anim-bouncy), box-shadow var(--time-fast) var(--anim-bouncy), background-color var(--time-fast);
+    position: relative;
+    user-select: none;
 }
 
-.keypad-btn:hover { background-color: #fff; }
+.keypad-btn:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #666;
+}
+
 .keypad-btn.pressed {
     background-color: #0f0;
-    box-shadow: 0 0 10px #0f0;
+    box-shadow: 0 2px 0 #080, 0 0 15px rgba(0, 255, 0, 0.5);
+    transform: translateY(2px);
+    animation: pop var(--time-med) var(--anim-bouncy);
+}
+
+.keypad-btn.error {
+    background-color: #f00 !important;
+    box-shadow: 0 2px 0 #800 !important;
+    animation: shake-mini 0.2s var(--anim-snappy);
+}
+
+.keypad-btn.success-pulse {
+    animation: successPulse 0.5s var(--anim-smooth) alternate 2;
+}
+
+@keyframes successPulse {
+    from { filter: brightness(1); box-shadow: 0 0 15px rgba(0, 255, 0, 0.5); }
+    to { filter: brightness(1.5); box-shadow: 0 0 25px rgba(0, 255, 0, 0.8); }
+}
+
+.keypad-reveal {
+    animation: keypadReveal 0.4s var(--anim-bouncy) both;
+}
+
+@keyframes keypadReveal {
+    from { opacity: 0; transform: scale(0.5); }
+    to { opacity: 1; transform: scale(1); }
 }
 
 .symbol-icon {
     font-size: 1.8rem;
     color: #000;
+    transition: color var(--time-fast);
+}
+
+.keypad-btn.pressed .symbol-icon {
+    color: #fff;
+    text-shadow: 0 0 5px #fff;
 }
 
 /* Simon Says Styles */
