@@ -1,3 +1,111 @@
+:root {
+    --anim-snappy: cubic-bezier(0.4, 0, 0.2, 1);
+    --anim-bouncy: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    --anim-smooth: cubic-bezier(0.165, 0.84, 0.44, 1);
+    --time-fast: 0.2s;
+    --time-med: 0.4s;
+}
+
+.animate-pop {
+    animation: pop var(--time-med) var(--anim-bouncy) forwards;
+}
+
+@keyframes pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+.animate-shake-mini {
+    animation: shake-mini 0.2s var(--anim-snappy);
+}
+
+@keyframes shake-mini {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-4px); }
+    75% { transform: translateX(4px); }
+}
+
+/* Simple Wires Animations */
+.simple-wires .wire {
+    transition: transform var(--time-fast) var(--anim-bouncy), box-shadow var(--time-fast) var(--anim-smooth);
+    will-change: transform;
+}
+
+.simple-wires .wire:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.simple-wires .wire-cut {
+    opacity: 1 !important;
+    pointer-events: none;
+    background-color: transparent !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+}
+
+.simple-wires .wire-cut::before,
+.simple-wires .wire-cut::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 40%;
+    background-color: inherit;
+    border: 1px solid rgba(0,0,0,0.5);
+    border-radius: 6px;
+    transition: transform var(--time-med) var(--anim-bouncy);
+}
+
+.simple-wires .wire-cut::before {
+    left: -14px;
+    transform: translateX(-20px) rotate(-5deg);
+    background-color: var(--wire-color);
+}
+
+.simple-wires .wire-cut::after {
+    right: -14px;
+    transform: translateX(20px) rotate(5deg);
+    background-color: var(--wire-color);
+}
+
+/* Set wire colors as variables for the cut pieces */
+.wire-red { --wire-color: #f00; }
+.wire-blue { --wire-color: #00f; }
+.wire-yellow { --wire-color: #ff0; }
+.wire-white { --wire-color: #fff; }
+.wire-black { --wire-color: #111; }
+
+.wire-reveal {
+    animation: wireReveal var(--time-med) var(--anim-bouncy) both;
+}
+
+@keyframes wireReveal {
+    from { opacity: 0; transform: scale(0.5) translateY(20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.module-status.disarmed {
+    animation: ledBloom 0.5s var(--anim-bouncy) forwards;
+}
+
+@keyframes ledBloom {
+    0% { transform: scale(0); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; background-color: #00ff00; box-shadow: 0 0 10px #00ff00; }
+}
+
+.wire-strike {
+    animation: wireStrike 0.2s var(--anim-snappy);
+    background-color: #f00 !important;
+}
+
+@keyframes wireStrike {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1) translateX(5px); }
+    100% { transform: scale(1); }
+}
+
 /* Screen Effects Overlay */
 body::after {
     content: '';

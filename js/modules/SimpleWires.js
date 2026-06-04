@@ -41,7 +41,8 @@ export class SimpleWires {
         const wireContainer = this.container.querySelector('.wire-container');
         this.wires.forEach((color, index) => {
             const wire = document.createElement('div');
-            wire.className = `wire wire-${color}`;
+            wire.className = `wire wire-${color} wire-reveal`;
+            wire.style.animationDelay = `${index * 0.1}s`;
             wire.dataset.index = index;
             wire.onclick = () => this.cutWire(index);
             wireContainer.appendChild(wire);
@@ -57,14 +58,17 @@ export class SimpleWires {
         AudioManager.playClick();
         Logger.log("SimpleWires", `Wire ${index} (${this.wires[index]}) cut`);
         
-        // Visual feedback for cut
-        wireEl.classList.add('wire-cut');
-
         const correctIndex = this.getCorrectWireIndex();
         
         if (index === correctIndex) {
+            wireEl.classList.add('wire-cut');
             this.disarm();
         } else {
+            wireEl.classList.add('wire-strike');
+            setTimeout(() => {
+                wireEl.classList.remove('wire-strike');
+                wireEl.classList.add('wire-cut');
+            }, 200);
             this.strike(index);
         }
     }
