@@ -1612,6 +1612,7 @@ button:hover {
     background-color: #222;
     padding: 2px;
     margin-bottom: 10px;
+    position: relative;
 }
 
 .maze-cell {
@@ -1622,11 +1623,20 @@ button:hover {
     justify-content: center;
 }
 
+.maze-cell-reveal {
+    animation: keypadReveal 0.4s var(--anim-bouncy) both;
+}
+
 .maze-player {
-    width: 8px;
-    height: 8px;
+    width: 10px;
+    height: 10px;
     background-color: #fff;
     border-radius: 2px;
+    position: absolute;
+    z-index: 10;
+    box-shadow: 0 0 5px #fff;
+    transition: transform 0.2s var(--anim-bouncy);
+    pointer-events: none;
 }
 
 .maze-goal {
@@ -1634,6 +1644,12 @@ button:hover {
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
     border-bottom: 8px solid #f00;
+    animation: goalPulse 1.5s infinite alternate var(--anim-smooth);
+}
+
+@keyframes goalPulse {
+    from { transform: scale(0.9); filter: drop-shadow(0 0 2px #f00); }
+    to { transform: scale(1.2); filter: drop-shadow(0 0 8px #f00); }
 }
 
 .maze-indicator {
@@ -1642,6 +1658,12 @@ button:hover {
     border: 2px solid #0f0;
     border-radius: 50%;
     position: absolute;
+    animation: indicatorFlicker 0.1s infinite alternate;
+}
+
+@keyframes indicatorFlicker {
+    from { opacity: 0.7; filter: brightness(0.8); }
+    to { opacity: 1; filter: brightness(1.2); }
 }
 
 .maze-controls {
@@ -1657,12 +1679,23 @@ button:hover {
 }
 
 .maze-btn {
-    width: 25px;
-    height: 25px;
+    width: 28px;
+    height: 28px;
     font-size: 0.8rem;
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: #444;
+    border: 2px solid #666;
+    box-shadow: 0 2px 0 #222;
+    cursor: pointer;
+    transition: transform 0.1s var(--anim-snappy), box-shadow 0.1s var(--anim-snappy);
+    user-select: none;
+}
+
+.maze-btn:active {
+    transform: scale(0.85) translateY(2px);
+    box-shadow: 0 1px 0 #222;
 }
 
 /* Passwords Styles */
