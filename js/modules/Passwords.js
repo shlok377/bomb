@@ -56,9 +56,11 @@ export class Passwords {
                 <div class="module-status"></div>
                 <div class="pass-columns">
                     ${this.columns.map((col, i) => `
-                        <div class="pass-column">
+                        <div class="pass-column pass-column-reveal" style="animation-delay: ${i * 0.05}s">
                             <button class="pass-nav up" data-col="${i}">▲</button>
-                            <div class="pass-char">${col[this.indices[i]].toUpperCase()}</div>
+                            <div class="pass-char-container" data-col="${i}">
+                                <div class="pass-char">${col[this.indices[i]].toUpperCase()}</div>
+                            </div>
                             <button class="pass-nav down" data-col="${i}">▼</button>
                         </div>
                     `).join('')}
@@ -76,8 +78,39 @@ export class Passwords {
 
     cycle(colIdx, dir) {
         if (this.isDisarmed || GameEngine.isGameOver) return;
-        this.indices[colIdx] = (this.indices[colIdx] + dir + 6) % 6;
-        this.render();
+        
+        const container = this.container.querySelector(`.pass-char-container[data-col="${colIdx}"]`);
+        const oldCharEl = container.querySelector('.pass-char');
+        
+        // Setup new character element
+        const nextIdx = (this.indices[colIdx] + dir + 6) % 6;
+        const newCharEl = document.createElement('div');
+        newCharEl.className = 'pass-char';
+        newCharEl.textContent = this.columns[colIdx][nextIdx].toUpperCase();
+        
+        // Apply animation classes
+        if (dir > 0) { // Down
+            oldCharEl.classList.add('slide-up-out');
+            newCharEl.classList.add('slide-up-in');
+        } else { // Up
+            oldCharEl.classList.add('slide-down-out');
+            newCharEl.classList.add('slide-down-in');
+        }
+        
+        container.appendChild(newCharEl);
+        
+        // Trigger animation
+        setTimeout(() => {
+            newCharEl.classList.remove('slide-up-in', 'slide-down-in');
+            this.indices[colIdx] = nextIdx;
+        }, 50);
+
+        // Cleanup old element
+        setTimeout(() => {
+            if (oldCharEl.parentNode === container) {
+                container.removeChild(oldCharEl);
+            }
+        }, 200);
     }
 
     submit() {
@@ -90,12 +123,23 @@ export class Passwords {
             this.disarm();
         } else {
             Logger.warn("Passwords", "Strike! Incorrect word.");
+            const chars = this.container.querySelectorAll('.pass-char');
+            chars.forEach(c => {
+                c.classList.add('shiver');
+                setTimeout(() => c.classList.remove('shiver'), 300);
+            });
             GameEngine.addStrike();
         }
     }
 
     disarm() {
         this.isDisarmed = true;
+        const chars = this.container.querySelectorAll('.pass-char');
+        chars.forEach((c, i) => {
+            setTimeout(() => {
+                c.classList.add('success-pulse');
+            }, i * 100);
+        });
         this.container.querySelector('.module-status').classList.add('disarmed');
         Logger.log("Passwords", "Module Disarmed");
         GameEngine.moduleSolved();

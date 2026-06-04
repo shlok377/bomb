@@ -1707,6 +1707,10 @@ button:hover {
     justify-content: center;
 }
 
+.pass-column-reveal {
+    animation: keypadReveal 0.4s var(--anim-bouncy) both;
+}
+
 .pass-column {
     display: flex;
     flex-direction: column;
@@ -1714,15 +1718,40 @@ button:hover {
     gap: 4px;
 }
 
-.pass-char {
+.pass-char-container {
     background-color: #000;
+    border: 1px solid #444;
+    width: 26px;
+    height: 30px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pass-char {
     color: #0f0;
     font-family: 'Courier New', Courier, monospace;
     font-size: 1.1rem;
-    padding: 4px 0;
-    border: 1px solid #444;
-    width: 26px;
     text-align: center;
+    position: absolute;
+    transition: transform 0.2s var(--anim-snappy), opacity 0.2s;
+}
+
+.pass-char.slide-up-out { transform: translateY(-30px); opacity: 0; }
+.pass-char.slide-up-in { transform: translateY(30px); opacity: 0; }
+.pass-char.slide-down-out { transform: translateY(30px); opacity: 0; }
+.pass-char.slide-down-in { transform: translateY(-30px); opacity: 0; }
+
+.pass-char.shiver {
+    animation: shake-mini 0.2s var(--anim-snappy);
+    color: #f00;
+}
+
+.pass-char.success-pulse {
+    animation: successPulse 0.5s var(--anim-smooth);
+    color: #0f0;
 }
 
 .pass-nav {
@@ -1733,12 +1762,34 @@ button:hover {
     align-items: center;
     justify-content: center;
     padding: 0 !important;
+    background-color: #444;
+    border: 1px solid #666;
+    box-shadow: 0 2px 0 #222;
+    cursor: pointer;
+    transition: transform 0.1s var(--anim-snappy), box-shadow 0.1s var(--anim-snappy);
+    user-select: none;
+}
+
+.pass-nav:active {
+    transform: scale(0.85) translateY(1px);
+    box-shadow: 0 1px 0 #222;
 }
 
 .pass-submit {
-    padding: 6px 15px;
+    padding: 8px 20px;
     font-size: 0.9rem;
     text-transform: uppercase;
+    background-color: #333;
+    border: 2px solid #555;
+    box-shadow: 0 4px 0 #222;
+    cursor: pointer;
+    transition: transform 0.1s var(--anim-snappy), box-shadow 0.1s var(--anim-snappy);
+    user-select: none;
+}
+
+.pass-submit:active {
+    transform: scale(0.9) translateY(3px);
+    box-shadow: 0 1px 0 #222;
 }
 
 /* Game Over Modal */
