@@ -104,7 +104,9 @@ export class Keypads {
 
     disarm() {
         this.isDisarmed = true;
-
+        this.container.querySelectorAll('.keypad-btn').forEach(b => {
+            b.classList.add('success-pulse');
+        });
         this.container.querySelector('.module-status').classList.add('disarmed');
         Logger.log("Keypads", "Module Disarmed");
         GameEngine.moduleSolved();
