@@ -1028,6 +1028,51 @@ button:hover {
     border: 2px solid #444;
     margin-bottom: 8px;
     min-height: 1.2rem;
+    position: relative;
+    overflow: hidden;
+    animation: terminalFlicker 2s infinite;
+}
+
+@keyframes terminalFlicker {
+    0%, 100% { opacity: 1; }
+    33% { opacity: 0.95; }
+    66% { opacity: 0.98; }
+    70% { opacity: 0.94; }
+}
+
+.wof-display::before {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    z-index: 2;
+    background-size: 100% 2px, 3px 100%;
+    pointer-events: none;
+}
+
+.wof-display.glitch {
+    animation: glitch 0.2s var(--anim-snappy) infinite;
+    color: #f00;
+}
+
+@keyframes glitch {
+    0% { transform: translate(0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(-2px, -2px); }
+    60% { transform: translate(2px, 2px); }
+    80% { transform: translate(2px, -2px); }
+    100% { transform: translate(0); }
+}
+
+.wof-display.success-flash {
+    animation: successFlash 0.5s var(--anim-smooth);
+}
+
+@keyframes successFlash {
+    0% { background-color: #000; }
+    50% { background-color: #040; box-shadow: inset 0 0 20px #0f0; }
+    100% { background-color: #000; }
 }
 
 .wof-button-grid {
@@ -1044,12 +1089,28 @@ button:hover {
     background-color: #ccc;
     color: #000;
     border: 2px solid #888;
+    box-shadow: 0 2px 0 #666;
     font-weight: bold;
     text-transform: uppercase;
     cursor: pointer;
+    transition: transform 0.1s var(--anim-snappy), box-shadow 0.1s var(--anim-snappy), background-color 0.2s;
+    user-select: none;
 }
 
-.wof-btn:hover { background-color: #eee; }
+.wof-btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 0 #666;
+    background-color: #aaa;
+}
+
+.wof-reveal {
+    animation: wofReveal 0.4s var(--anim-bouncy) both;
+}
+
+@keyframes wofReveal {
+    from { opacity: 0; transform: scale(0.5); }
+    to { opacity: 1; transform: scale(1); }
+}
 
 /* Memory Styles */
 .memory {
