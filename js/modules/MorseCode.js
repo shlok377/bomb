@@ -56,11 +56,13 @@ export class MorseCode {
                 <button class="morse-replay" title="Replay Pattern">↻</button>
                 <div class="morse-light"></div>
                 <div class="morse-controls">
-                    <button class="morse-nav prev"><</button>
-                    <div class="morse-freq-display">${this.frequencies[this.currentFreqIndex].freq} MHz</div>
-                    <button class="morse-nav next">></button>
+                    <button class="morse-nav prev morse-reveal" style="animation-delay: 0.1s"><</button>
+                    <div class="morse-freq-display morse-reveal" style="animation-delay: 0.2s">
+                        <span class="morse-freq-val">${this.frequencies[this.currentFreqIndex].freq} MHz</span>
+                    </div>
+                    <button class="morse-nav next morse-reveal" style="animation-delay: 0.3s">></button>
                 </div>
-                <button class="morse-tx">TX</button>
+                <button class="morse-tx morse-reveal" style="animation-delay: 0.4s">TX</button>
             </div>
         `;
 
@@ -72,8 +74,19 @@ export class MorseCode {
 
     changeFreq(dir) {
         if (this.isDisarmed || GameEngine.isGameOver) return;
+        
+        const displayVal = this.container.querySelector('.morse-freq-val');
+        const animClass = dir > 0 ? 'slide-up' : 'slide-down';
+        
+        displayVal.classList.remove('slide-up', 'slide-down');
+        void displayVal.offsetWidth; // Trigger reflow
+        displayVal.classList.add(animClass);
+        
         this.currentFreqIndex = (this.currentFreqIndex + dir + this.frequencies.length) % this.frequencies.length;
-        this.container.querySelector('.morse-freq-display').textContent = `${this.frequencies[this.currentFreqIndex].freq} MHz`;
+        
+        setTimeout(() => {
+            displayVal.textContent = `${this.frequencies[this.currentFreqIndex].freq} MHz`;
+        }, 100);
     }
 
     replay() {
