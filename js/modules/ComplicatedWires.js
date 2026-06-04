@@ -40,7 +40,7 @@ export class ComplicatedWires {
                 <div class="module-status"></div>
                 <div class="comp-wire-container">
                     ${this.wires.map((w, i) => `
-                        <div class="comp-wire-slot">
+                        <div class="comp-wire-slot comp-slot-reveal" style="animation-delay: ${i * 0.05}s">
                             <div class="comp-led ${w.led ? 'lit' : ''}"></div>
                             <div class="comp-wire ${w.red ? 'red' : ''} ${w.blue ? 'blue' : ''}" data-index="${i}"></div>
                             <div class="comp-star ${w.star ? 'present' : ''}">★</div>

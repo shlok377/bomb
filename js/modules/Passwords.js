@@ -56,9 +56,11 @@ export class Passwords {
                 <div class="module-status"></div>
                 <div class="pass-columns">
                     ${this.columns.map((col, i) => `
-                        <div class="pass-column">
+                        <div class="pass-column pass-column-reveal" style="animation-delay: ${i * 0.05}s">
                             <button class="pass-nav up" data-col="${i}">▲</button>
-                            <div class="pass-char">${col[this.indices[i]].toUpperCase()}</div>
+                            <div class="pass-char-container" data-col="${i}">
+                                <div class="pass-char">${col[this.indices[i]].toUpperCase()}</div>
+                            </div>
                             <button class="pass-nav down" data-col="${i}">▼</button>
                         </div>
                     `).join('')}
@@ -76,8 +78,16 @@ export class Passwords {
 
     cycle(colIdx, dir) {
         if (this.isDisarmed || GameEngine.isGameOver) return;
+        
+        // 1. Synchronously update the index
         this.indices[colIdx] = (this.indices[colIdx] + dir + 6) % 6;
-        this.render();
+        const char = this.columns[colIdx][this.indices[colIdx]].toUpperCase();
+
+        // 2. Clear and replace with a SINGLE animated element
+        const container = this.container.querySelector(`.pass-char-container[data-col="${colIdx}"]`);
+        const animClass = dir > 0 ? 'slide-in-up' : 'slide-in-down';
+        
+        container.innerHTML = `<div class="pass-char ${animClass}">${char}</div>`;
     }
 
     submit() {
@@ -90,12 +100,23 @@ export class Passwords {
             this.disarm();
         } else {
             Logger.warn("Passwords", "Strike! Incorrect word.");
+            const chars = this.container.querySelectorAll('.pass-char');
+            chars.forEach(c => {
+                c.classList.add('shiver');
+                setTimeout(() => c.classList.remove('shiver'), 300);
+            });
             GameEngine.addStrike();
         }
     }
 
     disarm() {
         this.isDisarmed = true;
+        const chars = this.container.querySelectorAll('.pass-char');
+        chars.forEach((c, i) => {
+            setTimeout(() => {
+                c.classList.add('success-pulse');
+            }, i * 100);
+        });
         this.container.querySelector('.module-status').classList.add('disarmed');
         Logger.log("Passwords", "Module Disarmed");
         GameEngine.moduleSolved();

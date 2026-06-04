@@ -84,7 +84,7 @@ export class WhosOnFirst {
                 <div class="module-status"></div>
                 <div class="wof-display">${this.displayWord}</div>
                 <div class="wof-button-grid">
-                    ${this.buttonWords.map((word, i) => `<button class="wof-btn" data-index="${i}">${word}</button>`).join('')}
+                    ${this.buttonWords.map((word, i) => `<button class="wof-btn wof-reveal" style="animation-delay: ${i * 0.05}s" data-index="${i}">${word}</button>`).join('')}
                 </div>
             </div>
         `;
@@ -102,6 +102,7 @@ export class WhosOnFirst {
 
         const correctWord = this.getCorrectWord();
         if (pressedWord === correctWord) {
+            this.container.querySelector('.wof-display').classList.add('success-flash');
             this.disarm();
         } else {
             this.strike(pressedWord, correctWord);
@@ -134,9 +135,15 @@ export class WhosOnFirst {
 
     strike(pressed, correct) {
         Logger.warn("WhosOnFirst", `Strike! Pressed ${pressed}, Expected ${correct}`);
+        const display = this.container.querySelector('.wof-display');
+        display.classList.add('glitch');
+        
         GameEngine.addStrike();
-        // Regenerate for next attempt as per original game behavior
-        this.generatePuzzle();
-        this.render();
+        
+        setTimeout(() => {
+            // Regenerate for next attempt as per original game behavior
+            this.generatePuzzle();
+            this.render();
+        }, 300);
     }
 }

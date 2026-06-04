@@ -35,7 +35,7 @@ export class Memory {
                 <div class="module-status"></div>
                 <div class="memory-display">${this.currentDisplay}</div>
                 <div class="memory-button-row">
-                    ${this.currentButtons.map((label, i) => `<button class="memory-btn" data-pos="${this.posMap[i]}">${label}</button>`).join('')}
+                    ${this.currentButtons.map((label, i) => `<button class="memory-btn memory-reveal" style="animation-delay: ${i * 0.05}s" data-pos="${this.posMap[i]}">${label}</button>`).join('')}
                 </div>
                 <div class="memory-stages">
                     <div class="stage-dot ${this.stage >= 1 ? 'active' : ''}"></div>
@@ -127,10 +127,17 @@ export class Memory {
 
     strike() {
         Logger.warn("Memory", "Incorrect button! Resetting to Stage 1.");
-        this.stage = 1;
-        this.history = [];
-        GameEngine.addStrike();
-        this.generateStage();
-        this.render();
+        
+        // Strike visual feedback on dots
+        const dots = this.container.querySelectorAll('.stage-dot');
+        dots.forEach(dot => dot.classList.add('reset'));
+
+        setTimeout(() => {
+            this.stage = 1;
+            this.history = [];
+            GameEngine.addStrike();
+            this.generateStage();
+            this.render();
+        }, 400);
     }
 }
