@@ -35,10 +35,10 @@ export class SimonSays {
             <div class="module simon-says">
                 <div class="module-status"></div>
                 <div class="simon-grid">
-                    <div class="simon-btn red" data-color="red"></div>
-                    <div class="simon-btn blue" data-color="blue"></div>
-                    <div class="simon-btn green" data-color="green"></div>
-                    <div class="simon-btn yellow" data-color="yellow"></div>
+                    <div class="simon-btn red simon-reveal" data-color="red" style="animation-delay: 0s"></div>
+                    <div class="simon-btn blue simon-reveal" data-color="blue" style="animation-delay: 0.1s"></div>
+                    <div class="simon-btn green simon-reveal" data-color="green" style="animation-delay: 0.2s"></div>
+                    <div class="simon-btn yellow simon-reveal" data-color="yellow" style="animation-delay: 0.3s"></div>
                 </div>
             </div>
         `;
@@ -67,11 +67,11 @@ export class SimonSays {
         flashSequence();
     }
 
-    async flashColor(color) {
+    async flashColor(color, duration = 500) {
         const btn = this.container.querySelector(`.simon-btn.${color}`);
         if (btn) {
             btn.classList.add('active');
-            await this.sleep(500);
+            await this.sleep(duration);
             btn.classList.remove('active');
         }
     }
@@ -89,7 +89,7 @@ export class SimonSays {
 
         if (color === expectedColor) {
             this.userInput.push(color);
-            this.flashColor(color); // Visual feedback
+            this.flashColor(color, 300); // Visual feedback
 
             if (this.userInput.length === this.sequence.length) {
                 if (this.sequence.length === 5) { // Win after 5 stages
@@ -127,9 +127,19 @@ export class SimonSays {
         return currentMap[originalColor];
     }
 
-    disarm() {
+    async disarm() {
         this.isDisarmed = true;
         clearTimeout(this.flashInterval);
+        
+        // Victory Spiral
+        const victoryOrder = ['red', 'blue', 'yellow', 'green'];
+        for (let i = 0; i < 2; i++) {
+            for (const color of victoryOrder) {
+                this.flashColor(color, 100);
+                await this.sleep(100);
+            }
+        }
+
         this.container.querySelector('.module-status').classList.add('disarmed');
         Logger.log("SimonSays", "Module Disarmed");
         GameEngine.moduleSolved();
@@ -138,6 +148,10 @@ export class SimonSays {
     strike() {
         Logger.warn("SimonSays", "Incorrect color pressed!");
         this.userInput = [];
+        const grid = this.container.querySelector('.simon-grid');
+        grid.classList.add('error');
+        setTimeout(() => grid.classList.remove('error'), 400);
+        
         GameEngine.addStrike();
         setTimeout(() => this.startFlashing(), 1000);
     }
