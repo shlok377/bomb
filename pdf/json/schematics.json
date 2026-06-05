@@ -158,9 +158,47 @@
       "id": "sequential-routing",
       "title": "On the Subject of Wire Sequences",
       "flavorText": "It's hard to say how this mechanism works... there must have been an easier way to manage nine wires.",
-      "rules": [
-        "Within this module there are several panels with wires on them, but only one panel is visible at a time.",
-        "Cut the wires as directed by the following table. Wire occurrences are cumulative over all panels within the module."
+      "content": [
+        {
+          "type": "header",
+          "text": "The Concept of 'Occurrence'"
+        },
+        {
+          "type": "text",
+          "text": "The most important part of this module is tracking the **OCCURRENCE** of each wire color. This is a cumulative count that does NOT reset between panels."
+        },
+        {
+          "type": "text",
+          "text": "**Definition:** An 'occurrence' is the total number of times a wire of a specific color has appeared in the module so far, starting from the first panel."
+        },
+        {
+          "type": "text",
+          "text": "**Example:** If Panel 1 has two Red wires, the top one is 'Red Occurrence #1' and the bottom one is 'Red Occurrence #2'. If Panel 2 then has another Red wire, that wire is 'Red Occurrence #3'."
+        },
+        {
+          "type": "header",
+          "text": "How to Solve"
+        },
+        {
+          "type": "text",
+          "text": "1. For each wire, note its **color** and its **occurrence number** (how many of that color have you seen in total?)."
+        },
+        {
+          "type": "text",
+          "text": "2. Note which letter (**A, B, or C**) the wire is connected to on the right side."
+        },
+        {
+          "type": "text",
+          "text": "3. Consult the tables below. If the letter is listed for that specific color and occurrence, **CUT THE WIRE**."
+        },
+        {
+          "type": "text",
+          "text": "4. Use the ◀ and ▶ buttons to move between the 4 panels. You MUST check every wire in every panel."
+        },
+        {
+          "type": "text",
+          "text": "5. Once all required wires are cut, go to the final panel and click the checkmark (**✔**) to finish. Missing a required wire will trigger a STRIKE."
+        }
       ],
       "logic": {
         "red": ["C", "B", "A", "A or C", "B", "A or C", "A, B, or C", "A or B", "B"],
