@@ -75,12 +75,36 @@ export const ModuleRegistry = {
             
             Logger.log("ModuleRegistry", `Selected Non-Adjacent Slots: ${selectedIndices}`);
 
+            // Track modules already used in this phase and their frequencies
+            const moduleCounts = {};
+
             selectedIndices.forEach(slotIdx => {
                 const slot = slots[slotIdx];
                 slot.innerHTML = ''; 
 
-                // Randomly pick a module type from the allowed phase pool
-                const randomKey = allowedKeys[Math.floor(Math.random() * allowedKeys.length)];
+                let randomKey;
+                const r = Math.random();
+                
+                const usedKeys = Object.keys(moduleCounts);
+                const twiceUsed = usedKeys.filter(k => moduleCounts[k] === 2);
+                const onceUsed = usedKeys.filter(k => moduleCounts[k] === 1);
+                const uniquePool = allowedKeys.filter(key => !moduleCounts[key]);
+
+                if (r < 0.01 && twiceUsed.length > 0) {
+                    // 1% chance for 3rd occurrence
+                    randomKey = twiceUsed[Math.floor(Math.random() * twiceUsed.length)];
+                } else if (r < 0.08 && onceUsed.length > 0) {
+                    // 7% chance for 2nd occurrence (0.01 to 0.08 range)
+                    randomKey = onceUsed[Math.floor(Math.random() * onceUsed.length)];
+                } else if (uniquePool.length > 0) {
+                    // Default: pick unique if available
+                    randomKey = uniquePool[Math.floor(Math.random() * uniquePool.length)];
+                } else {
+                    // Fallback to full pool
+                    randomKey = allowedKeys[Math.floor(Math.random() * allowedKeys.length)];
+                }
+
+                moduleCounts[randomKey] = (moduleCounts[randomKey] || 0) + 1;
                 const ModuleClass = this.availableModules[randomKey];
                 
                 // Initialize the module
@@ -91,21 +115,31 @@ export const ModuleRegistry = {
                 const cover = document.createElement('div');
                 cover.className = 'module-cover';
                 cover.textContent = ModuleTags[randomKey];
+                slot.appendChild(cover); // Restore missing cover!
+
+                const revealModule = () => {
+                    if (cover.classList.contains('revealed')) return;
+                    cover.classList.add('revealed');
+                    const moduleEl = slot.querySelector('.module');
+                    if (moduleEl) moduleEl.classList.add('start-animations');
+                };
+
                 cover.onclick = () => {
                     AudioManager.playClick();
-                    cover.classList.add('revealed');
+                    revealModule();
                 };
-                slot.appendChild(cover);
 
                 // Phase-based auto-reveal timeout
-                let revealTime = 30000; // Phase 1: 30s
-                if (phase === 2) revealTime = 20000; // Phase 2: 20s
-                if (phase === 3) revealTime = 10000; // Phase 3: 10s
+                // Force phase to number for comparison
+                const phaseNum = Number(phase);
+                let revealTime = 30000; // Default Phase 1: 30s
+                if (phaseNum === 2) revealTime = 20000; // Phase 2: 20s
+                if (phaseNum === 3) revealTime = 10000; // Phase 3: 10s
 
                 setTimeout(() => {
                     if (!cover.classList.contains('revealed')) {
-                        Logger.log("ModuleRegistry", `Auto-revealing tag after ${revealTime/1000}s timeout`);
-                        cover.classList.add('revealed');
+                        Logger.log("ModuleRegistry", `Auto-revealing tag after ${revealTime/1000}s timeout for Phase ${phaseNum}`);
+                        revealModule();
                     }
                 }, revealTime);
             });
