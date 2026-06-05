@@ -1496,17 +1496,31 @@ button:hover {
     transition: transform 0.4s var(--anim-snappy), opacity 0.4s;
 }
 
-.ws-wire-container.slide-out {
+.ws-wire-container.slide-out-left {
     transform: translateX(-120%);
     opacity: 0;
 }
 
-.ws-wire-container.slide-in {
+.ws-wire-container.slide-out-right {
+    transform: translateX(120%);
+    opacity: 0;
+}
+
+.ws-wire-container.slide-in-right {
     animation: slideInRight 0.4s var(--anim-snappy) both;
+}
+
+.ws-wire-container.slide-in-left {
+    animation: slideInLeft 0.4s var(--anim-snappy) both;
 }
 
 @keyframes slideInRight {
     from { transform: translateX(120%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideInLeft {
+    from { transform: translateX(-120%); opacity: 0; }
     to { transform: translateX(0); opacity: 1; }
 }
 
@@ -1582,23 +1596,41 @@ button:hover {
     text-align: center;
 }
 
-.ws-next-btn {
-    padding: 4px 12px;
-    font-size: 0.8rem;
+.ws-controls {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    justify-content: center;
+}
+
+.ws-nav-btn {
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.65rem;
     background-color: #444;
     color: white;
     border: 2px solid #666;
     box-shadow: 0 3px 0 #222;
     cursor: pointer;
     position: relative;
-    z-index: 100;
-    transition: transform 0.1s var(--anim-snappy), box-shadow 0.1s var(--anim-snappy);
+    z-index: 10;
+    transition: transform 0.1s var(--anim-snappy), box-shadow 0.1s var(--anim-snappy), opacity 0.2s;
     user-select: none;
 }
 
-.ws-next-btn:active {
+.ws-nav-btn:active:not(:disabled) {
     transform: translateY(2px);
     box-shadow: 0 1px 0 #222;
+}
+
+.ws-nav-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    box-shadow: none;
 }
 
 /* Mazes Styles */

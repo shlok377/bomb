@@ -35,14 +35,25 @@ export class WireSequences {
     generatePanels() {
         const colors = ['red', 'blue', 'black'];
         const letters = ['A', 'B', 'C'];
+        const globalCounts = { red: 0, blue: 0, black: 0 };
         
-        for (let p = 0; p < 4; p++) { // 4 panels
+        for (let p = 0; p < 4; p++) {
             const panelWires = [];
-            const wireCount = Math.floor(Math.random() * 3) + 1; // 1 to 3 wires
+            const wireCount = Math.floor(Math.random() * 3) + 1;
             for (let w = 0; w < wireCount; w++) {
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                const occurrence = globalCounts[color];
+                globalCounts[color]++;
+
+                const to = letters[Math.floor(Math.random() * letters.length)];
+                const rule = this.rules[color][occurrence];
+                const shouldCut = rule.includes(to);
+
                 panelWires.push({
-                    color: colors[Math.floor(Math.random() * colors.length)],
-                    to: letters[Math.floor(Math.random() * letters.length)],
+                    color,
+                    to,
+                    occurrence,
+                    shouldCut,
                     cut: false
                 });
             }
@@ -50,13 +61,13 @@ export class WireSequences {
         }
     }
 
-    render(isSlideIn = false) {
+    render(isSlideIn = false, slideDir = 'right') {
         const panel = this.panels[this.currentPanel];
         this.container.innerHTML = `
             <div class="module wire-sequences">
-                <div class="module-status"></div>
+                <div class="module-status ${this.isDisarmed ? 'disarmed' : ''}"></div>
                 <div class="ws-panel-label">Panel ${this.currentPanel + 1}/4</div>
-                <div class="ws-wire-container ${isSlideIn ? 'slide-in' : ''}">
+                <div class="ws-wire-container ${isSlideIn ? 'slide-in-' + slideDir : ''}">
                     ${panel.map((w, i) => `
                         <div class="ws-wire-row">
                             <div class="ws-wire ${w.color} ${w.cut ? 'cut' : ''} ${!isSlideIn ? 'ws-reveal' : ''}" style="animation-delay: ${i * 0.1}s" data-index="${i}"></div>
@@ -64,7 +75,10 @@ export class WireSequences {
                         </div>
                     `).join('')}
                 </div>
-                <button class="ws-next-btn">${this.currentPanel === 3 ? 'Finish' : 'Next'}</button>
+                <div class="ws-controls">
+                    <button class="ws-nav-btn prev-btn" ${this.currentPanel === 0 ? 'disabled' : ''}>◀</button>
+                    <button class="ws-nav-btn next-btn">${this.currentPanel === 3 ? '✔' : '▶'}</button>
+                </div>
             </div>
         `;
 
@@ -77,42 +91,60 @@ export class WireSequences {
             wire.onclick = () => this.handleCut(parseInt(wire.dataset.index));
         });
 
-        this.container.querySelector('.ws-next-btn').onclick = () => this.nextPanel();
+        this.container.querySelector('.prev-btn').onclick = () => this.prevPanel();
+        this.container.querySelector('.next-btn').onclick = () => this.nextPanel();
     }
 
     handleCut(index) {
         if (this.isDisarmed || GameEngine.isGameOver || this.panels[this.currentPanel][index].cut) return;
 
         const wire = this.panels[this.currentPanel][index];
-        const color = wire.color;
-        const currentCount = this.counts[color];
-        
-        const rule = this.rules[color][currentCount];
-        const shouldCut = rule.includes(wire.to);
-
         wire.cut = true;
         this.container.querySelector(`.ws-wire[data-index="${index}"]`).classList.add('cut');
-        this.counts[color]++;
 
-        if (!shouldCut) {
-            Logger.warn("WireSequences", `Strike! Incorrect cut: ${color} to ${wire.to} at occurrence ${currentCount + 1}`);
+        if (!wire.shouldCut) {
+            Logger.warn("WireSequences", `Strike! Incorrect cut: ${wire.color} to ${wire.to} at occurrence ${wire.occurrence + 1}`);
             GameEngine.addStrike();
         } else {
-            Logger.log("WireSequences", `Correct cut: ${color} to ${wire.to}`);
+            Logger.log("WireSequences", `Correct cut: ${wire.color} to ${wire.to}`);
         }
     }
 
+    prevPanel() {
+        if (this.isDisarmed || GameEngine.isGameOver || this.currentPanel === 0) return;
+
+        const container = this.container.querySelector('.ws-wire-container');
+        container.classList.add('slide-out-right');
+        
+        setTimeout(() => {
+            this.currentPanel--;
+            this.render(true, 'left');
+        }, 400);
+    }
+
     nextPanel() {
+        if (this.isDisarmed || GameEngine.isGameOver) return;
+
         if (this.currentPanel < 3) {
             const container = this.container.querySelector('.ws-wire-container');
-            container.classList.add('slide-out');
+            container.classList.add('slide-out-left');
             
             setTimeout(() => {
                 this.currentPanel++;
-                this.render(true);
+                this.render(true, 'right');
             }, 400);
         } else {
-            this.disarm();
+            // Check if all wires that should have been cut are cut
+            const allRequiredCut = this.panels.every(panel => 
+                panel.every(wire => !wire.shouldCut || wire.cut)
+            );
+
+            if (allRequiredCut) {
+                this.disarm();
+            } else {
+                Logger.warn("WireSequences", "Strike! Not all required wires were cut.");
+                GameEngine.addStrike();
+            }
         }
     }
 
