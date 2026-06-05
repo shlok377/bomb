@@ -115,21 +115,31 @@ export const ModuleRegistry = {
                 const cover = document.createElement('div');
                 cover.className = 'module-cover';
                 cover.textContent = ModuleTags[randomKey];
+                slot.appendChild(cover); // Restore missing cover!
+
+                const revealModule = () => {
+                    if (cover.classList.contains('revealed')) return;
+                    cover.classList.add('revealed');
+                    const moduleEl = slot.querySelector('.module');
+                    if (moduleEl) moduleEl.classList.add('start-animations');
+                };
+
                 cover.onclick = () => {
                     AudioManager.playClick();
-                    cover.classList.add('revealed');
+                    revealModule();
                 };
-                slot.appendChild(cover);
 
                 // Phase-based auto-reveal timeout
-                let revealTime = 30000; // Phase 1: 30s
-                if (phase === 2) revealTime = 20000; // Phase 2: 20s
-                if (phase === 3) revealTime = 10000; // Phase 3: 10s
+                // Force phase to number for comparison
+                const phaseNum = Number(phase);
+                let revealTime = 30000; // Default Phase 1: 30s
+                if (phaseNum === 2) revealTime = 20000; // Phase 2: 20s
+                if (phaseNum === 3) revealTime = 10000; // Phase 3: 10s
 
                 setTimeout(() => {
                     if (!cover.classList.contains('revealed')) {
-                        Logger.log("ModuleRegistry", `Auto-revealing tag after ${revealTime/1000}s timeout`);
-                        cover.classList.add('revealed');
+                        Logger.log("ModuleRegistry", `Auto-revealing tag after ${revealTime/1000}s timeout for Phase ${phaseNum}`);
+                        revealModule();
                     }
                 }, revealTime);
             });

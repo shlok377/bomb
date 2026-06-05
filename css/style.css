@@ -77,7 +77,17 @@
 .wire-white { --wire-color: #fff; }
 .wire-black { --wire-color: #111; }
 
-.wire-reveal {
+/* Global Module Entrance */
+.module.start-animations {
+    animation: modulePop var(--time-med) var(--anim-bouncy) both;
+}
+
+@keyframes modulePop {
+    from { transform: scale(0.95); opacity: 0.8; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.start-animations .wire-reveal {
     animation: wireReveal var(--time-med) var(--anim-bouncy) both;
 }
 
@@ -823,6 +833,10 @@ button:hover {
     user-select: none;
 }
 
+.start-animations .the-button .button-element {
+    animation: keypadReveal 0.5s var(--anim-bouncy) both;
+}
+
 .the-button .button-element:active, .the-button .button-element.pressed {
     transform: scale(0.92) translateY(4px);
     box-shadow: 0 2px 0 rgba(0,0,0,0.4), 0 5px 10px rgba(0,0,0,0.3);
@@ -931,7 +945,7 @@ button:hover {
     to { filter: brightness(1.5); box-shadow: 0 0 25px rgba(0, 255, 0, 0.8); }
 }
 
-.keypad-reveal {
+.start-animations .keypad-reveal {
     animation: keypadReveal 0.4s var(--anim-bouncy) both;
 }
 
@@ -1003,7 +1017,7 @@ button:hover {
     100% { opacity: 1; transform: scale(1); box-shadow: none; }
 }
 
-.simon-reveal {
+.start-animations .simon-reveal {
     animation: simonReveal 0.5s var(--anim-bouncy) both;
 }
 
@@ -1103,7 +1117,7 @@ button:hover {
     background-color: #aaa;
 }
 
-.wof-reveal {
+.start-animations .wof-reveal {
     animation: wofReveal 0.4s var(--anim-bouncy) both;
 }
 
@@ -1584,7 +1598,7 @@ button:hover {
     transform: translateX(15px) rotate(3deg);
 }
 
-.ws-reveal {
+.start-animations .ws-reveal {
     animation: wireReveal var(--time-med) var(--anim-bouncy) both;
 }
 
