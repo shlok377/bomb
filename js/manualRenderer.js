@@ -27,7 +27,7 @@ const imageMap = {
     'volatile-memory-access': ['Memory.png'],
     'frequential-deciphering': ['Morse Code.png', 'Morse Code Tables.png'],
     'navigational-algorithms': [],
-    'cryptographic-passphrases': ['Passwords.png', 'Passwords Table.png'],
+    'cryptographic-passphrases': [],
     'rotary-interfacing': ['LED Config Knobs Tables.png'],
     'reference-a': ['Appendix A.png', 'Indicators.png'],
     'reference-b': ['Appendix B Battery.png', 'Batteries.png'],
@@ -249,7 +249,11 @@ function renderLogicContent(id, logic) {
 
 
     if (id === 'cryptographic-passphrases') {
-        html += `<p>${logic.words.join(', ')}</p>`;
+        html += `<div class="password-grid">`;
+        logic.words.forEach(word => {
+            html += `<div class="password-word" onclick="this.classList.toggle('crossed')">${word}</div>`;
+        });
+        html += `</div>`;
     }
 
     if (id === 'reference-a') {
