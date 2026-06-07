@@ -79,6 +79,8 @@
         import { ModuleRegistry } from './js/ModuleRegistry.js';
         import { AudioManager } from './js/AudioManager.js';
         import { Logger } from './js/Logger.js';
+        import { CommentatorManager } from './js/commentator/CommentatorManager.js';
+        import { CommsIndicator } from './js/commentator/CommsIndicator.js';
 
         window.onerror = function(message, source, lineno, colno, error) {
             console.error(`[PHASE 2 ERROR] ${message} at ${source}:${lineno}`);
@@ -87,6 +89,10 @@
         document.addEventListener('DOMContentLoaded', () => {
             try {
                 Logger.log("PHASE 2", "Initializing Level...");
+
+                // Initialize Comms Indicator in HUD
+                const hud = document.getElementById('bomb-hud');
+                new CommsIndicator(hud);
                 
                 const urlParams = new URLSearchParams(window.location.search);
                 const level = urlParams.get('level') || "1";
@@ -115,6 +121,12 @@
                             </ul>
                         `;
                     }
+                }
+
+                if (level === "1") {
+                    setTimeout(() => {
+                        CommentatorManager.speak('phase2_intel');
+                    }, 500);
                 }
 
                 const beginBtn = document.getElementById('begin-btn');

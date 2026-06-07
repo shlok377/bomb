@@ -31,6 +31,7 @@ The Defuser must disarm all modules on the bomb before the timer reaches 0:00. C
 ## 🛠 Technical Features
 
 -   **Synthetic Audio Engine:** Zero-asset audio system using the Web Audio API. Ticking, buzzers, and chimes are generated in real-time.
+-   **"Nervous Commander" TTS:** A dynamic Text-to-Speech system with a high-stress personality. It provides audible briefings and tutorial steps with triple-randomized variations to increase immersion.
 -   **Dynamic Difficulty:** As strikes are recorded, the countdown timer accelerates (up to 3x speed!), increasing the pressure.
 -   **Clunky Gov Portal:** A custom HTML manual built with a "2016 military intranet" aesthetic, featuring a persistent sidebar for rapid lookup.
 -   **Data-Driven Logic:** All manual rules and module behaviors are driven by structured JSON, allowing for future randomization and procedural generation.
@@ -50,6 +51,7 @@ Due to modern browser security policies regarding JavaScript Modules and the Web
 
 -   `index.html`: The main landing page and level selection.
 -   `manual.html`: The dynamic, bureaucratic Expert manual.
+-   `js/commentator/`: The "Nervous Commander" TTS system logic and speech library.
 -   `js/`: Core game engine, UI manager, and module handlers.
 -   `css/`: Styling for the bomb, modules, and the manual portal.
 -   `pdf/json/`: The master data files containing all manual rules.

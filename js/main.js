@@ -1,5 +1,7 @@
 import { LevelManager } from './LevelManager.js';
 import { Logger } from './Logger.js';
+import { CommentatorManager } from './commentator/CommentatorManager.js';
+import { CommsIndicator } from './commentator/CommsIndicator.js';
 
 window.onerror = function(message, source, lineno, colno, error) {
     Logger.error("GLOBAL", `Uncaught Error: ${message}`, { source, lineno, colno, error });
@@ -9,6 +11,7 @@ window.onerror = function(message, source, lineno, colno, error) {
 document.addEventListener('DOMContentLoaded', () => {
     Logger.log("SYSTEM", "Game Initialized...");
     
+    const landingPage = document.getElementById('landing-page');
     const defuseBtn = document.getElementById('defuse-btn');
     const manualBtn = document.getElementById('manual-btn');
     const levelModal = document.getElementById('level-modal');
@@ -23,6 +26,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize Level Manager
     LevelManager.init();
+
+    // Initialize Commentator UI on Landing Page
+    if (landingPage) {
+        const titleH1 = landingPage.querySelector('h1');
+        new CommsIndicator(titleH1);
+        
+        // Auto-briefing after 0.5s
+        setTimeout(() => {
+            CommentatorManager.speak('landing_brief');
+        }, 500);
+    }
 
     // Landing Page Actions
     defuseBtn.addEventListener('click', () => {
