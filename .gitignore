@@ -3,7 +3,8 @@
 md
 temp
 /pdf/content
-
+GEMINI_main.md
+.gemini-agents
 
 
 # dependencies
