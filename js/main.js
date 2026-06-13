@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize Mute Button State
     const updateMuteButtonUI = () => {
         if (muteBtn) {
-            muteBtn.innerText = CommentatorManager.isMuted ? 'Unmute Audio' : 'Mute Audio';
+            muteBtn.innerText = CommentatorManager.isMuted ? '🔇' : '🔊';
             muteBtn.style.color = CommentatorManager.isMuted ? '#f00' : '#fff';
             muteBtn.style.borderColor = CommentatorManager.isMuted ? '#f00' : '#555';
         }
