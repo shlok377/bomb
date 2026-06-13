@@ -34,12 +34,14 @@ export const CommentatorManager = {
             return;
         }
 
-        // Stop current speech
-        this.stop();
+        // Workaround for some browsers getting stuck
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.resume();
 
         // Randomly select 1 of 3 variations
-        const randomIndex = Math.floor(Math.random() * category.variations.length);
-        const text = category.variations[randomIndex];
+        const variations = category.variations || category.text; // Support both keys
+        const randomIndex = Math.floor(Math.random() * variations.length);
+        const text = variations[randomIndex];
 
         Logger.log("CommentatorManager", `Speaking (${triggerId} #${randomIndex}): "${text}"`);
 
@@ -48,9 +50,23 @@ export const CommentatorManager = {
         utterance.rate = this.voiceProfile.rate;
         utterance.volume = this.voiceProfile.volume;
 
+        // Try to find a suitable English voice
+        const setVoice = () => {
+            const voices = window.speechSynthesis.getVoices();
+            if (voices.length > 0) {
+                const enVoice = voices.find(v => v.lang.startsWith('en')) || voices[0];
+                utterance.voice = enVoice;
+            }
+        };
+
+        setVoice();
+        if (!utterance.voice && window.speechSynthesis.onvoiceschanged !== undefined) {
+            window.speechSynthesis.onvoiceschanged = setVoice;
+        }
+
         // Visual signaling via events
         utterance.onstart = () => {
-            window.dispatchEvent(new CustomEvent('comms-start'));
+            window.dispatchEvent(new CustomEvent('comms-start', { detail: { text } }));
         };
 
         utterance.onend = () => {
@@ -59,13 +75,21 @@ export const CommentatorManager = {
         };
 
         utterance.onerror = (event) => {
-            Logger.error("CommentatorManager", "Speech Synthesis Error", event);
+            if (event.error !== 'interrupted' && event.error !== 'canceled') {
+                Logger.error("CommentatorManager", "Speech Synthesis Error", event);
+            }
             window.dispatchEvent(new CustomEvent('comms-stop'));
             this.currentUtterance = null;
         };
 
         this.currentUtterance = utterance;
-        window.speechSynthesis.speak(utterance);
+        
+        // Final sanity check/kickstart
+        setTimeout(() => {
+            // Some browsers need a second cancel/resume right before speak
+            window.speechSynthesis.resume();
+            window.speechSynthesis.speak(utterance);
+        }, 50);
     },
 
     /**

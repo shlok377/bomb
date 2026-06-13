@@ -112,12 +112,12 @@
                     const infoContent = document.getElementById('info-content');
                     if (infoContent) {
                         infoContent.innerHTML = `
-                            <p><strong>INTEL: ADVANCED COORDINATION</strong></p>
+                            <p><strong>INTEL: ADVANCED</strong></p>
                             <ul style="padding-left: 15px; margin-top: 10px;">
-                                <li><strong>20 Seconds:</strong> You only have 20 seconds to use the Module Names. Speed is life.</li>
-                                <li><strong>Navigation:</strong> For the navigation module (Mazes), find and describe the green circle identifiers first.</li>
-                                <li><strong>Persistence:</strong> Some modules span multiple panels. Do not click 'Next' until the Expert confirms the current set is safe.</li>
-                                <li><strong>Vigilance:</strong> Mistakes now cause the timer to accelerate even more aggressively.</li>
+                                <li><strong>1. 20 Seconds:</strong> Names lock FAST. Be quick.</li>
+                                <li><strong>2. Mazes:</strong> Describe green circles first.</li>
+                                <li><strong>3. Patience:</strong> Wait for Expert before clicking 'Next'.</li>
+                                <li><strong>4. Strikes:</strong> Mistakes speed up the timer.</li>
                             </ul>
                         `;
                     }
@@ -142,7 +142,7 @@
                         await AudioManager.resume();
                         AudioManager.playClick(); 
 
-                        GameEngine.init(4);
+                        GameEngine.init(4, 3);
                         UIManager.init();
                         ModuleRegistry.injectModules('face-front', 4, 2);
                     } catch (err) {

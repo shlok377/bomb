@@ -16,14 +16,15 @@ export const GameEngine = {
     modulesTotal: 0,
     modulesDisarmed: 0,
 
-    init(moduleCount) {
+    init(moduleCount, maxStrikes = 3) {
         try {
-            Logger.log("GameEngine", `Initializing with ${moduleCount} modules`);
+            Logger.log("GameEngine", `Initializing with ${moduleCount} modules and ${maxStrikes} max strikes`);
             AudioManager.init();
             
             this.modulesTotal = moduleCount;
             this.modulesDisarmed = 0;
             this.strikes = 0;
+            this.maxStrikes = maxStrikes;
             this.timeLeft = 300;
             this.isGameOver = false;
 
@@ -102,7 +103,7 @@ export const GameEngine = {
         const event = new CustomEvent('game-strike', { detail: { strikes: this.strikes } });
         window.dispatchEvent(event);
 
-        if (this.strikes >= this.maxStrikes) {
+        if (this.strikes > this.maxStrikes) {
             this.explode("TOO MANY STRIKES");
         } else {
             // Recalculate and restart timer with new speed

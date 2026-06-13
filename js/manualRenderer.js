@@ -225,13 +225,18 @@ function renderLogicContent(id, logic) {
     }
 
     if (id === 'sequential-routing') {
+        html += `<div class="wire-sequence-columns">`;
         ['red', 'blue', 'black'].forEach(color => {
-            html += `<h3>${color.toUpperCase()} Wire Occurrences</h3><table><tr><th>Occurrence</th><th>Cut if connected to:</th></tr>`;
+            html += `<div class="wire-sequence-column">
+                <h3>${color.toUpperCase()}</h3>
+                <table>
+                    <tr><th>Occurrence</th><th>Cut if:</th></tr>`;
             logic[color].forEach((rule, i) => {
                 html += `<tr><td>${i+1}</td><td>${rule}</td></tr>`;
             });
-            html += `</table>`;
+            html += `</table></div>`;
         });
+        html += `</div>`;
     }
 
     if (id === 'navigational-algorithms') {

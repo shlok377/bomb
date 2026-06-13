@@ -8,11 +8,11 @@
       "content": [
         {
           "type": "text",
-          "text": "1. Look at the word on the main display. Use the 'Step 1' table to find which button position to check."
+          "text": "1. Identify the button position from Step 1 using the word on the Display."
         },
         {
           "type": "text",
-          "text": "2. Look at the label of the button in that specific position. Use the 'Step 2' list for that label."
+          "text": "2. Identify the word list from Step 2 using the label on the button in that specific position."
         },
         {
           "type": "text",
@@ -111,6 +111,26 @@
         {
           "type": "text",
           "text": "Note: The signal pattern will always begin immediately following a brief GREEN sync pulse from the LED. Dots will appear as circles, while Bars (Dashes) will appear as horizontal rectangles."
+        },
+        {
+          "type": "text",
+          "text": "Identify word:"
+        },
+        {
+          "type": "text",
+          "text": "Start: After Green pulse."
+        },
+        {
+          "type": "text",
+          "text": "Dot: Short flash."
+        },
+        {
+          "type": "text",
+          "text": "Dash: Long flash."
+        },
+        {
+          "type": "text",
+          "text": "Match word to frequency, tune, and press TX."
         }
       ],
       "logic": {
@@ -133,15 +153,23 @@
       "content": [
         {
           "type": "text",
-          "text": "Note: Locate the maze identifying green indicators to find the correct blueprint below."
+          "text": "Find the maze by matching the Green circles to a grid below."
         },
         {
           "type": "text",
-          "text": "LEGEND: White Box that defuser sees = Your current position. Red Triangle = Target location (Finish). Green Circles = Maze identification indicators."
+          "text": "Ask the defuser for the starting and ending positions."
         },
         {
           "type": "text",
-          "text": "The path is carved into the grid. Any movement into a blocked (WHITE) cell will trigger a strike."
+          "text": "White Box: Your Position."
+        },
+        {
+          "type": "text",
+          "text": "Red Triangle: Goal."
+        },
+        {
+          "type": "text",
+          "text": "<strong>Move without hitting walls.</strong>"
         }
       ],
       "logic": {

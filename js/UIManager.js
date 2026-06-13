@@ -5,6 +5,7 @@
 
 import { BombState } from './BombState.js';
 import { Logger } from './Logger.js';
+import { GameEngine } from './GameEngine.js';
 
 export const UIManager = {
     currentFace: 'front', // front, top, bottom, left, right, back
@@ -15,6 +16,7 @@ export const UIManager = {
             this.setupEventListeners();
             this.updateHUD();
             this.renderEdgework();
+            this.updateStrikes(0); 
         } catch (err) {
             Logger.error("UIManager", "Failed to initialize UI", err);
         }
@@ -60,6 +62,11 @@ export const UIManager = {
     },
 
     triggerStrikeVisuals() {
+        const strikeEl = document.getElementById('strike-display');
+        if (strikeEl) {
+            strikeEl.classList.add('strike-shake');
+            setTimeout(() => strikeEl.classList.remove('strike-shake'), 500);
+        }
         document.body.classList.add('strike-flash');
         setTimeout(() => document.body.classList.remove('strike-flash'), 500);
     },
@@ -114,11 +121,13 @@ export const UIManager = {
     updateStrikes(count) {
         const strikeEl = document.getElementById('strike-display');
         if (strikeEl) {
-            let strikeStr = "";
-            for (let i = 0; i < count; i++) strikeStr += "X ";
-            strikeEl.textContent = strikeStr;
-            strikeEl.classList.add('strike-flash');
-            setTimeout(() => strikeEl.classList.remove('strike-flash'), 500);
+            const max = GameEngine.maxStrikes;
+            let html = '';
+            for (let i = 0; i < max; i++) {
+                const isLit = i < count;
+                html += `<span class="strike-cross ${isLit ? 'lit' : 'fainted'}">X</span>`;
+            }
+            strikeEl.innerHTML = html;
         }
     },
 
