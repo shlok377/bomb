@@ -204,6 +204,21 @@ h1 {
     letter-spacing: 5px;
 }
 
+.main-title:hover .title-text {
+    visibility: hidden;
+    position: relative;
+}
+
+.main-title:hover .title-text::after {
+    content: 'DihFUSE';
+    visibility: visible;
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    color: inherit;
+}
+
 .button-container {
     display: flex;
     gap: 2rem;
