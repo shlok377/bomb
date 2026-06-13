@@ -12,29 +12,29 @@
       ],
       "logic": {
         "3_wires": [
-          "If there are no red wires, cut the second wire.",
-          "Otherwise, if the last wire is white, cut the last wire.",
-          "Otherwise, if there is more than one blue wire, cut the last blue wire.",
-          "Otherwise, cut the last wire."
+          "No red? Cut 2nd.",
+          "Last is white? Cut last.",
+          "Multiple blue? Cut last blue.",
+          "Else cut last."
         ],
         "4_wires": [
-          "If there is more than one red wire and the last digit of the serial number is odd, cut the last red wire.",
-          "Otherwise, if the last wire is yellow and there are no red wires, cut the first wire.",
-          "Otherwise, if there is exactly one blue wire, cut the first wire.",
-          "Otherwise, if there is more than one yellow wire, cut the last wire.",
-          "Otherwise, cut the second wire."
+          "Multiple red and odd serial? Cut last red.",
+          "Last yellow and no red? Cut 1st.",
+          "One blue? Cut 1st.",
+          "Multiple yellow? Cut last.",
+          "Else cut 2nd."
         ],
         "5_wires": [
-          "If the last wire is black and the last digit of the serial number is odd, cut the fourth wire.",
-          "Otherwise, if there is exactly one red wire and there is more than one yellow wire, cut the first wire.",
-          "Otherwise, if there are no black wires, cut the second wire.",
-          "Otherwise, cut the first wire."
+          "Last black and odd serial? Cut 4th.",
+          "One red and multiple yellow? Cut 1st.",
+          "No black? Cut 2nd.",
+          "Else cut 1st."
         ],
         "6_wires": [
-          "If there are no yellow wires and the last digit of the serial number is odd, cut the third wire.",
-          "Otherwise, if there is exactly one yellow wire and there is more than one white wire, cut the fourth wire.",
-          "Otherwise, if there are no red wires, cut the last wire.",
-          "Otherwise, cut the fourth wire."
+          "No yellow and odd serial? Cut 3rd.",
+          "One yellow and multiple white? Cut 4th.",
+          "No red? Cut last.",
+          "Else cut 4th."
         ]
       }
     },
@@ -43,26 +43,26 @@
       "title": "On the Subject of The Button",
       "flavorText": "You might think that a button telling you to press it is pretty straightforward. That's the kind of thinking that gets people exploded.",
       "rules": [
-        "Follow these rules in the order they are listed. Perform the first action that applies:"
+        "Follow these rules in order. Perform the first action that applies (DO NOT Release YET, SCROLL DOWN):"
       ],
       "logic": {
         "actions": [
-          "If the button is blue and the button says 'Abort', hold the button and refer to 'Releasing a Held Button'.",
-          "If there is more than 1 battery on the bomb and the button says 'Detonate', press and immediately release the button.",
-          "If the button is white and there is a lit indicator with label CAR, hold the button and refer to 'Releasing a Held Button'.",
-          "If there are more than 2 batteries on the bomb and there is a lit indicator with label FRK, press and immediately release the button.",
-          "If the button is yellow, hold the button and refer to 'Releasing a Held Button'.",
-          "If the button is red and the button says 'Hold', press and immediately release the button.",
-          "If none of the above apply, hold the button and refer to 'Releasing a Held Button'."
+          "Blue and Abort? Hold.",
+          "Multiple Batteries and Detonate? Tap.",
+          "White and Lit CAR? Hold.",
+          "Three or more Batteries and Lit FRK? Tap.",
+          "Yellow? Hold.",
+          "Red and Hold? Tap.",
+          "Else? Hold."
         ],
         "releasing": {
           "title": "Releasing a Held Button",
-          "instruction": "If you start holding the button down, a colored strip will light up on the right side of the module. Based on its color, you must release the button at a specific point in time:",
+          "instruction": "If holding, check the colored strip color:",
           "strip_colors": [
-            "Blue strip: release when the countdown timer has a 4 in any position.",
-            "White strip: release when the countdown timer has a 1 in any position.",
-            "Yellow strip: release when the countdown timer has a 5 in any position.",
-            "Any other color strip: release when the countdown timer has a 1 in any position."
+            "Blue strip? Release on 4.",
+            "White strip? Release on 1.",
+            "Yellow strip? Release on 5.",
+            "Other? Release on 1."
           ]
         }
       }
@@ -74,11 +74,11 @@
       "content": [
         {
           "type": "text",
-          "text": "Only one column below has all four of the symbols from the keypad."
+          "text": "Find the one column below containing all four symbols."
         },
         {
           "type": "text",
-          "text": "Press the four buttons in the order their symbols appear from top to bottom within that column."
+          "text": "Press them in order from top to bottom."
         },
         {
           "type": "image",
