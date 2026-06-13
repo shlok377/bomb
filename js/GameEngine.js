@@ -103,7 +103,7 @@ export const GameEngine = {
         const event = new CustomEvent('game-strike', { detail: { strikes: this.strikes } });
         window.dispatchEvent(event);
 
-        if (this.strikes >= this.maxStrikes) {
+        if (this.strikes > this.maxStrikes) {
             this.explode("TOO MANY STRIKES");
         } else {
             // Recalculate and restart timer with new speed
