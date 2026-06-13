@@ -258,10 +258,22 @@ h1 {
     text-transform: uppercase;
 }
 
-.button-container {
+.landing-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 4rem;
+}
+
+.main-roles {
     display: flex;
     gap: 2rem;
-    margin-top: 4rem; /* Spacing from title */
+}
+
+.sub-controls, .utility-controls {
+    display: flex;
+    justify-content: center;
 }
 
 /* Tactical Button Theme (Matte Black Steel) - ONLY Landing Page Flow */
@@ -343,11 +355,11 @@ h1 {
 }
 
 /* Role Selection Hover Tooltips */
-.button-container button {
+.main-roles button {
     position: relative;
 }
 
-.button-container button::after {
+.main-roles button::after {
     content: attr(data-desc);
     position: absolute;
     top: 110%;
@@ -372,7 +384,7 @@ h1 {
     font-weight: normal;
 }
 
-.button-container button:hover::after {
+.main-roles button:hover::after {
     opacity: 1;
     transform: translateX(-50%) translateY(5px);
 }
@@ -421,24 +433,6 @@ button:hover {
     padding: 10px 20px;
     border: none;
     cursor: pointer;
-}
-
-#credits-btn {
-    position: fixed;
-    bottom: 20px;
-    left: 20px; /* Moved from right to left */
-    padding: 10px 20px;
-    font-size: 0.9rem;
-    background-color: rgba(0,0,0,0.5);
-    border: 1px solid #444;
-    color: #888;
-    cursor: pointer;
-}
-
-#credits-btn:hover {
-    background-color: #333;
-    color: #fff;
-    border-color: #888;
 }
 
 /* Modal Styles */
