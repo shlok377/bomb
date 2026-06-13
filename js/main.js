@@ -42,6 +42,18 @@ document.addEventListener('DOMContentLoaded', () => {
     if (landingPage) {
         const titleH1 = landingPage.querySelector('h1');
         new CommsIndicator(titleH1);
+
+        const commsBox = document.getElementById('landing-comms-box');
+        const commsText = document.getElementById('comms-text');
+
+        window.addEventListener('comms-start', (e) => {
+            if (commsBox && commsText && e.detail && e.detail.text) {
+                commsText.innerText = e.detail.text;
+                commsBox.classList.add('active');
+            }
+        });
+
+        // Box stays persistent now, no removal on 'comms-stop'
         
         // Auto-briefing after 0.5s
         setTimeout(() => {

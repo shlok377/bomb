@@ -7,9 +7,9 @@ export const SpeechLibrary = {
     "landing_brief": {
         "id": "landing_brief",
         "variations": [
-            "Defuser describes, Expert reads. Talk or die. Go!",
-            "Live bomb! Defuser describe, Expert solve. Fast!",
-            "Protocols active! Talk to survive. Ready up!"
+            "Defuser describes the bomb. Expert reads the manual. Talk to survive. Go!",
+            "Defuser: Say what you see. Expert: Find the fix. Work together or explode!",
+            "Defuser: Provide intel. Expert: Provide solutions. Fast communication only!"
         ]
     },
     "tutorial_search": {

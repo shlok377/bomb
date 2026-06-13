@@ -66,7 +66,7 @@ export const CommentatorManager = {
 
         // Visual signaling via events
         utterance.onstart = () => {
-            window.dispatchEvent(new CustomEvent('comms-start'));
+            window.dispatchEvent(new CustomEvent('comms-start', { detail: { text } }));
         };
 
         utterance.onend = () => {
