@@ -10,27 +10,27 @@ import { Logger } from './Logger.js';
 const tourSteps = [
     {
         target: '#welcome-screen',
-        title: 'Welcome, Expert',
-        text: "Welcome to the DEFUSAL INTRANET. This system is your primary tool for disarming explosive devices. Let's get you acquainted with the interface.",
+        title: 'Expert Onboarding',
+        text: "This system disarms bombs. Let's get started.",
         speechId: 'landing_brief'
     },
     {
         target: '#search-container',
-        title: 'Rapid Identification',
-        text: "Use the search bar to filter modules. Ask the defuser for the MODULE NAME on their module (e.g., Simple Wires) and type it here for instant access to the deactivation guide.",
+        title: 'Search Bar',
+        text: "Search for Module Names (e.g. Simple Wires) for fast protocols.",
         speechId: 'tutorial_search'
     },
     {
         target: '#nav-links-flat',
-        title: 'Classification Levels',
-        text: "Select a protocol from the sidebar. Directives, Modules, and Appendices are organized here for deep research when the module name is unavailable.",
+        title: 'Sidebar Links',
+        text: "Manual protocols. Use these if you can't find a name.",
         position: 'right',
         speechId: 'tutorial_nav'
     },
     {
         target: '#sticky-note',
-        title: 'Tactical Scratchpad',
-        text: "The Scratchpad is open by default. Use it to log vital data like the serial number, battery count, or module names so you don't forget them while navigating between pages. Closing and Reopening it won't lose your note, refreshing will.",
+        title: 'Scratchpad',
+        text: "Log edgework (Serial, Batteries) here. It persists when switching pages.",
         position: 'left',
         speechId: 'tutorial_scratchpad'
     }
