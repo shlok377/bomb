@@ -142,7 +142,7 @@
                         await AudioManager.resume();
                         AudioManager.playClick(); 
 
-                        GameEngine.init(4);
+                        GameEngine.init(4, 3);
                         UIManager.init();
                         ModuleRegistry.injectModules('face-front', 4, 2);
                     } catch (err) {

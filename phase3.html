@@ -142,7 +142,8 @@
                         await AudioManager.resume();
                         AudioManager.playClick(); 
 
-                        GameEngine.init(6);
+                        const strikesLimit = level === "5" ? 1 : 2;
+                        GameEngine.init(6, strikesLimit);
                         UIManager.init();
                         ModuleRegistry.injectModules('face-front', 6, 3);
                     } catch (err) {

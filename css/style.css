@@ -501,9 +501,44 @@ button:hover {
 }
 
 #strike-display {
-    font-size: 2rem;
-    color: #ff0000;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.strike-cross {
+    font-size: 2.2rem;
+    font-family: 'Courier New', Courier, monospace;
     font-weight: bold;
+    transition: all 0.3s var(--anim-bouncy);
+}
+
+.strike-cross.fainted {
+    color: #300; /* Dark red/fainted */
+    opacity: 0.3;
+}
+
+.strike-cross.lit {
+    color: #ff0000;
+    text-shadow: 0 0 15px #ff0000;
+    opacity: 1;
+    animation: strikePop 0.4s var(--anim-bouncy);
+}
+
+@keyframes strikePop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.5); }
+    100% { transform: scale(1); }
+}
+
+.strike-shake {
+    animation: strikeShake 0.5s var(--anim-snappy);
+}
+
+@keyframes strikeShake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
 }
 
 .strike-flash {
