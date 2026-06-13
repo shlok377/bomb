@@ -7,6 +7,7 @@ import { SpeechLibrary } from './speeches.js';
 import { Logger } from '../Logger.js';
 
 export const CommentatorManager = {
+    isMuted: localStorage.getItem('commentator_muted') === 'true',
     voiceProfile: {
         pitch: 1.4,
         rate: 1.15,
@@ -20,6 +21,8 @@ export const CommentatorManager = {
      * @param {string} triggerId - The ID of the speech category.
      */
     speak(triggerId) {
+        if (this.isMuted) return;
+
         if (!window.speechSynthesis) {
             Logger.warn("CommentatorManager", "Speech Synthesis not supported in this browser.");
             return;

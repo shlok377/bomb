@@ -17,20 +17,20 @@ const tourSteps = [
     {
         target: '#search-container',
         title: 'Rapid Identification',
-        text: "Use the search bar to filter modules. Ask the defuser for the HEX CODE (Nightmare Tag) on their module (e.g., #D0OV8B) and type it here for instant access to the deactivation guide.",
+        text: "Use the search bar to filter modules. Ask the defuser for the MODULE NAME on their module (e.g., Simple Wires) and type it here for instant access to the deactivation guide.",
         speechId: 'tutorial_search'
     },
     {
         target: '#nav-links-flat',
         title: 'Classification Levels',
-        text: "Select a protocol from the sidebar. Directives, Modules, and Appendices are organized here for deep research when the search code is unavailable.",
+        text: "Select a protocol from the sidebar. Directives, Modules, and Appendices are organized here for deep research when the module name is unavailable.",
         position: 'right',
         speechId: 'tutorial_nav'
     },
     {
         target: '#sticky-note',
         title: 'Tactical Scratchpad',
-        text: "The Scratchpad is open by default. Use it to log vital data like the serial number, battery count, or those hex codes so you don't forget them while navigating between pages. Closing and Reopening it won't lose your note, refreshing will.",
+        text: "The Scratchpad is open by default. Use it to log vital data like the serial number, battery count, or module names so you don't forget them while navigating between pages. Closing and Reopening it won't lose your note, refreshing will.",
         position: 'left',
         speechId: 'tutorial_scratchpad'
     }

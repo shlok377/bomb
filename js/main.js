@@ -21,11 +21,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const expertBriefing = document.getElementById('expert-briefing');
     const closeExpertBriefing = document.getElementById('close-expert-briefing');
     const creditsBtn = document.getElementById('credits-btn');
+    const muteBtn = document.getElementById('mute-btn');
     const creditsModal = document.getElementById('credits-modal');
     const closeCredits = document.getElementById('close-credits');
 
     // Initialize Level Manager
     LevelManager.init();
+
+    // Initialize Mute Button State
+    const updateMuteButtonUI = () => {
+        if (muteBtn) {
+            muteBtn.innerText = CommentatorManager.isMuted ? 'Unmute Audio' : 'Mute Audio';
+            muteBtn.style.color = CommentatorManager.isMuted ? '#f00' : '#fff';
+            muteBtn.style.borderColor = CommentatorManager.isMuted ? '#f00' : '#555';
+        }
+    };
+    updateMuteButtonUI();
 
     // Initialize Commentator UI on Landing Page
     if (landingPage) {
@@ -47,6 +58,18 @@ document.addEventListener('DOMContentLoaded', () => {
     manualBtn.addEventListener('click', () => {
         Logger.log("SYSTEM", "Manual clicked - showing briefing");
         expertBriefing.style.display = 'flex';
+    });
+
+    muteBtn.addEventListener('click', () => {
+        CommentatorManager.isMuted = !CommentatorManager.isMuted;
+        localStorage.setItem('commentator_muted', CommentatorManager.isMuted);
+        Logger.log("SYSTEM", `Commentator ${CommentatorManager.isMuted ? 'Muted' : 'Unmuted'}`);
+        updateMuteButtonUI();
+        if (CommentatorManager.isMuted) {
+            CommentatorManager.stop();
+        } else {
+            CommentatorManager.speak('landing_brief');
+        }
     });
 
     // Briefing Accept Actions

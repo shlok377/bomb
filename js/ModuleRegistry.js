@@ -12,19 +12,19 @@ import { Passwords } from './modules/Passwords.js';
 import { Logger } from './Logger.js';
 import { AudioManager } from './AudioManager.js';
 
-// Nightmare Mode Tags
+// Module Identification Names
 const ModuleTags = {
-    'simple-wires': '#D0OV8B',
-    'the-button': '#O0DV8B',
-    'keypads': '#0ODV8B',
-    'simon-says': '#A0OV8B',
-    'whos-on-first': '#D0OA8B',
-    'memory': '#O0DA8B',
-    'morse-code': '#0VDA8B',
-    'complicated-wires': '#DV0A8B',
-    'wire-sequences': '#OV0A8B',
-    'mazes': '#D00V8B',
-    'passwords': '#O00V8B'
+    'simple-wires': 'Simple Wires',
+    'the-button': 'The Button',
+    'keypads': 'Keypads',
+    'simon-says': 'Simon Says',
+    'whos-on-first': "Who's On First",
+    'memory': 'Memory',
+    'morse-code': 'Morse Code',
+    'complicated-wires': 'Complicated Wires',
+    'wire-sequences': 'Wire Sequences',
+    'mazes': 'Mazes',
+    'passwords': 'Passwords'
 };
 
 export const ModuleRegistry = {
