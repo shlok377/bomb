@@ -514,8 +514,8 @@ button:hover {
 }
 
 .strike-cross.fainted {
-    color: #300; /* Dark red/fainted */
-    opacity: 0.3;
+    color: #400; /* Slightly brighter dark red */
+    opacity: 0.5; /* Increased from 0.3 */
 }
 
 .strike-cross.lit {

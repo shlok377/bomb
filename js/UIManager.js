@@ -5,6 +5,7 @@
 
 import { BombState } from './BombState.js';
 import { Logger } from './Logger.js';
+import { GameEngine } from './GameEngine.js';
 
 export const UIManager = {
     currentFace: 'front', // front, top, bottom, left, right, back
