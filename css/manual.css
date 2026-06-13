@@ -33,6 +33,7 @@ body, html {
 /* Persistent Left Sidebar */
 #side-nav {
     width: 300px;
+    flex-shrink: 0; /* Ensures sidebar stays visible and doesn't get squished */
     background-color: #dcdcdc; /* Light grey government feel */
     border-right: 3px solid #999;
     overflow-y: auto;
@@ -379,3 +380,41 @@ li {
     opacity: 0.3;
     background-color: #bbb;
 }
+
+/* Wire Sequences Manual Columns */
+.wire-sequence-columns {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+    align-items: flex-start;
+}
+
+.wire-sequence-column {
+    flex: 1;
+    min-width: 0;
+}
+
+.wire-sequence-column h3 {
+    font-size: 0.9rem;
+    white-space: nowrap;
+    margin-top: 10px;
+    background-color: #eee;
+    padding: 5px;
+    border: 1px solid #ccc;
+    text-align: center;
+}
+
+.wire-sequence-column table {
+    margin-top: 0;
+    table-layout: fixed; /* Ensures equal width control */
+    width: 100%;
+}
+
+.wire-sequence-column th, .wire-sequence-column td {
+    padding: 8px 4px;
+    font-size: 0.95rem; /* Increased font size */
+    text-align: center;
+    width: 25%; /* Reduced from 50% as requested */
+    word-wrap: break-word;
+}
+

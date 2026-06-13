@@ -195,13 +195,38 @@ body, html {
     justify-content: center;
     min-height: 100vh;
     text-align: center;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../pic/bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 h1 {
-    font-size: 3rem;
-    margin-bottom: 2rem;
+    font-size: 5rem;
+    margin-bottom: 0.5rem;
     text-transform: uppercase;
-    letter-spacing: 5px;
+    letter-spacing: 15px;
+    font-weight: 900;
+    color: #222; /* Dark weathered metal casing */
+    text-shadow: 
+        1px 1px 0px #444,
+        2px 2px 0px #333,
+        3px 3px 0px #222,
+        4px 4px 0px #111,
+        0 0 10px rgba(255, 69, 0, 0.5), /* Orange-red neon glow base */
+        0 0 20px rgba(255, 69, 0, 0.3),
+        0 0 30px rgba(255, 69, 0, 0.2);
+    position: relative;
+    display: inline-block;
+}
+
+/* Neon Inlay Effect */
+.title-text {
+    position: relative;
+    background: linear-gradient(to bottom, #ff4500, #ff0000);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 5px #ff4500);
 }
 
 .main-title:hover .title-text {
@@ -216,7 +241,28 @@ h1 {
     left: 50%;
     top: 0;
     transform: translateX(-50%);
-    color: inherit;
+    background: linear-gradient(to bottom, #ff8c00, #ff4500);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 8px #ff8c00);
+}
+
+.subtitle {
+    font-family: 'Courier New', Courier, monospace; /* Stencil substitute */
+    font-size: 1.2rem;
+    color: #98FF98; /* Mint green tactical look */
+    letter-spacing: 4px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
+
+.bottom-text {
+    color: #777; /* Metallic gray */
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
 }
 
 .button-container {
