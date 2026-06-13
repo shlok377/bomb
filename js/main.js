@@ -65,10 +65,14 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('commentator_muted', CommentatorManager.isMuted);
         Logger.log("SYSTEM", `Commentator ${CommentatorManager.isMuted ? 'Muted' : 'Unmuted'}`);
         updateMuteButtonUI();
+        
         if (CommentatorManager.isMuted) {
             CommentatorManager.stop();
         } else {
-            CommentatorManager.speak('landing_brief');
+            // Small delay helps some browsers trigger TTS reliably after a click
+            setTimeout(() => {
+                CommentatorManager.speak('landing_brief');
+            }, 100);
         }
     });
 
