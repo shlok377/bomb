@@ -273,7 +273,7 @@ h1 {
     z-index: 100; /* Ensure top row is above lower rows for tooltips */
 }
 
-.sub-controls {
+.gamemode-controls, .sub-controls {
     display: flex;
     justify-content: center;
     position: relative;
@@ -557,6 +557,104 @@ button:hover {
 #close-modal {
     margin-top: 1rem;
     float: right;
+}
+
+/* Game Mode Selection Styles */
+.gamemode-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.gamemode-option {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid #333;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s var(--anim-snappy);
+    position: relative;
+    overflow: hidden;
+}
+
+.gamemode-option:hover {
+    background: rgba(0, 255, 0, 0.05);
+    border-color: #0f0;
+}
+
+.gamemode-option input[type="radio"] {
+    display: none;
+}
+
+.custom-radio {
+    width: 22px;
+    height: 22px;
+    border: 2px solid #555;
+    border-radius: 50%;
+    margin-right: 20px;
+    position: relative;
+    flex-shrink: 0;
+    transition: all 0.2s var(--anim-bouncy);
+}
+
+.gamemode-option input[type="radio"]:checked + .custom-radio {
+    border-color: #0f0;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+}
+
+.custom-radio::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    width: 12px;
+    height: 12px;
+    background-color: #0f0;
+    border-radius: 50%;
+    transition: transform 0.2s var(--anim-bouncy);
+    box-shadow: 0 0 8px #0f0;
+}
+
+.gamemode-option input[type="radio"]:checked + .custom-radio::after {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.option-info {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.option-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    color: #eee;
+    transition: color 0.2s;
+}
+
+.option-desc {
+    font-size: 0.85rem;
+    color: #888;
+    margin-top: 4px;
+}
+
+.gamemode-option input[type="radio"]:checked ~ .option-info .option-title {
+    color: #0f0;
+}
+
+/* Selected option highlight animation */
+.gamemode-option input[type="radio"]:checked ~ .option-info {
+    animation: slideRight 0.3s var(--anim-snappy);
+}
+
+@keyframes slideRight {
+    0% { transform: translateX(0); }
+    50% { transform: translateX(5px); }
+    100% { transform: translateX(0); }
 }
 
 /* In-Game Styles */

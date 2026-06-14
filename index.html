@@ -18,6 +18,10 @@
                 <button id="manual-btn" data-desc="EXPERT: Use the manual. Give clear orders. Stay calm.">Read the Manual</button>
             </div>
             
+            <div class="gamemode-controls">
+                <button id="gamemode-btn">Game Mode</button>
+            </div>
+
             <div class="sub-controls">
                 <button id="credits-btn">Credits</button>
             </div>
@@ -130,6 +134,47 @@
             </div>
 
             <button id="close-modal">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Game Mode Selection Modal -->
+    <div id="gamemode-modal" class="modal">
+        <div class="modal-content">
+            <h2 style="color: #0f0; border-bottom: 2px solid #333; padding-bottom: 10px; margin-bottom: 25px;">SELECT OPERATION MODE</h2>
+            
+            <div class="gamemode-list">
+                <label class="gamemode-option">
+                    <input type="radio" name="gamemode" value="ai">
+                    <span class="custom-radio"></span>
+                    <div class="option-info">
+                        <span class="option-title">HUMAN DEFUSER, AI EXPERT</span>
+                        <span class="option-desc">The AI Expert provides manual assistance.</span>
+                    </div>
+                </label>
+
+                <label class="gamemode-option">
+                    <input type="radio" name="gamemode" value="classic" checked>
+                    <span class="custom-radio"></span>
+                    <div class="option-info">
+                        <span class="option-title">2 PLAYERS (DEFAULT)</span>
+                        <span class="option-desc">One Defuser, One Expert. Standard procedures.</span>
+                    </div>
+                </label>
+
+                <label class="gamemode-option">
+                    <input type="radio" name="gamemode" value="multiplayer">
+                    <span class="custom-radio"></span>
+                    <div class="option-info">
+                        <span class="option-title">MULTIPLAYER</span>
+                        <span class="option-desc">Connect with multiple experts via network.</span>
+                    </div>
+                </label>
+            </div>
+
+            <div style="margin-top: 30px; display: flex; gap: 15px;">
+                <button id="apply-gamemode" class="accept-btn" style="flex: 2;">APPLY SETTINGS</button>
+                <button id="close-gamemode" class="accept-btn" style="flex: 1; background: #333;">BACK</button>
+            </div>
         </div>
     </div>
 

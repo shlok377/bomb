@@ -14,8 +14,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const landingPage = document.getElementById('landing-page');
     const defuseBtn = document.getElementById('defuse-btn');
     const manualBtn = document.getElementById('manual-btn');
+    const gamemodeBtn = document.getElementById('gamemode-btn');
     const levelModal = document.getElementById('level-modal');
     const closeModal = document.getElementById('close-modal');
+    const gamemodeModal = document.getElementById('gamemode-modal');
+    const applyGamemodeBtn = document.getElementById('apply-gamemode');
+    const closeGamemodeBtn = document.getElementById('close-gamemode');
     const defuserBriefing = document.getElementById('defuser-briefing');
     const closeDefuserBriefing = document.getElementById('close-defuser-briefing');
     const expertBriefing = document.getElementById('expert-briefing');
@@ -26,8 +30,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const creditsModal = document.getElementById('credits-modal');
     const closeCredits = document.getElementById('close-credits');
 
+    // State
+    let selectedGameMode = localStorage.getItem('selected_gamemode') || 'classic';
+
     // Initialize Level Manager
     LevelManager.init();
+
+    // Initialize UI State
+    const initUI = () => {
+        // Set correct radio button
+        const radio = document.querySelector(`input[name="gamemode"][value="${selectedGameMode}"]`);
+        if (radio) radio.checked = true;
+    };
+    initUI();
 
     // Initialize Mute Button State
     const updateMuteButtonUI = () => {
@@ -94,6 +109,29 @@ document.addEventListener('DOMContentLoaded', () => {
         expertBriefing.style.display = 'flex';
     });
 
+    if (gamemodeBtn) {
+        gamemodeBtn.addEventListener('click', () => {
+            gamemodeModal.style.display = 'flex';
+        });
+    }
+
+    applyGamemodeBtn.addEventListener('click', () => {
+        const selectedRadio = document.querySelector('input[name="gamemode"]:checked');
+        if (selectedRadio) {
+            selectedGameMode = selectedRadio.value;
+            localStorage.setItem('selected_gamemode', selectedGameMode);
+            Logger.log("SYSTEM", `Game Mode updated to: ${selectedGameMode.toUpperCase()}`);
+            gamemodeModal.style.display = 'none';
+        }
+    });
+
+    closeGamemodeBtn.addEventListener('click', () => {
+        gamemodeModal.style.display = 'none';
+        // Reset radio to saved state
+        const radio = document.querySelector(`input[name="gamemode"][value="${selectedGameMode}"]`);
+        if (radio) radio.checked = true;
+    });
+
     muteBtn.addEventListener('click', () => {
         CommentatorManager.isMuted = !CommentatorManager.isMuted;
         localStorage.setItem('commentator_muted', CommentatorManager.isMuted);
@@ -140,6 +178,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         if (event.target === creditsModal) {
             creditsModal.style.display = 'none';
+        }
+        if (event.target === gamemodeModal) {
+            gamemodeModal.style.display = 'none';
         }
         if (event.target === defuserBriefing) {
             defuserBriefing.style.display = 'none';
