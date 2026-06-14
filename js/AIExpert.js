@@ -104,20 +104,25 @@ ROBOTIC PROTOCOL:
 
     setupPTT() {
         window.addEventListener('keydown', (e) => {
-            if (e.code === 'Space' && !this.isRecording && !this.isCooldown) {
+            if (e.code === 'Space') {
                 if (document.activeElement.tagName === 'INPUT') return; 
-                e.preventDefault();
-                this.startRecording();
-            } else if (e.code === 'Space' && this.isCooldown) {
-                e.preventDefault();
-                this.showCooldownWarning();
+                e.preventDefault(); // Always prevent scrolling when space is pressed
+
+                if (!this.isRecording && !this.isCooldown) {
+                    this.startRecording();
+                } else if (this.isCooldown) {
+                    this.showCooldownWarning();
+                }
             }
         });
 
         window.addEventListener('keyup', (e) => {
-            if (e.code === 'Space' && this.isRecording) {
+            if (e.code === 'Space') {
+                if (document.activeElement.tagName === 'INPUT') return;
                 e.preventDefault();
-                this.stopRecording();
+                if (this.isRecording) {
+                    this.stopRecording();
+                }
             }
         });
     },
