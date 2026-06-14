@@ -3,6 +3,7 @@ import { Logger } from './Logger.js';
 import { CommentatorManager } from './commentator/CommentatorManager.js';
 import { CommsIndicator } from './commentator/CommsIndicator.js';
 import { AudioManager } from './AudioManager.js';
+import { AIExpert } from './AIExpert.js';
 
 window.onerror = function(message, source, lineno, colno, error) {
     Logger.error("GLOBAL", `Uncaught Error: ${message}`, { source, lineno, colno, error });
@@ -46,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // State
     let selectedGameMode = 'classic'; // Always reset to default on land
-    window.sessionApiKey = null; // Strictly session-based, destroyed on close
+    sessionStorage.removeItem('groq_api_key'); // Ensure fresh start on land
     localStorage.setItem('selected_gamemode', 'classic'); // Ensure storage is synced to default
 
     // Initialize Level Manager
@@ -148,8 +149,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const selectedRadio = document.querySelector('input[name="gamemode"]:checked');
         if (selectedRadio) {
             const modeValue = selectedRadio.value;
+            const sessionKey = sessionStorage.getItem('groq_api_key');
             
-            if (modeValue === 'ai' && !window.sessionApiKey) {
+            if (modeValue === 'ai' && !sessionKey) {
                 // Intercept to get API Key first
                 gamemodeModal.style.display = 'none';
                 aiConfigModal.style.display = 'flex';
@@ -166,6 +168,19 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('selected_gamemode', selectedGameMode);
         Logger.log("SYSTEM", `Game Mode updated to: ${selectedGameMode.toUpperCase()}`);
         updateLandingRoles();
+        
+        const sessionKey = sessionStorage.getItem('groq_api_key');
+        if (mode === 'ai' && sessionKey) {
+            AIExpert.init(sessionKey);
+            const commsText = document.getElementById('comms-text');
+            if (commsText && !document.querySelector('.ptt-hint')) {
+                const hint = document.createElement('div');
+                hint.className = 'ptt-hint';
+                hint.innerHTML = 'Hold <b>[SPACEBAR]</b> to Transmit';
+                commsText.parentElement.appendChild(hint);
+            }
+        }
+        
         gamemodeModal.style.display = 'none';
         aiConfigModal.style.display = 'none';
     };
@@ -173,7 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
     connectAiBtn.addEventListener('click', () => {
         const key = apiKeyInput.value.trim();
         if (key && key.startsWith('gsk_')) {
-            window.sessionApiKey = key;
+            sessionStorage.setItem('groq_api_key', key);
             Logger.log("SYSTEM", "AI Uplink Established (Key stored in session memory)");
             applyMode('ai');
         } else {
