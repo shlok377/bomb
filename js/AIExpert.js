@@ -12,64 +12,42 @@ export const AIExpert = {
     recognition: null,
     isRecording: false,
     isCooldown: false,
-    cooldownTime: 3000, // 3 seconds between transmissions
+    cooldownTime: 3000, 
     history: [],
     maxHistory: 4,
 
-    // Compressed Manual for System Prompt
-    systemPrompt: `You are an automated AI Expert Bomb Defusal System.
+    // Base System Prompt (Context will be prepended dynamically)
+    systemPromptBase: `You are an automated AI Expert Bomb Defusal System.
 ROBOTIC PROTOCOL: 
 1. STATUS CONFIRMATION: Briefly repeat key intel received (e.g. "CONFIRMED: 3 WIRES.").
 2. INSTRUCTION: Provide the next logical step immediately.
 3. CONSTRAINTS: Reply in UNDER 15 WORDS. Use ALL CAPS for emphasis. NO conversational filler. NO 'Hello'. NO 'Good luck'.
-4. PERSONALITY: Chatbot-like, logical, sterile, tactical.
+4. PERSONALITY: Chatbot-like, logical, sterile, tactical.`,
 
-MANUAL:
-WIRES: 
-3: no red=cut 2nd, last wht=cut last, mult blu=cut last blu, else=cut last.
-4: mult red+odd sn=cut last red, last yel+no red=cut 1st, 1 blu=cut 1st, mult yel=cut last, else=cut 2nd.
-5: last blk+odd sn=cut 4th, 1 red+mult yel=cut 1st, no blk=cut 2nd, else=cut 1st.
-6: no yel+odd sn=cut 3rd, 1 yel+mult wht=cut 4th, no red=cut last, else=cut 4th.
-
-BUTTON: 
-Blu+Abort=Hold. Mult batt+Detonate=Tap. Wht+Lit CAR=Hold. 3+ batt+Lit FRK=Tap. Yel=Hold. Red+Hold=Tap. Else=Hold. 
-HOLD RELEASE: Blu strip=4, Wht=1, Yel=5, Else=1 (in any timer pos).
-
-SIMON(strikes 0,1,2): 
-Vowel: R>B,B>R,G>Y,Y>G | R>Y,B>G,G>B,Y>R | R>G,B>R,G>Y,Y>B. 
-NoVowel: R>B,B>Y,G>G,Y>R | R>R,B>B,G>Y,Y>G | R>Y,B>G,G>B,Y>R.
-
-WHO'S ON FIRST:
-Step 1: YES=mid-L, FIRST=top-R, DISPLAY=bot-R, OKAY=top-R, SAYS=bot-R, NOTHING=mid-L, BLANK=mid-R, NO=bot-R, LED=mid-L, LEAD=bot-R, READ=mid-R, RED=mid-R, REED=bot-L, LEED=bot-L, THEY'RE=bot-L, THERE=bot-R, THEY ARE=mid-L, SEE=bot-R, C=top-R, CEE=bot-R.
-Step 2: 
-READY: YES, OKAY, WHAT, MIDDLE, LEFT, PRESS, RIGHT, BLANK, READY.
-FIRST: LEFT, OKAY, YES, MIDDLE, NO, RIGHT, NOTHING, UHHH, WAIT, READY, BLANK, WHAT, PRESS, FIRST.
-NO: BLANK, UHHH, WAIT, FIRST, WHAT, READY, RIGHT, YES, NOTHING, LEFT, OKAY, NO.
-BLANK: WAIT, RIGHT, OKAY, MIDDLE, BLANK.
-NOTHING: UHHH, RIGHT, OKAY, MIDDLE, YES, BLANK, NO, PRESS, LEFT, WHAT, WAIT, FIRST, NOTHING.
-YES: OKAY, RIGHT, UHHH, MIDDLE, WHAT, PRESS, READY, NOTHING, YES.
-WHAT: UHHH, WHAT.
-UHHH: READY, NOTHING, LEFT, WHAT, OKAY, YES, RIGHT, NO, PRESS, BLANK, UHHH.
-LEFT: RIGHT, LEFT.
-RIGHT: YES, NOTHING, READY, PRESS, NO, WAIT, WHAT, RIGHT.
-MIDDLE: BLANK, READY, OKAY, WHAT, NOTHING, PRESS, NO, WAIT, LEFT, MIDDLE.
-OKAY: MIDDLE, NO, FIRST, YES, UHHH, NOTHING, WAIT, OKAY.
-WAIT: UHHH, NO, BLANK, OKAY, YES, LEFT, FIRST, PRESS, WHAT, NOTHING, READY, RIGHT, MIDDLE, WAIT.
-PRESS: RIGHT, MIDDLE, YES, READY, PRESS.
-YOU: SURE, YOU ARE, YOUR, YOU'RE, NEXT, UH HUH, UR, HOLD, WHAT?, YOU.
-YOU ARE: YOUR, NEXT, LIKE, UH HUH, WHAT?, DONE, UH UH, HOLD, YOU, YOU'RE, SURE, UR, YOU ARE.
-YOUR: UH UH, YOU ARE, UH HUH, YOUR.
-YOU'RE: YOU, YOU'RE.
-UR: DONE, U, UR.
-U: UH HUH, SURE, NEXT, WHAT?, YOU'RE, UR, UH UH, DONE, U.
-UH HUH: UH HUH.
-UH UH: UR, U, DONE, UH UH.
-WHAT?: YOU, HOLD, YOU'RE, YOUR, U, DONE, UH UH, LIKE, WHAT?.
-DONE: SURE, UH HUH, NEXT, WHAT?, YOUR, UR, YOU'RE, HOLD, LIKE, YOU, U, YOU ARE, UH UH, DONE.
-NEXT: WHAT?, UH HUH, UH UH, YOUR, HOLD, SURE, NEXT.
-HOLD: YOU ARE, U, DONE, UH UH, YOU, LIKE, SURE, WHAT?, YOUR, NEXT, HOLD.
-SURE: YOU ARE, DONE, LIKE, YOU'RE, YOU, NEXT, UH HUH, UR, HOLD, WHAT?, YOUR, UH UH, IT, U, SURE.
-LIKE: YOU'RE, NEXT, U, UR, HOLD, DONE, IT, WHAT?, UH HUH, YOU, LIKE.`,
+    contextMap: {
+        'button': ['button.md'],
+        'keypad': ['keypads.md'],
+        'symbol': ['keypads.md'],
+        'simon': ['simon.md'],
+        'flash': ['simon.md', 'morse.md'],
+        'first': ['wof.md'],
+        'who': ['wof.md'],
+        'memory': ['memory.md'],
+        'morse': ['morse.md'],
+        'maze': ['mazes.md'],
+        'password': ['passwords.md'],
+        'letter': ['passwords.md'],
+        'serial': ['edgework.md'],
+        'battery': ['edgework.md'],
+        'batteries': ['edgework.md'],
+        'indicator': ['edgework.md'],
+        'port': ['edgework.md'],
+        // The "Wire" Umbrella
+        'simple wire': ['simple_wires.md'],
+        'complicated': ['complicated_wires.md'],
+        'sequence': ['wire_sequences.md'],
+        'wire': ['simple_wires.md', 'complicated_wires.md', 'wire_sequences.md'] 
+    },
 
     init(apiKey) {
         this.apiKey = apiKey;
@@ -120,7 +98,6 @@ LIKE: YOU'RE, NEXT, U, UR, HOLD, DONE, IT, WHAT?, UH HUH, YOU, LIKE.`,
         };
 
         this.recognition.onend = () => {
-            // Logic moved to stopRecording for snappiness
             Logger.log("AIExpert", "Recognition Session Ended");
         };
     },
@@ -128,7 +105,7 @@ LIKE: YOU'RE, NEXT, U, UR, HOLD, DONE, IT, WHAT?, UH HUH, YOU, LIKE.`,
     setupPTT() {
         window.addEventListener('keydown', (e) => {
             if (e.code === 'Space' && !this.isRecording && !this.isCooldown) {
-                if (document.activeElement.tagName === 'INPUT') return; // Don't trigger if typing in input
+                if (document.activeElement.tagName === 'INPUT') return; 
                 e.preventDefault();
                 this.startRecording();
             } else if (e.code === 'Space' && this.isCooldown) {
@@ -224,8 +201,12 @@ LIKE: YOU'RE, NEXT, U, UR, HOLD, DONE, IT, WHAT?, UH HUH, YOU, LIKE.`,
         }
 
         try {
+            const relevantFiles = this.identifyContext(userInput);
+            const manualContext = await this.loadManualContext(relevantFiles);
+            const systemPrompt = `${this.systemPromptBase}\n\nRELEVANT MANUAL SECTION:\n${manualContext}`;
+
             const messages = [
-                { role: "system", content: this.systemPrompt },
+                { role: "system", content: systemPrompt },
                 ...this.history,
                 { role: "user", content: userInput }
             ];
@@ -239,7 +220,7 @@ LIKE: YOU'RE, NEXT, U, UR, HOLD, DONE, IT, WHAT?, UH HUH, YOU, LIKE.`,
                 body: JSON.stringify({
                     model: "llama-3.1-8b-instant",
                     messages: messages,
-                    temperature: 0.5,
+                    temperature: 0.3,
                     max_tokens: 100
                 })
             });
@@ -255,7 +236,6 @@ LIKE: YOU'RE, NEXT, U, UR, HOLD, DONE, IT, WHAT?, UH HUH, YOU, LIKE.`,
             const data = await response.json();
             const aiText = data.choices[0].message.content;
 
-            // Update History (Sliding Window)
             this.history.push({ role: "user", content: userInput });
             this.history.push({ role: "assistant", content: aiText });
             if (this.history.length > this.maxHistory * 2) {
@@ -271,18 +251,44 @@ LIKE: YOU'RE, NEXT, U, UR, HOLD, DONE, IT, WHAT?, UH HUH, YOU, LIKE.`,
         }
     },
 
+    identifyContext(input) {
+        const historyText = this.history.map(m => m.content).join(' ').toLowerCase();
+        const text = (input + ' ' + historyText).toLowerCase();
+        const filesToLoad = new Set();
+        filesToLoad.add('edgework.md');
+
+        for (const [keyword, files] of Object.entries(this.contextMap)) {
+            if (text.includes(keyword)) {
+                files.forEach(f => filesToLoad.add(f));
+            }
+        }
+        return Array.from(filesToLoad);
+    },
+
+    async loadManualContext(files) {
+        if (files.length === 0) return "No specific module detected. Ask defuser for more details.";
+        try {
+            const contents = await Promise.all(files.map(async (file) => {
+                const response = await fetch(`AI_docs/${file}`);
+                if (response.ok) return await response.text();
+                return '';
+            }));
+            return contents.join('\n\n');
+        } catch (err) {
+            Logger.error("AIExpert", "Failed to load manual context", err);
+            return "ERROR LOADING MANUAL.";
+        }
+    },
+
     addMessage(sender, text, type) {
         const box = document.getElementById('landing-comms-box') || document.querySelector('.comms-box');
         const commsText = document.getElementById('comms-text');
-        
         if (box && commsText) {
             box.classList.add('active');
             const msgDiv = document.createElement('div');
             msgDiv.className = `comms-msg ${type}`;
             msgDiv.innerHTML = `<strong>${sender}:</strong> ${text}`;
             commsText.appendChild(msgDiv);
-            
-            // Auto-scroll
             box.scrollTop = box.scrollHeight;
         }
     }
