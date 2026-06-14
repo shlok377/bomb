@@ -11,6 +11,7 @@ import { Mazes } from './modules/Mazes.js';
 import { Passwords } from './modules/Passwords.js';
 import { Logger } from './Logger.js';
 import { AudioManager } from './AudioManager.js';
+import { GameEngine } from './GameEngine.js';
 
 // Module Identification Names
 const ModuleTags = {
@@ -55,7 +56,18 @@ export const ModuleRegistry = {
             const container = document.getElementById(containerId);
             if (!container) throw new Error(`Container ${containerId} not found`);
 
-            const allowedKeys = this.phaseModules[phase] || this.phaseModules[3];
+            let allowedKeys = [...(this.phaseModules[phase] || this.phaseModules[3])];
+            
+            // SIDE QUEST FIX: Simon Says only works correctly with 0, 1, or 2 strikes.
+            // If the level allows more than 2 strikes, exclude it from the pool.
+            if (GameEngine.maxStrikes > 2) {
+                const originalLength = allowedKeys.length;
+                allowedKeys = allowedKeys.filter(k => k !== 'simon-says');
+                if (allowedKeys.length < originalLength) {
+                    Logger.log("ModuleRegistry", `Simon Says excluded from pool (maxStrikes: ${GameEngine.maxStrikes} > 2)`);
+                }
+            }
+
             Logger.log("ModuleRegistry", `Injecting ${count} modules from Phase ${phase} pool into ${containerId}`);
             
             // Clear container first

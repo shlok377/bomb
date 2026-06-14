@@ -43,6 +43,7 @@
       "title": "On the Subject of The Button",
       "flavorText": "You might think that a button telling you to press it is pretty straightforward. That's the kind of thinking that gets people exploded.",
       "rules": [
+        "Indicators (like 'Lit CAR') can be found on the SIDES of the bomb. FLIP the bomb to check all edgework.",
         "Follow these rules in order. Perform the first action that applies (DO NOT Release YET, SCROLL DOWN):"
       ],
       "logic": {
@@ -59,10 +60,10 @@
           "title": "Releasing a Held Button",
           "instruction": "If holding, check the colored strip color:",
           "strip_colors": [
-            "Blue strip? Release on 4.",
-            "White strip? Release on 1.",
-            "Yellow strip? Release on 5.",
-            "Other? Release on 1."
+            "Blue strip? Release when the timer has a 4 in any position.",
+            "White strip? Release when the timer has a 1 in any position.",
+            "Yellow strip? Release when the timer has a 5 in any position.",
+            "Other? Release when the timer has a 1 in any position."
           ]
         }
       }
