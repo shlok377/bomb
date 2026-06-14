@@ -41,7 +41,20 @@ document.addEventListener('DOMContentLoaded', () => {
         // Set correct radio button
         const radio = document.querySelector(`input[name="gamemode"][value="${selectedGameMode}"]`);
         if (radio) radio.checked = true;
+        
+        updateLandingRoles();
     };
+
+    const updateLandingRoles = () => {
+        if (manualBtn) {
+            if (selectedGameMode === 'ai') {
+                manualBtn.style.display = 'none';
+            } else {
+                manualBtn.style.display = 'block';
+            }
+        }
+    };
+
     initUI();
 
     // Initialize Mute Button State
@@ -121,6 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
             selectedGameMode = selectedRadio.value;
             localStorage.setItem('selected_gamemode', selectedGameMode);
             Logger.log("SYSTEM", `Game Mode updated to: ${selectedGameMode.toUpperCase()}`);
+            updateLandingRoles();
             gamemodeModal.style.display = 'none';
         }
     });
