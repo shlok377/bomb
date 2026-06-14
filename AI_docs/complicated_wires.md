@@ -1,0 +1,30 @@
+# COMPLICATED WIRES
+Symbols: C=Cut, D=Don't, S=Cut if serial even, P=Cut if parallel port, B=Cut if 2+ batteries.
+White: C
+W+Red: S
+W+Blue: S
+W+R+B: S
+W+Star: C
+W+R+Star: C
+W+B+Star: D
+W+R+B+Star: D
+W+LED: D
+W+R+LED: B
+W+B+LED: P
+W+R+B+LED: S
+W+Star+LED: B
+W+R+Star+LED: B
+W+B+Star+LED: P
+W+R+B+Star+LED: D
+Red: S
+R+Star: C
+R+LED: B
+R+Star+LED: B
+Blue: S
+B+Star: D
+B+LED: P
+B+Star+LED: P
+Red+Blue: S
+R+B+Star: S
+R+B+LED: S
+R+B+Star+LED: D

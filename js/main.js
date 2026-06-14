@@ -2,6 +2,8 @@ import { LevelManager } from './LevelManager.js';
 import { Logger } from './Logger.js';
 import { CommentatorManager } from './commentator/CommentatorManager.js';
 import { CommsIndicator } from './commentator/CommsIndicator.js';
+import { AudioManager } from './AudioManager.js';
+import { AIExpert } from './AIExpert.js';
 
 window.onerror = function(message, source, lineno, colno, error) {
     Logger.error("GLOBAL", `Uncaught Error: ${message}`, { source, lineno, colno, error });
@@ -11,11 +13,28 @@ window.onerror = function(message, source, lineno, colno, error) {
 document.addEventListener('DOMContentLoaded', () => {
     Logger.log("SYSTEM", "Game Initialized...");
     
+    // Global Tactile Click
+    document.addEventListener('mousedown', () => {
+        if (!AudioManager.isInitialized) {
+            AudioManager.init();
+        }
+        AudioManager.playClick();
+    });
+
     const landingPage = document.getElementById('landing-page');
     const defuseBtn = document.getElementById('defuse-btn');
     const manualBtn = document.getElementById('manual-btn');
+    const gamemodeBtn = document.getElementById('gamemode-btn');
     const levelModal = document.getElementById('level-modal');
     const closeModal = document.getElementById('close-modal');
+    const gamemodeModal = document.getElementById('gamemode-modal');
+    const applyGamemodeBtn = document.getElementById('apply-gamemode');
+    const closeGamemodeBtn = document.getElementById('close-gamemode');
+    const aiConfigModal = document.getElementById('ai-config-modal');
+    const apiKeyInput = document.getElementById('api-key-input');
+    const connectAiBtn = document.getElementById('connect-ai');
+    const cancelAiConfigBtn = document.getElementById('cancel-ai-config');
+    const groqLink = document.getElementById('groq-link');
     const defuserBriefing = document.getElementById('defuser-briefing');
     const closeDefuserBriefing = document.getElementById('close-defuser-briefing');
     const expertBriefing = document.getElementById('expert-briefing');
@@ -26,8 +45,34 @@ document.addEventListener('DOMContentLoaded', () => {
     const creditsModal = document.getElementById('credits-modal');
     const closeCredits = document.getElementById('close-credits');
 
+    // State
+    let selectedGameMode = 'classic'; // Always reset to default on land
+    sessionStorage.removeItem('groq_api_key'); // Ensure fresh start on land
+    localStorage.setItem('selected_gamemode', 'classic'); // Ensure storage is synced to default
+
     // Initialize Level Manager
     LevelManager.init();
+
+    // Initialize UI State
+    const initUI = () => {
+        // Set correct radio button
+        const radio = document.querySelector(`input[name="gamemode"][value="${selectedGameMode}"]`);
+        if (radio) radio.checked = true;
+        
+        updateLandingRoles();
+    };
+
+    const updateLandingRoles = () => {
+        if (manualBtn) {
+            if (selectedGameMode === 'ai') {
+                manualBtn.style.display = 'none';
+            } else {
+                manualBtn.style.display = 'block';
+            }
+        }
+    };
+
+    initUI();
 
     // Initialize Mute Button State
     const updateMuteButtonUI = () => {
@@ -94,6 +139,78 @@ document.addEventListener('DOMContentLoaded', () => {
         expertBriefing.style.display = 'flex';
     });
 
+    if (gamemodeBtn) {
+        gamemodeBtn.addEventListener('click', () => {
+            gamemodeModal.style.display = 'flex';
+        });
+    }
+
+    applyGamemodeBtn.addEventListener('click', () => {
+        const selectedRadio = document.querySelector('input[name="gamemode"]:checked');
+        if (selectedRadio) {
+            const modeValue = selectedRadio.value;
+            const sessionKey = sessionStorage.getItem('groq_api_key');
+            
+            if (modeValue === 'ai' && !sessionKey) {
+                // Intercept to get API Key first
+                gamemodeModal.style.display = 'none';
+                aiConfigModal.style.display = 'flex';
+                apiKeyInput.value = ''; // Clear for safety
+                apiKeyInput.focus();
+            } else {
+                applyMode(modeValue);
+            }
+        }
+    });
+
+    const applyMode = (mode) => {
+        selectedGameMode = mode;
+        localStorage.setItem('selected_gamemode', selectedGameMode);
+        Logger.log("SYSTEM", `Game Mode updated to: ${selectedGameMode.toUpperCase()}`);
+        updateLandingRoles();
+        
+        const sessionKey = sessionStorage.getItem('groq_api_key');
+        if (mode === 'ai' && sessionKey) {
+            AIExpert.init(sessionKey);
+            const commsText = document.getElementById('comms-text');
+            if (commsText && !document.querySelector('.ptt-hint')) {
+                const hint = document.createElement('div');
+                hint.className = 'ptt-hint';
+                hint.innerHTML = 'Hold <b>[SPACEBAR]</b> to Transmit';
+                commsText.parentElement.appendChild(hint);
+            }
+        }
+        
+        gamemodeModal.style.display = 'none';
+        aiConfigModal.style.display = 'none';
+    };
+
+    connectAiBtn.addEventListener('click', () => {
+        const key = apiKeyInput.value.trim();
+        if (key && key.startsWith('gsk_')) {
+            sessionStorage.setItem('groq_api_key', key);
+            Logger.log("SYSTEM", "AI Uplink Established (Key stored in session memory)");
+            applyMode('ai');
+        } else {
+            alert("Invalid API Key. Please enter a valid Groq API key (starts with gsk_).");
+        }
+    });
+
+    cancelAiConfigBtn.addEventListener('click', () => {
+        aiConfigModal.style.display = 'none';
+        // Revert radio button in gamemode modal
+        const radio = document.querySelector(`input[name="gamemode"][value="${selectedGameMode}"]`);
+        if (radio) radio.checked = true;
+        gamemodeModal.style.display = 'flex';
+    });
+
+    closeGamemodeBtn.addEventListener('click', () => {
+        gamemodeModal.style.display = 'none';
+        // Reset radio to saved state
+        const radio = document.querySelector(`input[name="gamemode"][value="${selectedGameMode}"]`);
+        if (radio) radio.checked = true;
+    });
+
     muteBtn.addEventListener('click', () => {
         CommentatorManager.isMuted = !CommentatorManager.isMuted;
         localStorage.setItem('commentator_muted', CommentatorManager.isMuted);
@@ -129,6 +246,21 @@ document.addEventListener('DOMContentLoaded', () => {
         creditsModal.style.display = 'none';
     });
 
+    if (groqLink) {
+        groqLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            const width = 600;
+            const height = 700;
+            const left = (window.screen.width / 2) - (width / 2);
+            const top = (window.screen.height / 2) - (height / 2);
+            window.open(
+                groqLink.href, 
+                'GroqConsole', 
+                `width=${width},height=${height},left=${left},top=${top},menubar=no,toolbar=no,location=no,status=no`
+            );
+        });
+    }
+
     // Close Modal Actions
     closeModal.addEventListener('click', () => {
         levelModal.style.display = 'none';
@@ -140,6 +272,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         if (event.target === creditsModal) {
             creditsModal.style.display = 'none';
+        }
+        if (event.target === gamemodeModal) {
+            gamemodeModal.style.display = 'none';
         }
         if (event.target === defuserBriefing) {
             defuserBriefing.style.display = 'none';

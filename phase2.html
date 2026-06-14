@@ -58,6 +58,12 @@
         </div>
     </div> <!-- End main-game-area -->
 
+    <!-- Comms Box -->
+    <div id="landing-comms-box" class="comms-box">
+        <div class="comms-header">INCOMING TRANSMISSION...</div>
+        <div id="comms-text" class="comms-text"></div>
+    </div>
+
         <div id="view-indicator">Viewing: FRONT</div>
 
         <div class="nav-controls">
@@ -81,6 +87,7 @@
         import { Logger } from './js/Logger.js';
         import { CommentatorManager } from './js/commentator/CommentatorManager.js';
         import { CommsIndicator } from './js/commentator/CommsIndicator.js';
+        import { AIExpert } from './js/AIExpert.js';
 
         window.onerror = function(message, source, lineno, colno, error) {
             console.error(`[PHASE 2 ERROR] ${message} at ${source}:${lineno}`);
@@ -89,6 +96,30 @@
         document.addEventListener('DOMContentLoaded', () => {
             try {
                 Logger.log("PHASE 2", "Initializing Level...");
+
+                // Global Tactile Click
+                document.addEventListener('mousedown', () => {
+                    if (!AudioManager.isInitialized) {
+                        AudioManager.init();
+                    }
+                    AudioManager.playClick();
+                });
+
+                // Initialize AI Expert if mode is active
+                const selectedMode = localStorage.getItem('selected_gamemode');
+                const sessionKey = sessionStorage.getItem('groq_api_key');
+                if (selectedMode === 'ai' && sessionKey) {
+                    AIExpert.init(sessionKey);
+                    const box = document.getElementById('landing-comms-box');
+                    const commsText = document.getElementById('comms-text');
+                    if (box && commsText) {
+                        box.classList.add('active');
+                        const hint = document.createElement('div');
+                        hint.className = 'ptt-hint';
+                        hint.innerHTML = 'Hold <b>[SPACEBAR]</b> to Transmit';
+                        box.appendChild(hint);
+                    }
+                }
 
                 // Initialize Comms Indicator in HUD
                 const hud = document.getElementById('bomb-hud');
