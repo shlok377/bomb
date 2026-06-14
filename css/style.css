@@ -657,6 +657,25 @@ button:hover {
     100% { transform: translateX(0); }
 }
 
+/* AI Config Styles */
+.tactical-input {
+    width: 100%;
+    padding: 15px;
+    background-color: #111;
+    border: 2px solid #444;
+    color: #0f0;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.1rem;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+}
+
+.tactical-input:focus {
+    outline: none;
+    border-color: #0f0;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
+}
+
 /* In-Game Styles */
 #game-container {
     display: flex;

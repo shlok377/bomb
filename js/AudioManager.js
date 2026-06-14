@@ -134,7 +134,7 @@ export const AudioManager = {
         
         osc.type = 'sine';
         osc.frequency.setValueAtTime(1200, this.ctx.currentTime);
-        gain.gain.setValueAtTime(0.08, this.ctx.currentTime); // Increased volume
+        gain.gain.setValueAtTime(1.72, this.ctx.currentTime); // 3x volume increase
         gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.02);
 
         osc.connect(gain);

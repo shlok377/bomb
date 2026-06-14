@@ -178,6 +178,33 @@
         </div>
     </div>
 
+    <!-- AI Configuration Modal -->
+    <div id="ai-config-modal" class="modal">
+        <div class="modal-content">
+            <h2 style="color: #0f0; border-bottom: 2px solid #333; padding-bottom: 10px; margin-bottom: 20px;">AI EXPERT CONFIGURATION</h2>
+            
+            <div class="ai-config-form">
+                <p style="margin-bottom: 15px; color: #ccc;">Enter your API key to establish a secure uplink with the AI Expert.</p>
+                
+                <input type="password" id="api-key-input" placeholder="Enter Groq API Key (gsk_...)" class="tactical-input">
+                
+                <div class="security-note" style="margin-top: 20px; padding: 15px; background: rgba(255,0,0,0.1); border-left: 4px solid #f00;">
+                    <p style="color: #f00; font-weight: bold; margin-bottom: 5px; font-size: 0.9rem;">⚠️ SECURITY & TRUST DISCLAIMER</p>
+                    <p style="font-size: 0.85rem; color: #bbb; line-height: 1.4;">For your security, we <strong>STRICTLY DO NOT SAVE</strong> your API key anywhere. It is kept only in temporary session memory and is destroyed when you close the tab. It is routed directly to the official API endpoint without passing through any external servers.</p>
+                </div>
+
+                <div class="info-note" style="margin-top: 15px; font-size: 0.85rem; color: #888;">
+                    <p><strong>NOTE:</strong> Currently, we only support <strong>Groq API keys</strong> (not sponsored) to ensure ultra-low latency communication required for defusal operations. Get a free key at <a href="https://console.groq.com/keys" id="groq-link" style="color: #0f0;">console.groq.com/keys</a>.</p>
+                </div>
+            </div>
+
+            <div style="margin-top: 30px; display: flex; gap: 15px;">
+                <button id="connect-ai" class="accept-btn" style="flex: 2;">ESTABLISH UPLINK</button>
+                <button id="cancel-ai-config" class="accept-btn" style="flex: 1; background: #333;">CANCEL</button>
+            </div>
+        </div>
+    </div>
+
     <script src="js/main.js" type="module"></script>
 </body>
 </html>

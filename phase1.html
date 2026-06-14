@@ -112,6 +112,14 @@
         document.addEventListener('DOMContentLoaded', () => {
             try {
                 Logger.log("PHASE 1", "Initializing Level...");
+
+                // Global Tactile Click
+                document.addEventListener('mousedown', () => {
+                    if (!AudioManager.isInitialized) {
+                        AudioManager.init();
+                    }
+                    AudioManager.playClick();
+                });
                 
                 // Initialize Comms Indicator in HUD
                 const hud = document.getElementById('bomb-hud');
