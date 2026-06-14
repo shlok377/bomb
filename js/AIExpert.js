@@ -86,8 +86,8 @@ LIKE: YOU'RE, NEXT, U, UR, HOLD, DONE, IT, WHAT?, UH HUH, YOU, LIKE.`,
         }
 
         this.recognition = new SpeechRecognition();
-        this.recognition.continuous = true; // Prevents auto-stop on silence
-        this.recognition.interimResults = true; // Allows us to see work-in-progress
+        this.recognition.continuous = false; // Snappier for PTT bursts
+        this.recognition.interimResults = true; 
         this.recognition.lang = 'en-US'; 
 
         this.recognition.onstart = () => {
@@ -99,9 +99,6 @@ LIKE: YOU'RE, NEXT, U, UR, HOLD, DONE, IT, WHAT?, UH HUH, YOU, LIKE.`,
             for (let i = event.resultIndex; i < event.results.length; ++i) {
                 if (event.results[i].isFinal) {
                     finalTranscript += event.results[i][0].transcript;
-                } else {
-                    // Interim result - log for debugging
-                    console.log("[AIExpert] Hearing:", event.results[i][0].transcript);
                 }
             }
 
@@ -111,14 +108,10 @@ LIKE: YOU'RE, NEXT, U, UR, HOLD, DONE, IT, WHAT?, UH HUH, YOU, LIKE.`,
         };
 
         this.recognition.onerror = (event) => {
-            if (event.error === 'no-speech') {
-                // If we get no-speech while recording is supposedly on, don't crash
-                return;
-            }
+            if (event.error === 'no-speech') return;
             if (event.error === 'network') {
                 this.addMessage("SYSTEM", "SPEECH NETWORK ERR. RE-TRYING...", "system");
                 this.stopRecording();
-                // Attempt to re-init after short delay
                 setTimeout(() => this.setupSpeech(), 500);
                 return;
             }
@@ -127,8 +120,8 @@ LIKE: YOU'RE, NEXT, U, UR, HOLD, DONE, IT, WHAT?, UH HUH, YOU, LIKE.`,
         };
 
         this.recognition.onend = () => {
-            this.isRecording = false;
-            this.stopRecordingUI();
+            // Logic moved to stopRecording for snappiness
+            Logger.log("AIExpert", "Recognition Session Ended");
         };
     },
 
@@ -182,8 +175,10 @@ LIKE: YOU'RE, NEXT, U, UR, HOLD, DONE, IT, WHAT?, UH HUH, YOU, LIKE.`,
         } catch (e) {
             Logger.error("AIExpert", "Error stopping recognition", e);
         }
+        
+        this.isRecording = false;
+        this.stopRecordingUI();
         AudioManager.playRadioStop();
-        // this.isRecording will be set to false in onend
     },
 
     startRecordingUI() {
